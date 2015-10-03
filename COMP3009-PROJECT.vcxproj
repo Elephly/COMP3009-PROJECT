@@ -123,8 +123,10 @@
   <ItemGroup>
     <ClInclude Include="Header Files\MyDefines.h" />
     <ClInclude Include="Header Files\MyGeometry.h" />
+    <ClInclude Include="Header Files\MyGraphics.h" />
     <ClInclude Include="Header Files\MyImage.h" />
     <ClInclude Include="Header Files\MyImageUtil.h" />
+    <ClInclude Include="Header Files\MyIncludes.h" />
     <ClInclude Include="Header Files\MyMath.h" />
     <ClInclude Include="Header Files\SOIL.h" />
   </ItemGroup>
@@ -134,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\MyGeometry.cpp" />
+    <ClCompile Include="Source Files\MyGraphics.cpp" />
     <ClCompile Include="Source Files\MyImage.cpp" />
     <ClCompile Include="Source Files\MyImageUtil.cpp" />
     <ClCompile Include="Source Files\MyMath.cpp" />

@@ -14,12 +14,12 @@ class MyImageUtil
 {
 public:
 	/* Image distortion effects */
-	static void BlackHoleEffect(MyImage *src, MyGeometry::MyCircle areaOfEffect);
-	static void ExpandEffect(MyImage *src, MyGeometry::MyCircle areaOfEffect);
-	static void SwirlEffect(MyImage *src, MyGeometry::MyCircle areaOfEffect, int nTwists);
+	static void BlackHoleEffect(MyImage *src, MyCircle areaOfEffect);
+	static void ExpandEffect(MyImage *src, MyCircle areaOfEffect);
+	static void SwirlEffect(MyImage *src, MyCircle areaOfEffect, int nTwists);
 
 	/* Copy and paste */
-	static void CopyFromImage(MyImage *src, MyImage **dest, MyGeometry::MyRectangle selection);
+	static void CopyFromImage(MyImage *src, MyImage **dest, MyRectangle selection);
 	static void PasteToImage(MyImage *src, MyImage *dest, int x, int y);
 
 	/* Image filters */

@@ -1,7 +1,5 @@
 #include "MyImageUtil.h"
-#include "MyDefines.h"
-
-using namespace MyGeometry;
+#include "MyIncludes.h"
 
 void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 {
@@ -53,7 +51,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 				src->SetPixelAt((int)xPrime, (int)yPrime, pixel, channels);
 				pixelSet[(int)yPrime][(int)xPrime] = true;
 
-				delete[] pixel;
+				MyDeleteArray(pixel);
 			}
 		}
 	}
@@ -91,7 +89,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 							colorChannels[0][i] = tempPixel[i];
 						}
 						nLerps++;
-						delete[] tempPixel;
+						MyDeleteArray(tempPixel);
 					}
 					if (i > x1 && pixelSet[i - 1][j] == true)
 					{
@@ -101,7 +99,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 							colorChannels[1][i] = tempPixel[i];
 						}
 						nLerps++;
-						delete[] tempPixel;
+						MyDeleteArray(tempPixel);
 					}
 					if (j < (x2 - 1) && pixelSet[i][j + 1] == true)
 					{
@@ -111,7 +109,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 							colorChannels[2][i] = tempPixel[i];
 						}
 						nLerps++;
-						delete[] tempPixel;
+						MyDeleteArray(tempPixel);
 					}
 					if (j > x1 && pixelSet[i][j - 1] == true)
 					{
@@ -121,7 +119,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 							colorChannels[3][i] = tempPixel[i];
 						}
 						nLerps++;
-						delete[] tempPixel;
+						MyDeleteArray(tempPixel);
 					}
 					
 					pixel = new GLubyte[channels];
@@ -132,7 +130,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 						pixel[i] = avg;
 					}
 					src->SetPixelAt(j, i, pixel, channels);
-					delete[] pixel;
+					MyDeleteArray(pixel);
 					pixelSet[i][j] = true;
 				}
 			}
@@ -141,15 +139,15 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 
 	for (int i = 0; i < 4; i++)
 	{
-		delete[] colorChannels[i];
+		MyDeleteArray(colorChannels[i]);
 	}
 	for (int i = 0; i < src->GetImageHeight(); i++)
 	{
-		delete[] pixelSet[i];
+		MyDeleteArray(pixelSet[i]);
 	}
-	delete[] pixelSet;
+	MyDeleteArray(pixelSet);
 
-	delete temp;
+	MyDelete(temp);
 }
 
 void MyImageUtil::ExpandEffect(MyImage * src, MyCircle areaOfEffect)
@@ -183,12 +181,12 @@ void MyImageUtil::ExpandEffect(MyImage * src, MyCircle areaOfEffect)
 
 				pixel = BilerpPixels(temp, xPrime, yPrime);
 				src->SetPixelAt(j, i, pixel, channels);
-				delete[] pixel;
+				MyDeleteArray(pixel);
 			}
 		}
 	}
 
-	delete temp;
+	MyDelete(temp);
 }
 
 void MyImageUtil::SwirlEffect(MyImage * src, MyCircle areaOfEffect, int nTwists)
@@ -241,21 +239,17 @@ void MyImageUtil::SwirlEffect(MyImage * src, MyCircle areaOfEffect, int nTwists)
 					pixel = temp->GetPixelAt(xPrime, yPrime);
 				}
 				src->SetPixelAt(j, i, pixel, channels);
-				delete[] pixel;
+				MyDeleteArray(pixel);
 			}
 		}
 	}
 
-	delete temp;
+	MyDelete(temp);
 }
 
 void MyImageUtil::CopyFromImage(MyImage * src, MyImage ** dest, MyRectangle selection)
 {
-	if (*dest != 0)
-	{
-		delete *dest;
-		*dest = 0;
-	}
+	MyDelete(*dest);
 	int x = min(selection.GetX1(), selection.GetX2());
 	int y = min(selection.GetY1(), selection.GetY2());
 	int width = abs(selection.GetWidth());
@@ -272,13 +266,13 @@ void MyImageUtil::CopyFromImage(MyImage * src, MyImage ** dest, MyRectangle sele
 			{
 				buffer[(i * width * channels) + (j * channels) + k] = pixel[k];
 			}
-			delete[] pixel;
+			MyDeleteArray(pixel);
 		}
 	}
 
 	*dest = new MyImage(buffer, width, height, channels);
 
-	delete[] buffer;
+	MyDeleteArray(buffer);
 }
 
 void MyImageUtil::PasteToImage(MyImage * src, MyImage * dest, int x, int y)
@@ -294,7 +288,7 @@ void MyImageUtil::PasteToImage(MyImage * src, MyImage * dest, int x, int y)
 		{
 			GLubyte *pixel = src->GetPixelAt(j, i);
 			dest->SetPixelAt(x + j, i + y, pixel, channels);
-			delete[] pixel;
+			MyDeleteArray(pixel);
 		}
 	}
 }
@@ -346,7 +340,7 @@ void MyImageUtil::GrayscaleImage(MyImage *src, MyImage *dest, GRAYSCALE_TYPE typ
 	}
 
 	dest->SetImage(buffer, width, height, channels);
-	delete[] buffer;
+	MyDeleteArray(buffer);
 }
 
 void MyImageUtil::SeparateChannel(MyImage *src, MyImage *dest, RBGA_CHANNEL channel, SEPARATION_TYPE type)
@@ -371,7 +365,7 @@ void MyImageUtil::SeparateChannel(MyImage *src, MyImage *dest, RBGA_CHANNEL chan
 	}
 
 	dest->SetImage(buffer, width, height, channels);
-	delete[] buffer;
+	MyDeleteArray(buffer);
 }
 
 void MyImageUtil::SubtractChannel(MyImage *src, MyImage *dest, RBGA_CHANNEL channel, SEPARATION_TYPE type)
@@ -396,7 +390,7 @@ void MyImageUtil::SubtractChannel(MyImage *src, MyImage *dest, RBGA_CHANNEL chan
 	}
 
 	dest->SetImage(buffer, width, height, channels);
-	delete[] buffer;
+	MyDeleteArray(buffer);
 }
 
 GLubyte * MyImageUtil::LerpPixels(GLubyte * a, GLubyte * b, double t, int channels)
@@ -457,23 +451,20 @@ GLubyte * MyImageUtil::BilerpPixels(MyImage * image, double x, double y)
 		lerpBottom = 0;
 	}
 
-	if (lerpBottom != 0)
-	{
-		delete[] lerpBottom;
-	}
+	MyDeleteArray(lerpBottom);
 	if (x != xFloor)
 	{
-		delete[] bottomLeft;
-		delete[] bottomRight;
+		MyDeleteArray(bottomLeft);
+		MyDeleteArray(bottomRight);
 		if (y != yFloor)
 		{
-			delete[] topLeft;
-			delete[] topRight;
+			MyDeleteArray(topLeft);
+			MyDeleteArray(topRight);
 		}
 	}
 	if (y != yFloor)
 	{
-		delete[] lerpTop;
+		MyDeleteArray(lerpTop);
 	}
 	return pixel;
 }

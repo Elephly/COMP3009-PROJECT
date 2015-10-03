@@ -1,8 +1,4 @@
-#include <stdio.h>
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+#include "MyIncludes.h"
 
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
@@ -34,8 +30,6 @@
 
 
 /************************************************************************/
-
-using namespace MyGeometry;
 
 // GLOBALS
 
@@ -69,12 +63,24 @@ int rightClickMenu;
 int photoboothSubMenu;
 MyRectangle selectionRect;
 MyCircle distortionCircle;
+GLuint vbo; // vertex buffer object
 
 void quit();
 
-void initGeom(char *imageFileName)
+void initGeom()
 {
+	MyVertex3D tri[3];
+	tri[0].v.x = -1.0; tri[0].v.y = -1.0; tri[0].v.z = 0.0;
+	tri[1].v.x = 0.0; tri[1].v.y = 1.0; tri[1].v.z = 0.0;
+	tri[2].v.x = 1.0; tri[2].v.y = -1.0; tri[2].v.z = 0.0;
 
+	tri[0].c.r = 1.0; tri[0].c.g = 0.0; tri[0].c.b = 0.0; tri[0].c.a = 1.0;
+	tri[1].c.r = 0.0; tri[1].c.g = 1.0; tri[1].c.b = 0.0; tri[1].c.a = 1.0;
+	tri[2].c.r = 0.0; tri[2].c.g = 0.0; tri[2].c.b = 1.0; tri[2].c.a = 1.0;
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(tri), tri, GL_STATIC_DRAW);
 }
 
 /* Called when the corresponsing window is created or resized. */
@@ -107,6 +113,14 @@ void renderWinCB(void)
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	/*
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(MyVertex3D), 0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDisableVertexAttribArray(0);
+
+	/*/
 	glRasterPos2i(x, y);
 	GLubyte *buffer = renderImage->GetImageBuffer();
 	glDrawPixels(renderImage->GetImageWidth(), renderImage->GetImageHeight(), GL_RGBA, GL_UNSIGNED_BYTE, (void *)(buffer));
@@ -153,25 +167,7 @@ void renderWinCB(void)
 		}
 		glRasterPos2i(x1, y1);
 		glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, (void *)(selectionBuffer));
-		delete[] selectionBuffer;
-
-		// I was told that I might lose marks if I used the code below to draw a rubber-band, so
-		// I quickly implemented the drawing of a rectangle myself above, however, I did end up
-		// using GL functionality for drawing the circle further below
-		/*
-		glEnable(GL_COLOR_LOGIC_OP);
-		glLogicOp(GL_XOR);
-
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glRecti(selectionRect.GetX1(), selectionRect.GetY1(), selectionRect.GetX2(), selectionRect.GetY2());
-
-		glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glRecti(selectionRect.GetX1(), selectionRect.GetY1(), selectionRect.GetX2(), selectionRect.GetY2());
-		
-		glDisable(GL_COLOR_LOGIC_OP);
-		*/
+		MyDeleteArray(selectionBuffer);
 	}
 
 	if (!distortionCircle.IsZeroDimensional())
@@ -207,7 +203,8 @@ void renderWinCB(void)
 		glDisable(GL_COLOR_LOGIC_OP);
 	}
 
-	delete[] buffer;
+	MyDeleteArray(buffer);
+	//*/
 
 	glFlush();
 
@@ -564,6 +561,15 @@ int main(int argc, char *argv[])
 	glutMotionFunc(mouseMoveCB);
 	glutPassiveMotionFunc(mouseMovePassiveCB);
 
+	//* initialize glew
+	int rc = glewInit();
+	if (rc != GLEW_OK)
+	{
+		printf("%s\n", glewGetErrorString(rc));
+	}
+
+	initGeom();
+
 	/* start the main loop *///*
 	glutMainLoop();
 	//*/
@@ -574,25 +580,9 @@ int main(int argc, char *argv[])
 void quit()
 {
 	glutDestroyWindow(wid1);
-	if (image != 0)
-	{
-		delete image;
-		image = 0;
-	}
-	if (renderImage != 0)
-	{
-		delete renderImage;
-		renderImage = 0;
-	}
-	if (imageClipboard != 0)
-	{
-		delete imageClipboard;
-		imageClipboard = 0;
-	}
-	if (renderClipboard != 0)
-	{
-		delete renderClipboard;
-		renderClipboard = 0;
-	}
+	MyDelete(image);
+	MyDelete(renderImage);
+	MyDelete(imageClipboard);
+	MyDelete(renderClipboard);
 	_CrtDumpMemoryLeaks();
 }

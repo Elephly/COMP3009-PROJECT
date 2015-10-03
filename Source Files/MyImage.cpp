@@ -1,5 +1,5 @@
 #include "MyImage.h"
-#include "MyDefines.h"
+#include "MyIncludes.h"
 
 MyImage::MyImage() : width(0), height(0), channels(0), image(nullptr) { }
 
@@ -31,11 +31,7 @@ MyImage::MyImage(MyImage & other)
 
 MyImage::~MyImage()
 {
-	if (image != 0)
-	{
-		delete[] image;
-		image = 0;
-	}
+	MyDeleteArray(image);
 }
 
 GLint MyImage::GetImageWidth()
@@ -83,10 +79,7 @@ void MyImage::SetImage(GLubyte * buffer, GLint w, GLint h, GLint ch)
 	width = w;
 	height = h;
 	channels = ch;
-	if (image != nullptr)
-	{
-		delete[] image;
-	}
+	MyDeleteArray(image);
 
 	image = new GLubyte[w * h * ch]();
 	for (int i = 0; i < w * h * ch; i++)
@@ -104,15 +97,12 @@ void MyImage::SetImage(MyImage *image)
 
 	SetImage(buffer, width, height, channels);
 
-	delete[] buffer;
+	MyDeleteArray(buffer);
 }
 
 void MyImage::SetImageFile(GLchar * src)
 {
-	if (image != nullptr)
-	{
-		delete[] image;
-	}
+	MyDeleteArray(image);
 	image = SOIL_load_image(src, &width, &height, &channels, SOIL_LOAD_RGBA);
 }
 
