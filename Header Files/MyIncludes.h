@@ -10,6 +10,9 @@
 #include <crtdbg.h>
 #endif
 
+#include <cassert>
+#include <cstring>
+
 #include "MyMath.h"
 
 #endif // MYINCLUDES_H

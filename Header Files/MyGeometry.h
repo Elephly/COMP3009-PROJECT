@@ -5,27 +5,40 @@
 
 typedef struct
 {
+	int x;
+	int y;
+} MyPoint2D;
+
+typedef struct
+{
+	int x;
+	int y;
+	int z;
+} MyPoint3D;
+
+typedef struct
+{
 	float x;
 	float y;
-} MyPoint2D;
+} MyVector2D;
 
 typedef struct
 {
 	float x;
 	float y;
 	float z;
-} MyPoint3D;
+} MyVector3D;
 
 typedef struct
 {
-	MyPoint2D v;
+	MyVector2D v;
 	MyColorRGBA c;
 
 } MyVertex2D;
 
 typedef struct
 {
-	MyPoint3D v;
+	MyVector3D v;
 	MyColorRGBA c;
 } MyVertex3D;
 

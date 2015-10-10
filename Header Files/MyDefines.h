@@ -25,4 +25,12 @@
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif
 
+#ifndef ASPECT_RATIO_X
+#define ASPECT_RATIO_X 16
+#endif
+
+#ifndef ASPECT_RATIO_Y
+#define ASPECT_RATIO_Y 9
+#endif
+
 #endif // MYDEFINES_H
