@@ -1,6 +1,10 @@
 #ifndef MYDEFINES_H
 #define MYDEFINES_H
 
+#ifndef PROJECT_NAME
+#define PROJECT_NAME "COMP3009-PROJECT"
+#endif
+
 #ifndef _CRTDBG_MAP_ALLOC
 #define _CRTDBG_MAP_ALLOC
 #endif // _CRTDBG_MAP_ALLOC

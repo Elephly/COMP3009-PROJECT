@@ -7,12 +7,6 @@ void MainKeyboardUpFunc(unsigned char key, int x, int y);
 void MainMouseFunc(int button, int state, int x, int y);
 void MainMouseMoveFunc(int x, int y);
 void MainMouseMovePassiveFunc(int x, int y);
-void test()
-{
-	char t[32];
-	sprintf_s(t, "uh oh");
-	throw t;
-}
 
 MyApplication *myApplication;
 
@@ -20,7 +14,7 @@ int main(int argc, char *argv[])
 {
 	try
 	{
-		myApplication = new MyApplication("COMP3009-PROJECT");
+		myApplication = new MyApplication(PROJECT_NAME);
 		myApplication->Initialize(&argc, argv);
 		myApplication->RegisterReshapeFunc(MainReshapeFunc);
 		myApplication->RegisterDisplayFunc(MainDisplayFunc);

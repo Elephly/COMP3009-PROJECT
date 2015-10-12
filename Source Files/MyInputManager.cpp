@@ -16,8 +16,7 @@ MyInputManager::MyInputManager()
 	{
 		Mouse[i] = GLUT_UP;
 	}
-	MouseLocation.x = 0;
-	MouseLocation.y = 0;
+	MouseLocation = MyPoint2D();
 }
 
 MyInputManager::~MyInputManager()

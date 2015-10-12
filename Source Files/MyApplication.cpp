@@ -233,8 +233,8 @@ void MyApplication::MouseFunc(int button, int state, int x, int y)
 	}
 
 	inputManager->Mouse[button] = state;
-	inputManager->MouseLocation.x = glX;
-	inputManager->MouseLocation.y = glY;
+	inputManager->MouseLocation.SetX((float)glX);
+	inputManager->MouseLocation.SetY((float)glY);
 }
 
 void MyApplication::MouseMoveFunc(int x, int y)
@@ -256,8 +256,8 @@ void MyApplication::MouseMoveFunc(int x, int y)
 	{
 
 	}
-	inputManager->MouseLocation.x = glX;
-	inputManager->MouseLocation.y = glY;
+	inputManager->MouseLocation.SetX((float)glX);
+	inputManager->MouseLocation.SetY((float)glY);
 }
 
 void MyApplication::MouseMovePassiveFunc(int x, int y)
@@ -266,6 +266,6 @@ void MyApplication::MouseMovePassiveFunc(int x, int y)
 	int winHeight = glutGet(GLUT_WINDOW_HEIGHT);
 	int glX = x;
 	int glY = winHeight - y;
-	inputManager->MouseLocation.x = glX;
-	inputManager->MouseLocation.y = glY;
+	inputManager->MouseLocation.SetX((float)glX);
+	inputManager->MouseLocation.SetY((float)glY);
 }

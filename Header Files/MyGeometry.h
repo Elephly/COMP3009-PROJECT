@@ -3,44 +3,83 @@
 
 #include "MyGraphics.h"
 
-typedef struct
+class MyPoint2D
 {
-	int x;
-	int y;
-} MyPoint2D;
+public:
+	MyPoint2D(float x = 0.0f, float y = 0.0f);
+	~MyPoint2D();
 
-typedef struct
-{
-	int x;
-	int y;
-	int z;
-} MyPoint3D;
+	// Getters
+	float GetX();
+	float GetY();
 
-typedef struct
-{
-	float x;
-	float y;
-} MyVector2D;
+	// Setters
+	void SetX(float x);
+	void SetY(float y);
 
-typedef struct
-{
-	float x;
-	float y;
-	float z;
-} MyVector3D;
+private:
+	float x_;
+	float y_;
+};
 
-typedef struct
+class MyPoint3D
 {
+public:
+	MyPoint3D(float x = 0.0f, float y = 0.0f, float z  = 0.0f);
+	~MyPoint3D();
+
+	// Getters
+	float GetX();
+	float GetY();
+	float GetZ();
+
+	// Setters
+	void SetX(float x);
+	void SetY(float y);
+	void SetZ(float z);
+
+private:
+	float x_;
+	float y_;
+	float z_;
+};
+
+class MyVector2D : MyPoint2D
+{
+public:
+	MyVector2D(float x = 0.0f, float y = 0.0f);
+	~MyVector2D();
+};
+
+class MyVector3D : MyPoint3D
+{
+public:
+	MyVector3D(float x = 0.0f, float y = 0.0f, float z = 0.0f);
+	~MyVector3D();
+};
+
+class MyVertex2D
+{
+public:
+	MyVertex2D(MyVector2D &vector = MyVector2D(0.0f, 0.0f), MyColorRGBA &color = MyColorRGBA(0.0f, 0.0f, 0.0f, 1.0f));
+	~MyVertex2D();
+
+private:
 	MyVector2D v;
 	MyColorRGBA c;
 
-} MyVertex2D;
+};
 
-typedef struct
+class MyVertex3D
 {
+public:
+	MyVertex3D(MyVector3D &vector = MyVector3D(0.0f, 0.0f, 0.0f), MyColorRGBA &color = MyColorRGBA(0.0f, 0.0f, 0.0f, 1.0f));
+	~MyVertex3D();
+
+private:
 	MyVector3D v;
 	MyColorRGBA c;
-} MyVertex3D;
+};
 
 class MyRectangle
 {
