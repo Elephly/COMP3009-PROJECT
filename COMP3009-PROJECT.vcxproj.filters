@@ -48,6 +48,12 @@
     <ClInclude Include="Header Files\MyInputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\MyFileIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png">
@@ -82,9 +88,15 @@
     <ClCompile Include="Source Files\MyInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\MyFileIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyShaderProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader Files\tri.frag" />
-    <None Include="Shader Files\tri.vert" />
+    <None Include="Shader Files\Color.vert" />
+    <None Include="Shader Files\Color.frag" />
   </ItemGroup>
 </Project>

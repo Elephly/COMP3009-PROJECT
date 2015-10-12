@@ -7,6 +7,12 @@ void MainKeyboardUpFunc(unsigned char key, int x, int y);
 void MainMouseFunc(int button, int state, int x, int y);
 void MainMouseMoveFunc(int x, int y);
 void MainMouseMovePassiveFunc(int x, int y);
+void test()
+{
+	char t[32];
+	sprintf_s(t, "uh oh");
+	throw t;
+}
 
 MyApplication *myApplication;
 
@@ -28,13 +34,11 @@ int main(int argc, char *argv[])
 	}
 	catch (char *err)
 	{
-		printf("%s\n\nPress enter to exit.", err);
+		fprintf(stderr, "Exception: %s\n\nPress enter to exit.", err);
 		getchar();
 	}
 
 	MyDelete(myApplication);
-
-	//initMaterials();
 
 	//initGeom();
 
@@ -53,7 +57,17 @@ void MainDisplayFunc()
 
 void MainKeyboardFunc(unsigned char key, int x, int y)
 {
-	myApplication->KeyboardFunc(key, x, y);
+	if (key == 27)
+	{
+		MyDelete(myApplication);
+#ifdef _CRTDBG_MAP_ALLOC
+		_CrtDumpMemoryLeaks();
+#endif
+	}
+	else
+	{
+		myApplication->KeyboardFunc(key, x, y);
+	}
 }
 
 void MainKeyboardUpFunc(unsigned char key, int x, int y)
@@ -74,9 +88,6 @@ void MainMouseMovePassiveFunc(int x, int y)
 	myApplication->MouseMovePassiveFunc(x, y);
 }
 
-//GLuint vbo; // vertex buffer object
-//GLuint shaderProgram;
-
 /*
 void initGeom()
 {
@@ -92,83 +103,5 @@ void initGeom()
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tri), tri, GL_STATIC_DRAW);
-}
-
-int readCode(char * fileName, char **shaderCode, int *codeLength)
-{
-	int length = 0;
-	FILE *fp = NULL;
-	// check for error in file name
-	fopen_s(&fp, fileName, "r"); // open file and check for errors
-	if (fp == NULL) { return -1; }
-	// find the length of code
-	fseek(fp, 0L, SEEK_END);
-	length = ftell(fp);
-	rewind(fp); // could use fseek(fp, 0L, SEEK_SET)
-	if (length > 0) {
-		// allocated space for code and check for errors
-		*shaderCode = (char *)malloc(length + 1); // add a space for the '\0'
-		if (*shaderCode == NULL) return(-2);
-		memset((void *)*shaderCode, 0, length + 1);
-		fread((void *)*shaderCode, sizeof(char), length, fp);
-		(*shaderCode)[length] = 0;
-	}
-	if (fp != NULL) fclose(fp);
-	if (codeLength != NULL) *codeLength = length;
-
-	return 0;
-}
-
-void initMaterials()
-{
-	int rc;
-	int codeLength;
-	char *shaderSrc[1];
-	
-	rc = readCode("Material Files\\tri.vert", shaderSrc, &codeLength);
-	GLuint vtxShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vtxShader, 1, shaderSrc, 0);
-	glCompileShader(vtxShader);
-	glGetShaderiv(vtxShader, GL_COMPILE_STATUS, &rc);
-	if (rc != GL_TRUE)
-	{
-		char log[2048];
-		glGetShaderInfoLog(vtxShader, sizeof(log), NULL, log);
-		fprintf(stderr, "Error creating vertex shader - %s\n", log);
-	}
-	MyDeleteArray(shaderSrc[0]);
-
-	rc = readCode("Material Files\\tri.frag", shaderSrc, &codeLength);
-	GLuint frgShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(frgShader, 1, shaderSrc, 0);
-	glCompileShader(frgShader);
-	glGetShaderiv(frgShader, GL_COMPILE_STATUS, &rc);
-	if (rc != GL_TRUE)
-	{
-		char log[2048];
-		glGetShaderInfoLog(frgShader, sizeof(log), NULL, log);
-		fprintf(stderr, "Error creating fragment shader - %s\n", log);
-	}
-	MyDeleteArray(shaderSrc[0]);
-
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vtxShader);
-	glAttachShader(shaderProgram, frgShader);
-	glLinkProgram(shaderProgram);
-
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &rc);
-	if (rc != GL_TRUE)
-	{
-		char log[2048];
-		glGetProgramInfoLog(shaderProgram, sizeof(log), NULL, log);
-		fprintf(stderr, "Error linking shader program (id=%d) - %s\n", shaderProgram, log);
-	}
-
-	glDetachShader(shaderProgram, vtxShader);
-	glDeleteShader(vtxShader);
-	glDetachShader(shaderProgram, frgShader);
-	glDeleteShader(frgShader);
-
-	glUseProgram(shaderProgram);
 }
 */

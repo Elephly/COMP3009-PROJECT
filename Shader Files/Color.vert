@@ -1,9 +1,5 @@
 #version 150
 
-
-// Doron Nussbaum
-// Vertex Shader example
-
 attribute vec3 vtxPos;
 attribute vec4 vtxColor;
 

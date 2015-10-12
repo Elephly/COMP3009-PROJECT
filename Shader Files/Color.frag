@@ -2,7 +2,7 @@
 
 uniform int useColourAtt;
 
-varying vec4 vColor; // the vertex colour
+varying vec4 vColor;
 
 void main(void)
 {

@@ -3,6 +3,7 @@
 
 #include "MyIncludes.h"
 #include "MyInputManager.h"
+#include "MyShaderProgram.h"
 
 class MyApplication
 {
@@ -16,7 +17,6 @@ public:
 	void Draw();
 
 	void Run();
-	void Exit();
 
 	// Getters
 	char *GetName();
@@ -48,7 +48,8 @@ private:
 	int windowID;
 	MyInputManager *inputManager;
 
-	void destroyObjects();
+	// Shaders
+	MyShaderProgram *colorShader;
 };
 
 #endif // MYAPPLICATION_H

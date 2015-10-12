@@ -20,11 +20,19 @@ MyApplication::MyApplication(char * name)
 	windowHeight = 0;
 	windowID = 0;
 	inputManager = new MyInputManager();
+
+	colorShader = new MyShaderProgram();
 }
 
 MyApplication::~MyApplication()
 {
-	destroyObjects();
+	if (windowID != 0)
+	{
+		glutDestroyWindow(windowID);
+	}
+	MyDeleteArray(applicationName);
+	MyDelete(inputManager);
+	MyDelete(colorShader);
 }
 
 void MyApplication::Initialize(int *argc, char **argv)
@@ -32,15 +40,17 @@ void MyApplication::Initialize(int *argc, char **argv)
 	glutInit(argc, argv);
 	windowWidth = (int)(0.75f * (float)glutGet(GLUT_SCREEN_WIDTH));
 	windowHeight = (int)((float)windowWidth / ((float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y));
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowSize(windowWidth, windowHeight);
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),
 		(int)((float)(glutGet(GLUT_SCREEN_HEIGHT) - windowHeight) / 4.0f));
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
-	glutInitWindowSize(windowWidth, windowHeight);
 	windowID = glutCreateWindow(applicationName);
 	if (GLenum err = glewInit() != GLEW_OK)
 	{
 		throw glewGetErrorString(err);
 	}
+	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
+	glUseProgram(colorShader->GetShaderProgram());
 }
 
 void MyApplication::LoadContent()
@@ -58,14 +68,6 @@ void MyApplication::Draw()
 void MyApplication::Run()
 {
 	glutMainLoop();
-}
-
-void MyApplication::Exit()
-{
-	destroyObjects();
-#ifdef _CRTDBG_MAP_ALLOC
-	_CrtDumpMemoryLeaks();
-#endif
 }
 
 char * MyApplication::GetName()
@@ -163,7 +165,7 @@ void MyApplication::DisplayFunc()
 	glDisableVertexAttribArray(colorLoc);
 	*/
 
-	glFlush();
+	glutSwapBuffers();
 
 	glutPostRedisplay();
 }
@@ -172,9 +174,10 @@ void MyApplication::KeyboardFunc(unsigned char key, int x, int y)
 {
 	if (inputManager->Keys[key] == GLUT_UP)
 	{
+		// UNREACHABLE
 		if (key == 27)
 		{
-			Exit();
+			// exit
 		}
 	}
 	if (inputManager != 0)
@@ -265,14 +268,4 @@ void MyApplication::MouseMovePassiveFunc(int x, int y)
 	int glY = winHeight - y;
 	inputManager->MouseLocation.x = glX;
 	inputManager->MouseLocation.y = glY;
-}
-
-void MyApplication::destroyObjects()
-{
-	if (windowID != 0)
-	{
-		glutDestroyWindow(windowID);
-	}
-	MyDeleteArray(applicationName);
-	MyDelete(inputManager);
 }
