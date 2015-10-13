@@ -18,8 +18,8 @@ public:
 
 	// Setters
 	void SetShader(MyShaderProgram *shader);
-	void SetVertex(MyVertex3D &vertex);
-	void SetVertex(float x, float y, float z, MyColorRGBA &color = MyColorRGBA());
+	void SetNextVertex(MyVertex3D &vertex);
+	void SetNextVertex(float x, float y, float z, MyColorRGBA &color = MyColorRGBA());
 
 private:
 	int currentVertex;

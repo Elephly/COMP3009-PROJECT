@@ -23,15 +23,22 @@ MyApplication::MyApplication(char * name)
 
 	colorShader = new MyShaderProgram();
 
+	/*
 	testTriangle = new MyTriangle();
-	testTriangle->SetVertex(MyVertex3D(-1.0f, -1.0f, 0.0f, MyColorRGBA(1.0f)));
-	testTriangle->SetVertex(MyVertex3D(0.0f, 1.0f, 0.0f, MyColorRGBA(0.0f, 1.0f)));
-	testTriangle->SetVertex(MyVertex3D(1.0f, -1.0f, 0.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
+	testTriangle->SetNextVertex(MyVertex3D(-1.0f, -1.0f, 0.0f, MyColorRGBA(1.0f)));
+	testTriangle->SetNextVertex(MyVertex3D(0.0f, 1.0f, 0.0f, MyColorRGBA(0.0f, 1.0f)));
+	testTriangle->SetNextVertex(MyVertex3D(1.0f, -1.0f, 0.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
+	*/
+	testQuad = new MyQuad(MyVertex3D(-0.5f, -0.5f, 0.0f, MyColorRGBA(1.0f)),
+		MyVertex3D(0.0f, 1.0f, 0.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex3D(0.25f, -0.5f, 0.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)),
+		MyVertex3D(0.0f, -0.75f, 0.0f, MyColorRGBA(1.0f, 0.0f, 1.0f)));
 }
 
 MyApplication::~MyApplication()
 {
-	MyDelete(testTriangle);
+	//MyDelete(testTriangle);
+	MyDelete(testQuad);
 	MyDelete(colorShader);
 	if (windowID != 0)
 	{
@@ -58,7 +65,8 @@ void MyApplication::Initialize(int *argc, char **argv)
 	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
 	glUseProgram(colorShader->GetShaderProgram());
 
-	testTriangle->Initialize(colorShader);
+	//testTriangle->Initialize(colorShader);
+	testQuad->Initialize(colorShader);
 }
 
 void MyApplication::LoadContent()
@@ -77,7 +85,8 @@ void MyApplication::Draw()
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	testTriangle->Draw();
+	//testTriangle->Draw();
+	testQuad->Draw();
 
 	glutSwapBuffers();
 

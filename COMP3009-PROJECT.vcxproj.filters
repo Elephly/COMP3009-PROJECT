@@ -57,6 +57,9 @@
     <ClInclude Include="Header Files\MyTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\MyQuad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png">
@@ -98,6 +101,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MyTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyQuad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

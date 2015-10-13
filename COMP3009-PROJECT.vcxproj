@@ -131,6 +131,7 @@
     <ClInclude Include="Header Files\MyIncludes.h" />
     <ClInclude Include="Header Files\MyInputManager.h" />
     <ClInclude Include="Header Files\MyMath.h" />
+    <ClInclude Include="Header Files\MyQuad.h" />
     <ClInclude Include="Header Files\MyShaderProgram.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
     <ClInclude Include="Header Files\MyTriangle.h" />
@@ -140,6 +141,7 @@
     <Image Include="Resource Files\sample.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\MyQuad.cpp" />
     <ClCompile Include="Source Files\MyTriangle.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\MyApplication.cpp" />

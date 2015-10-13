@@ -66,13 +66,13 @@ void MyTriangle::SetShader(MyShaderProgram *shader)
 	shaderProgram = shader;
 }
 
-void MyTriangle::SetVertex(MyVertex3D & vertex)
+void MyTriangle::SetNextVertex(MyVertex3D & vertex)
 {
 	vertices[currentVertex] = vertex;
 	currentVertex = (currentVertex + 1) % 3;
 }
 
-void MyTriangle::SetVertex(float x, float y, float z, MyColorRGBA & color)
+void MyTriangle::SetNextVertex(float x, float y, float z, MyColorRGBA & color)
 {
 	vertices[currentVertex] = MyVertex3D(x, y, z, color);
 	currentVertex = (currentVertex + 1) % 3;
