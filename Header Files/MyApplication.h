@@ -4,6 +4,7 @@
 #include "MyIncludes.h"
 #include "MyInputManager.h"
 #include "MyShaderProgram.h"
+#include "MyTriangle.h"
 
 class MyApplication
 {
@@ -50,6 +51,8 @@ private:
 
 	// Shaders
 	MyShaderProgram *colorShader;
+
+	MyTriangle *testTriangle;
 };
 
 #endif // MYAPPLICATION_H

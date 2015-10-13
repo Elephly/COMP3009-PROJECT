@@ -22,6 +22,11 @@ MyApplication::MyApplication(char * name)
 	inputManager = new MyInputManager();
 
 	colorShader = new MyShaderProgram();
+
+	testTriangle = new MyTriangle();
+	testTriangle->SetVertex(MyVertex3D(-1.0f, -1.0f, 0.0f, MyColorRGBA(1.0f)));
+	testTriangle->SetVertex(MyVertex3D(0.0f, 1.0f, 0.0f, MyColorRGBA(0.0f, 1.0f)));
+	testTriangle->SetVertex(MyVertex3D(1.0f, -1.0f, 0.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
 }
 
 MyApplication::~MyApplication()
@@ -51,6 +56,8 @@ void MyApplication::Initialize(int *argc, char **argv)
 	}
 	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
 	glUseProgram(colorShader->GetShaderProgram());
+
+	testTriangle->Initialize(colorShader);
 }
 
 void MyApplication::LoadContent()
@@ -63,6 +70,20 @@ void MyApplication::Update()
 
 void MyApplication::Draw()
 {
+	int x = 0, y = 0;
+	float r = 100.0f / 255.0f;
+	float g = 149.0f / 255.0f;
+	float b = 237.0f / 255.0f;
+	float a = 1.0f;
+
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	testTriangle->Draw();
+
+	glutSwapBuffers();
+
+	glutPostRedisplay();
 }
 
 void MyApplication::Run()
@@ -136,38 +157,7 @@ void MyApplication::ReshapeFunc(int width, int height)
 
 void MyApplication::DisplayFunc()
 {
-	int x = 0, y = 0;
-	float r = 100.0f / 255.0f;
-	float g = 149.0f / 255.0f;
-	float b = 237.0f / 255.0f;
-	float a = 1.0f;
-
-	// clear the window
-	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	/*
-	MyVertex3D v;
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	GLuint positionLoc = glGetAttribLocation(shaderProgram, "vtxPos");
-	glEnableVertexAttribArray(positionLoc);
-	int attAddress = (char *)&v.v - (char *)&v;
-	glVertexAttribPointer(positionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(MyVertex3D), (void *)attAddress);
-	GLuint colorLoc = glGetAttribLocation(shaderProgram, "vtxColor");
-	glEnableVertexAttribArray(colorLoc);
-	attAddress = (char *)&v.c - (char *)&v;
-	glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex3D), (void *)attAddress);
-	GLuint loc = glGetUniformLocation(shaderProgram, "useColourAtt");
-	glUniform1i(loc, 1);
-
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(positionLoc);
-	glDisableVertexAttribArray(colorLoc);
-	*/
-
-	glutSwapBuffers();
-
-	glutPostRedisplay();
+	Draw();
 }
 
 void MyApplication::KeyboardFunc(unsigned char key, int x, int y)

@@ -61,8 +61,19 @@ public:
 class MyVertex2D
 {
 public:
-	MyVertex2D(MyVector2D &vector = MyVector2D(0.0f, 0.0f), MyColorRGBA &color = MyColorRGBA(0.0f, 0.0f, 0.0f, 1.0f));
+	MyVertex2D(float x = 0.0f, float y = 0.0f, MyColorRGBA &color = MyColorRGBA());
+	MyVertex2D(MyVector2D &vector, MyColorRGBA &color = MyColorRGBA());
 	~MyVertex2D();
+
+	// Getters
+	MyVector2D &GetVector();
+	MyColorRGBA &GetColor();
+
+	// Setters
+	void SetVector(float x, float y);
+	void SetVector(MyVector2D &vector);
+	void SetColor(float red, float green, float blue, float alpha);
+	void SetColor(MyColorRGBA &color);
 
 private:
 	MyVector2D v;
@@ -73,8 +84,19 @@ private:
 class MyVertex3D
 {
 public:
-	MyVertex3D(MyVector3D &vector = MyVector3D(0.0f, 0.0f, 0.0f), MyColorRGBA &color = MyColorRGBA(0.0f, 0.0f, 0.0f, 1.0f));
+	MyVertex3D(float x = 0.0f, float y = 0.0f, float z = 0.0f, MyColorRGBA &color = MyColorRGBA());
+	MyVertex3D(MyVector3D &vector, MyColorRGBA &color = MyColorRGBA());
 	~MyVertex3D();
+
+	// Getters
+	MyVector3D &GetVector();
+	MyColorRGBA &GetColor();
+
+	// Setters
+	void SetVector(float x, float y, float z);
+	void SetVector(MyVector3D &vector);
+	void SetColor(float red, float green, float blue, float alpha);
+	void SetColor(MyColorRGBA &color);
 
 private:
 	MyVector3D v;
