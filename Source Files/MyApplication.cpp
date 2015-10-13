@@ -72,12 +72,9 @@ void MyApplication::Update()
 void MyApplication::Draw()
 {
 	int x = 0, y = 0;
-	float r = 100.0f / 255.0f;
-	float g = 149.0f / 255.0f;
-	float b = 237.0f / 255.0f;
-	float a = 1.0f;
 
-	glClearColor(r, g, b, a);
+	MyColorRGBA c = MyColors::CornflowerBlue;
+	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	testTriangle->Draw();

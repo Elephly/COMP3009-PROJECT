@@ -1,6 +1,6 @@
 #include "MyGraphics.h"
 
-//MyColors::CornflowerBlue = MyColorRGBA(100.0f / 255.0f, 149.0f / 255.0f, 237.0f / 255.0f, 1.0f);
+const MyColorRGBA MyColors::CornflowerBlue = MyColorRGBA(100.0f / 255.0f, 149.0f / 255.0f, 237.0f / 255.0f, 1.0f);
 
 MyColorRGBA::MyColorRGBA(float red, float green, float blue, float alpha)
 {

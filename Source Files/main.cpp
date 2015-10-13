@@ -34,8 +34,6 @@ int main(int argc, char *argv[])
 
 	MyDelete(myApplication);
 
-	//initGeom();
-
 	return 0;
 }
 
@@ -81,21 +79,3 @@ void MainMouseMovePassiveFunc(int x, int y)
 {
 	myApplication->MouseMovePassiveFunc(x, y);
 }
-
-/*
-void initGeom()
-{
-	MyVertex3D tri[3];
-	tri[0].v.x = -1.0; tri[0].v.y = -1.0; tri[0].v.z = 0.0;
-	tri[1].v.x = 0.0; tri[1].v.y = 1.0; tri[1].v.z = 0.0;
-	tri[2].v.x = 1.0; tri[2].v.y = -1.0; tri[2].v.z = 0.0;
-
-	tri[0].c.r = 1.0; tri[0].c.g = 0.0; tri[0].c.b = 0.0; tri[0].c.a = 1.0;
-	tri[1].c.r = 0.0; tri[1].c.g = 1.0; tri[1].c.b = 0.0; tri[1].c.a = 1.0;
-	tri[2].c.r = 0.0; tri[2].c.g = 0.0; tri[2].c.b = 1.0; tri[2].c.a = 1.0;
-
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tri), tri, GL_STATIC_DRAW);
-}
-*/

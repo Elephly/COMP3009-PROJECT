@@ -1,12 +1,6 @@
 #ifndef MYGRAPHICS_H
 #define MYGRAPHICS_H
 
-class MyColors
-{
-public:
-	//static const MyColorRGBA CornflowerBlue;
-};
-
 class MyColorRGBA
 {
 public:
@@ -30,6 +24,12 @@ private:
 	float g;
 	float b;
 	float a;
+};
+
+class MyColors
+{
+public:
+	static const MyColorRGBA CornflowerBlue;
 };
 
 #endif // MYGRAPHICS_H
