@@ -1,7 +1,5 @@
 #include "MyTriangle.h"
 
-#include <cstdio> // temp
-
 #include <glew.h>
 
 MyTriangle::MyTriangle(MyVertex3D &vertex1, MyVertex3D &vertex2, MyVertex3D &vertex3)

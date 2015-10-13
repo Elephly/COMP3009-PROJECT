@@ -31,13 +31,14 @@ MyApplication::MyApplication(char * name)
 
 MyApplication::~MyApplication()
 {
+	MyDelete(testTriangle);
+	MyDelete(colorShader);
 	if (windowID != 0)
 	{
 		glutDestroyWindow(windowID);
 	}
-	MyDeleteArray(applicationName);
 	MyDelete(inputManager);
-	MyDelete(colorShader);
+	MyDeleteArray(applicationName);
 }
 
 void MyApplication::Initialize(int *argc, char **argv)
