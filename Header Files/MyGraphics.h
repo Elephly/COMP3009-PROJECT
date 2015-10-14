@@ -14,10 +14,10 @@ public:
 	float &GetAlpha();
 
 	// Setters
-	void SetRed(float red);
-	void SetGreen(float green);
-	void SetBlue(float blue);
-	void SetAlpha(float alpha);
+	void SetRed(float &red);
+	void SetGreen(float &green);
+	void SetBlue(float &blue);
+	void SetAlpha(float &alpha);
 
 private:
 	float r;

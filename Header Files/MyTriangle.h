@@ -1,7 +1,7 @@
 #ifndef MYTRIANGLE_H
 #define MYTRIANGLE_H
 
-#include "MyGeometry.h"
+#include "MyVertex.h"
 #include "MyShaderProgram.h"
 
 class MyTriangle
@@ -14,11 +14,14 @@ public:
 	void Draw();
 
 	// Getters
+	MyVertex3D &GetCurrentVertex();
 	MyVertex3D &GetNextVertex();
 
 	// Setters
 	void SetShader(MyShaderProgram *shader);
+	void SetCurrentVertex(MyVertex3D &vertex);
 	void SetNextVertex(MyVertex3D &vertex);
+	void SetCurrentVertex(float x, float y, float z, MyColorRGBA &color = MyColorRGBA());
 	void SetNextVertex(float x, float y, float z, MyColorRGBA &color = MyColorRGBA());
 
 private:

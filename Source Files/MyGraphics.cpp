@@ -34,22 +34,22 @@ float &MyColorRGBA::GetAlpha()
 	return a;
 }
 
-void MyColorRGBA::SetRed(float red)
+void MyColorRGBA::SetRed(float &red)
 {
 	r = red;
 }
 
-void MyColorRGBA::SetGreen(float green)
+void MyColorRGBA::SetGreen(float &green)
 {
 	g = green;
 }
 
-void MyColorRGBA::SetBlue(float blue)
+void MyColorRGBA::SetBlue(float &blue)
 {
 	b = blue;
 }
 
-void MyColorRGBA::SetAlpha(float alpha)
+void MyColorRGBA::SetAlpha(float &alpha)
 {
 	a = alpha;
 }

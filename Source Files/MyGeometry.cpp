@@ -136,22 +136,22 @@ MyPoint2D::~MyPoint2D()
 {
 }
 
-float MyPoint2D::GetX()
+float &MyPoint2D::GetX()
 {
 	return x_;
 }
 
-float MyPoint2D::GetY()
+float &MyPoint2D::GetY()
 {
 	return y_;
 }
 
-void MyPoint2D::SetX(float x)
+void MyPoint2D::SetX(float &x)
 {
 	x_ = x;
 }
 
-void MyPoint2D::SetY(float y)
+void MyPoint2D::SetY(float &y)
 {
 	y_ = y;
 }
@@ -167,143 +167,32 @@ MyPoint3D::~MyPoint3D()
 {
 }
 
-float MyPoint3D::GetX()
+float &MyPoint3D::GetX()
 {
 	return x_;
 }
 
-float MyPoint3D::GetY()
+float &MyPoint3D::GetY()
 {
 	return y_;
 }
 
-float MyPoint3D::GetZ()
+float &MyPoint3D::GetZ()
 {
 	return z_;
 }
 
-void MyPoint3D::SetX(float x)
+void MyPoint3D::SetX(float &x)
 {
 	x_ = x;
 }
 
-void MyPoint3D::SetY(float y)
+void MyPoint3D::SetY(float &y)
 {
 	y_ = y;
 }
 
-void MyPoint3D::SetZ(float z)
+void MyPoint3D::SetZ(float &z)
 {
 	z_ = z;
-}
-
-MyVector2D::MyVector2D(float x, float y) :
-	MyPoint2D(x, y)
-{
-	
-}
-
-MyVector2D::~MyVector2D()
-{
-}
-
-MyVector3D::MyVector3D(float x, float y, float z) :
-	MyPoint3D(x, y, z)
-{
-}
-
-MyVector3D::~MyVector3D()
-{
-}
-
-MyVertex2D::MyVertex2D(float x, float y, MyColorRGBA & color)
-{
-	v = MyVector2D(x, y);
-	c = color;
-}
-
-MyVertex2D::MyVertex2D(MyVector2D &vector, MyColorRGBA &color)
-{
-	v = vector;
-	c = color;
-}
-
-MyVertex2D::~MyVertex2D()
-{
-}
-
-MyVector2D & MyVertex2D::GetVector()
-{
-	return v;
-}
-
-MyColorRGBA & MyVertex2D::GetColor()
-{
-	return c;
-}
-
-void MyVertex2D::SetVector(float x, float y)
-{
-	v = MyVector2D(x, y);
-}
-
-void MyVertex2D::SetVector(MyVector2D & vector)
-{
-	v = vector;
-}
-
-void MyVertex2D::SetColor(float red, float green, float blue, float alpha)
-{
-	c = MyColorRGBA(red, green, blue, alpha);
-}
-
-void MyVertex2D::SetColor(MyColorRGBA & color)
-{
-	c = color;
-}
-
-MyVertex3D::MyVertex3D(float x, float y, float z, MyColorRGBA &color)
-{
-	v = MyVector3D(x, y, z);
-	c = color;
-}
-
-MyVertex3D::MyVertex3D(MyVector3D &vector, MyColorRGBA &color)
-{
-	v = vector;
-	c = color;
-}
-
-MyVertex3D::~MyVertex3D()
-{
-}
-
-MyVector3D & MyVertex3D::GetVector()
-{
-	return v;
-}
-
-MyColorRGBA & MyVertex3D::GetColor()
-{
-	return c;
-}
-
-void MyVertex3D::SetVector(float x, float y, float z)
-{
-	v = MyVector3D(x, y, z);
-}
-
-void MyVertex3D::SetVector(MyVector3D & vector)
-{
-	v = vector;
-}
-
-void MyVertex3D::SetColor(float red, float green, float blue, float alpha)
-{
-	c = MyColorRGBA(red, green, blue, alpha);
-}
-
-void MyVertex3D::SetColor(MyColorRGBA & color)
-{
-	c = color;
 }

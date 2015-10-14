@@ -23,21 +23,14 @@ MyApplication::MyApplication(char * name)
 
 	colorShader = new MyShaderProgram();
 
-	/*
-	testTriangle = new MyTriangle();
-	testTriangle->SetNextVertex(MyVertex3D(-1.0f, -1.0f, 0.0f, MyColorRGBA(1.0f)));
-	testTriangle->SetNextVertex(MyVertex3D(0.0f, 1.0f, 0.0f, MyColorRGBA(0.0f, 1.0f)));
-	testTriangle->SetNextVertex(MyVertex3D(1.0f, -1.0f, 0.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
-	*/
-	testQuad = new MyQuad(MyVertex3D(-0.5f, -0.5f, 0.0f, MyColorRGBA(1.0f)),
-		MyVertex3D(0.0f, 1.0f, 0.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex3D(0.25f, -0.5f, 0.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)),
-		MyVertex3D(0.0f, -0.75f, 0.0f, MyColorRGBA(1.0f, 0.0f, 1.0f)));
+	testQuad = new MyQuad(MyVertex3D(-0.5f, -0.5f, 0.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex3D(-0.5f, 0.5f, 0.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex3D(0.5f, 0.5f, 0.0f, MyColorRGBA(1.0f, 1.0f)),
+		MyVertex3D(0.5f, -0.5f, 0.0f, MyColorRGBA(1.0f, 1.0f)));
 }
 
 MyApplication::~MyApplication()
 {
-	//MyDelete(testTriangle);
 	MyDelete(testQuad);
 	MyDelete(colorShader);
 	if (windowID != 0)
@@ -58,6 +51,9 @@ void MyApplication::Initialize(int *argc, char **argv)
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),
 		(int)((float)(glutGet(GLUT_SCREEN_HEIGHT) - windowHeight) / 4.0f));
 	windowID = glutCreateWindow(applicationName);
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 	if (GLenum err = glewInit() != GLEW_OK)
 	{
 		throw glewGetErrorString(err);
@@ -65,7 +61,6 @@ void MyApplication::Initialize(int *argc, char **argv)
 	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
 	glUseProgram(colorShader->GetShaderProgram());
 
-	//testTriangle->Initialize(colorShader);
 	testQuad->Initialize(colorShader);
 }
 
@@ -75,17 +70,21 @@ void MyApplication::LoadContent()
 
 void MyApplication::Update()
 {
+
 }
 
 void MyApplication::Draw()
 {
-	int x = 0, y = 0;
+	MyVector3D viewerPosition(0.0f, 0.0f, 5.0f);
+	MyVector3D lookAtPoint(0.0f, 0.0f, 0.0f);
+	MyVector3D upVector(0.0f, 1.0f, 0.0f);
+	//Matrix4f viewMat, projMat;
 
 	MyColorRGBA c = MyColors::CornflowerBlue;
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//testTriangle->Draw();
 	testQuad->Draw();
 
 	glutSwapBuffers();
@@ -116,6 +115,11 @@ int MyApplication::GetWindowHeight()
 void MyApplication::RegisterReshapeFunc(void(*callback)(int width, int height))
 {
 	glutReshapeFunc(callback);
+}
+
+void MyApplication::RegisterTimerFunc(void(*callback)(int operation))
+{
+	glutTimerFunc(FRAME_TIME, callback, TIMER_UPDATE_OPERATION);
 }
 
 void MyApplication::RegisterDisplayFunc(void(*callback)())
@@ -160,6 +164,18 @@ void MyApplication::ReshapeFunc(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0.0, windowWidth, 0.0, windowHeight);
+}
+
+void MyApplication::TimerFunc(int operation)
+{
+	switch (operation)
+	{
+	case TIMER_UPDATE_OPERATION:
+		Update();
+		break;
+	default:
+		break;
+	}
 }
 
 void MyApplication::DisplayFunc()
@@ -230,8 +246,8 @@ void MyApplication::MouseFunc(int button, int state, int x, int y)
 	}
 
 	inputManager->Mouse[button] = state;
-	inputManager->MouseLocation.SetX((float)glX);
-	inputManager->MouseLocation.SetY((float)glY);
+	inputManager->MouseLocation.SetX((float &)glX);
+	inputManager->MouseLocation.SetY((float &)glY);
 }
 
 void MyApplication::MouseMoveFunc(int x, int y)
@@ -253,8 +269,8 @@ void MyApplication::MouseMoveFunc(int x, int y)
 	{
 
 	}
-	inputManager->MouseLocation.SetX((float)glX);
-	inputManager->MouseLocation.SetY((float)glY);
+	inputManager->MouseLocation.SetX((float &)glX);
+	inputManager->MouseLocation.SetY((float &)glY);
 }
 
 void MyApplication::MouseMovePassiveFunc(int x, int y)
@@ -263,6 +279,6 @@ void MyApplication::MouseMovePassiveFunc(int x, int y)
 	int winHeight = glutGet(GLUT_WINDOW_HEIGHT);
 	int glX = x;
 	int glY = winHeight - y;
-	inputManager->MouseLocation.SetX((float)glX);
-	inputManager->MouseLocation.SetY((float)glY);
+	inputManager->MouseLocation.SetX((float &)glX);
+	inputManager->MouseLocation.SetY((float &)glY);
 }

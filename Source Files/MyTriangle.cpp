@@ -24,6 +24,10 @@ void MyTriangle::Initialize(MyShaderProgram *shader)
 	GLuint vbo;
 	MyVertex3D v;
 
+	unsigned int *addr_ver = (unsigned int *)&v;
+	unsigned int *addr_vec = (unsigned int *)&v.GetVector().GetX();
+	unsigned int *addr_col = (unsigned int *)&v.GetColor().GetRed();
+
 	glGenVertexArrays(1, &vertexArrayObject);
 	glBindVertexArray(vertexArrayObject);
 
@@ -33,11 +37,11 @@ void MyTriangle::Initialize(MyShaderProgram *shader)
 
 	GLuint positionLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxPos");
 	glEnableVertexAttribArray(positionLoc);
-	unsigned int attAddress = (unsigned int *)&v.GetVector() - (unsigned int *)&v;
+	unsigned int attAddress = (unsigned int)addr_vec - (unsigned int)addr_ver;
 	glVertexAttribPointer(positionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(MyVertex3D), (void *)attAddress);
 	GLuint colorLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxColor");
 	glEnableVertexAttribArray(colorLoc);
-	attAddress += sizeof(MyVector3D);
+	attAddress = (unsigned int)addr_col - (unsigned int)addr_ver;
 	glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex3D), (void *)attAddress);
 
 	glEnableVertexAttribArray(0);
@@ -54,6 +58,11 @@ void MyTriangle::Draw()
 	glBindVertexArray(0);
 }
 
+MyVertex3D & MyTriangle::GetCurrentVertex()
+{
+	return vertices[currentVertex];
+}
+
 MyVertex3D & MyTriangle::GetNextVertex()
 {
 	int i = currentVertex;
@@ -66,14 +75,24 @@ void MyTriangle::SetShader(MyShaderProgram *shader)
 	shaderProgram = shader;
 }
 
-void MyTriangle::SetNextVertex(MyVertex3D & vertex)
+void MyTriangle::SetCurrentVertex(MyVertex3D & vertex)
 {
 	vertices[currentVertex] = vertex;
+}
+
+void MyTriangle::SetNextVertex(MyVertex3D & vertex)
+{
+	SetCurrentVertex(vertex);
 	currentVertex = (currentVertex + 1) % 3;
+}
+
+void MyTriangle::SetCurrentVertex(float x, float y, float z, MyColorRGBA & color)
+{
+	vertices[currentVertex] = MyVertex3D(x, y, z, color);
 }
 
 void MyTriangle::SetNextVertex(float x, float y, float z, MyColorRGBA & color)
 {
-	vertices[currentVertex] = MyVertex3D(x, y, z, color);
+	SetCurrentVertex(x, y, z, color);
 	currentVertex = (currentVertex + 1) % 3;
 }

@@ -60,6 +60,12 @@
     <ClInclude Include="Header Files\MyQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\MyVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyVertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png">
@@ -104,6 +110,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MyQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyVertex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

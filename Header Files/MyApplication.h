@@ -27,6 +27,7 @@ public:
 
 	// Callback Function Registers
 	void RegisterReshapeFunc(void(*callback)(int width, int height));
+	void RegisterTimerFunc(void(*callback)(int operation));
 	void RegisterDisplayFunc(void(*callback)());
 	void RegisterKeyboardFunc(void(*callback)(unsigned char key, int x, int y));
 	void RegisterKeyboardUpFunc(void(*callback)(unsigned char key, int x, int y));
@@ -36,6 +37,7 @@ public:
 
 	// Callback Functions
 	void ReshapeFunc(int width, int height);
+	void TimerFunc(int operation);
 	void DisplayFunc();
 	void KeyboardFunc(unsigned char key, int x, int y);
 	void KeyboardUpFunc(unsigned char key, int x, int y);
@@ -53,7 +55,6 @@ private:
 	// Shaders
 	MyShaderProgram *colorShader;
 
-	//MyTriangle *testTriangle;
 	MyQuad *testQuad;
 };
 

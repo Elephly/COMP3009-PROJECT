@@ -135,7 +135,9 @@
     <ClInclude Include="Header Files\MyShaderProgram.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
     <ClInclude Include="Header Files\MyTriangle.h" />
+    <ClInclude Include="Header Files\MyVector.h" />
     <ClInclude Include="Header Files\SOIL.h" />
+    <ClInclude Include="Header Files\MyVertex.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png" />
@@ -154,6 +156,8 @@
     <ClCompile Include="Source Files\MyMath.cpp" />
     <ClCompile Include="Source Files\MyShaderProgram.cpp" />
     <ClCompile Include="Source Files\MyStringUtil.cpp" />
+    <ClCompile Include="Source Files\MyVector.cpp" />
+    <ClCompile Include="Source Files\MyVertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader Files\Color.frag" />

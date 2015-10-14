@@ -1,6 +1,7 @@
 #include "MyApplication.h"
 
 void MainReshapeFunc(int width, int height);
+void MainTimerFunc(int operation);
 void MainDisplayFunc();
 void MainKeyboardFunc(unsigned char key, int x, int y);
 void MainKeyboardUpFunc(unsigned char key, int x, int y);
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
 		myApplication = new MyApplication(PROJECT_NAME);
 		myApplication->Initialize(&argc, argv);
 		myApplication->RegisterReshapeFunc(MainReshapeFunc);
+		myApplication->RegisterTimerFunc(MainTimerFunc);
 		myApplication->RegisterDisplayFunc(MainDisplayFunc);
 		myApplication->RegisterKeyboardFunc(MainKeyboardFunc);
 		myApplication->RegisterKeyboardUpFunc(MainKeyboardUpFunc);
@@ -40,6 +42,12 @@ int main(int argc, char *argv[])
 void MainReshapeFunc(int width, int height)
 {
 	myApplication->ReshapeFunc(width, height);
+}
+
+void MainTimerFunc(int operation)
+{
+	myApplication->RegisterTimerFunc(MainTimerFunc);
+	myApplication->TimerFunc(operation);
 }
 
 void MainDisplayFunc()
