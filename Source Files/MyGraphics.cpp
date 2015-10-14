@@ -14,22 +14,22 @@ MyColorRGBA::~MyColorRGBA()
 {
 }
 
-float &MyColorRGBA::GetRed()
+const float &MyColorRGBA::GetRed()
 {
 	return r;
 }
 
-float &MyColorRGBA::GetGreen()
+const float &MyColorRGBA::GetGreen()
 {
 	return g;
 }
 
-float &MyColorRGBA::GetBlue()
+const float &MyColorRGBA::GetBlue()
 {
 	return b;
 }
 
-float &MyColorRGBA::GetAlpha()
+const float &MyColorRGBA::GetAlpha()
 {
 	return a;
 }

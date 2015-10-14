@@ -136,12 +136,12 @@ MyPoint2D::~MyPoint2D()
 {
 }
 
-float &MyPoint2D::GetX()
+const float &MyPoint2D::GetX()
 {
 	return x_;
 }
 
-float &MyPoint2D::GetY()
+const float &MyPoint2D::GetY()
 {
 	return y_;
 }
@@ -167,17 +167,17 @@ MyPoint3D::~MyPoint3D()
 {
 }
 
-float &MyPoint3D::GetX()
+const float &MyPoint3D::GetX()
 {
 	return x_;
 }
 
-float &MyPoint3D::GetY()
+const float &MyPoint3D::GetY()
 {
 	return y_;
 }
 
-float &MyPoint3D::GetZ()
+const float &MyPoint3D::GetZ()
 {
 	return z_;
 }
@@ -195,4 +195,56 @@ void MyPoint3D::SetY(float &y)
 void MyPoint3D::SetZ(float &z)
 {
 	z_ = z;
+}
+
+MyPoint4D::MyPoint4D(float x, float y, float z, float w)
+{
+	x_ = x;
+	y_ = y;
+	z_ = z;
+	w_ = w;
+}
+
+MyPoint4D::~MyPoint4D()
+{
+}
+
+const float &MyPoint4D::GetX()
+{
+	return x_;
+}
+
+const float &MyPoint4D::GetY()
+{
+	return y_;
+}
+
+const float &MyPoint4D::GetZ()
+{
+	return z_;
+}
+
+const float &MyPoint4D::GetW()
+{
+	return w_;
+}
+
+void MyPoint4D::SetX(float &x)
+{
+	x_ = x;
+}
+
+void MyPoint4D::SetY(float &y)
+{
+	y_ = y;
+}
+
+void MyPoint4D::SetZ(float &z)
+{
+	z_ = z;
+}
+
+void MyPoint4D::SetW(float &w)
+{
+	w_ = w;
 }

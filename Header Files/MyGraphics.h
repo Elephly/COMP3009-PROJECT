@@ -8,10 +8,10 @@ public:
 	~MyColorRGBA();
 
 	// Getters
-	float &GetRed();
-	float &GetGreen();
-	float &GetBlue();
-	float &GetAlpha();
+	const float &GetRed();
+	const float &GetGreen();
+	const float &GetBlue();
+	const float &GetAlpha();
 
 	// Setters
 	void SetRed(float &red);

@@ -10,8 +10,8 @@ public:
 	~MyPoint2D();
 
 	// Getters
-	float &GetX();
-	float &GetY();
+	const float &GetX();
+	const float &GetY();
 
 	// Setters
 	void SetX(float &x);
@@ -25,13 +25,13 @@ protected:
 class MyPoint3D
 {
 public:
-	MyPoint3D(float x = 0.0f, float y = 0.0f, float z  = 0.0f);
+	MyPoint3D(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 	~MyPoint3D();
 
 	// Getters
-	float &GetX();
-	float &GetY();
-	float &GetZ();
+	const float &GetX();
+	const float &GetY();
+	const float &GetZ();
 
 	// Setters
 	void SetX(float &x);
@@ -42,6 +42,31 @@ protected:
 	float x_;
 	float y_;
 	float z_;
+};
+
+class MyPoint4D
+{
+public:
+	MyPoint4D(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 1.0f);
+	~MyPoint4D();
+
+	// Getters
+	const float &GetX();
+	const float &GetY();
+	const float &GetZ();
+	const float &GetW();
+
+	// Setters
+	void SetX(float &x);
+	void SetY(float &y);
+	void SetZ(float &z);
+	void SetW(float &w);
+
+protected:
+	float x_;
+	float y_;
+	float z_;
+	float w_;
 };
 
 class MyRectangle
