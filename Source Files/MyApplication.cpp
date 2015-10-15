@@ -12,6 +12,7 @@
 #endif
 
 #include "MyStringUtil.h"
+#include "MyMatrix.h"
 
 MyApplication::MyApplication(char * name)
 {
@@ -51,9 +52,11 @@ void MyApplication::Initialize(int *argc, char **argv)
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),
 		(int)((float)(glutGet(GLUT_SCREEN_HEIGHT) - windowHeight) / 4.0f));
 	windowID = glutCreateWindow(applicationName);
-	//glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
+	/*
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	//*/
 	if (GLenum err = glewInit() != GLEW_OK)
 	{
 		throw glewGetErrorString(err);
@@ -78,7 +81,7 @@ void MyApplication::Draw()
 	MyVector3D viewerPosition(0.0f, 0.0f, 5.0f);
 	MyVector3D lookAtPoint(0.0f, 0.0f, 0.0f);
 	MyVector3D upVector(0.0f, 1.0f, 0.0f);
-	//Matrix4f viewMat, projMat;
+	MyMatrix4 viewMat, projMat;
 
 	MyColorRGBA c = MyColors::CornflowerBlue;
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());

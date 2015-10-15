@@ -36,6 +36,7 @@ public:
 	MyVector2D &operator-=(const MyVector2D &other);
 	MyVector2D &operator*=(const float &multiplier);
 	MyVector2D &operator/=(const float &divisor);
+	friend MyVector2D operator*(const float &multiplier, MyVector2D &vector);
 	friend std::ostream &operator<<(std::ostream &os, const MyVector2D &vector);
 };
 
@@ -62,6 +63,7 @@ public:
 	MyVector3D &operator-=(const MyVector3D &other);
 	MyVector3D &operator*=(const float &multiplier);
 	MyVector3D &operator/=(const float &divisor);
+	friend MyVector3D operator*(const float &multiplier, MyVector3D &vector);
 	friend std::ostream &operator<<(std::ostream &os, const MyVector3D &vector);
 };
 
@@ -89,6 +91,7 @@ public:
 	MyVector4D &operator-=(const MyVector4D &other);
 	MyVector4D &operator*=(const float &multiplier);
 	MyVector4D &operator/=(const float &divisor);
+	friend MyVector4D operator*(const float &multiplier, MyVector4D &vector);
 	friend std::ostream &operator<<(std::ostream &os, const MyVector4D &vector);
 };
 

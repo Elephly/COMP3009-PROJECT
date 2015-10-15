@@ -92,6 +92,11 @@ MyVector2D & MyVector2D::operator/=(const float & divisor)
 	return *this;
 }
 
+MyVector2D operator*(const float &multiplier, MyVector2D &vector)
+{
+	return vector * multiplier;
+}
+
 std::ostream &operator<<(std::ostream &os, const MyVector2D &vector)
 {
 	os << "(" << vector.x_ << ", " << vector.y_ << ")";
@@ -194,6 +199,11 @@ MyVector3D & MyVector3D::operator/=(const float & divisor)
 	z_ /= divisor;
 
 	return *this;
+}
+
+MyVector3D operator*(const float &multiplier, MyVector3D &vector)
+{
+	return vector * multiplier;
 }
 
 std::ostream &operator<<(std::ostream &os, const MyVector3D &vector)
@@ -307,6 +317,11 @@ MyVector4D & MyVector4D::operator/=(const float & divisor)
 	w_ /= divisor;
 
 	return *this;
+}
+
+MyVector4D operator*(const float &multiplier, MyVector4D &vector)
+{
+	return vector * multiplier;
 }
 
 std::ostream &operator<<(std::ostream &os, const MyVector4D &vector)

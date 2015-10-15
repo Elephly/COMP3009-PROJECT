@@ -1,5 +1,7 @@
 #include "MyApplication.h"
 
+using namespace std;
+
 void MainReshapeFunc(int width, int height);
 void MainTimerFunc(int operation);
 void MainDisplayFunc();
