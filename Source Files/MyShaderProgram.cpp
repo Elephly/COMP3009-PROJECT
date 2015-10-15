@@ -1,8 +1,6 @@
 #include "MyShaderProgram.h"
 
-#include "MyDefines.h"
-#include <cstdio>
-#include <cstring>
+#include "MyIncludes.h"
 #include "glew.h"
 #include "MyFileIO.h"
 
@@ -112,4 +110,14 @@ void MyShaderProgram::InitializeShaderProgram(char * vertShaderFileName, char * 
 int MyShaderProgram::GetShaderProgram()
 {
 	return shaderProgram;
+}
+
+int MyShaderProgram::BindUniformMatrix(MyMatrix4 & matrix, const char * uniformName)
+{
+	int location = glGetUniformLocation(shaderProgram, uniformName);
+	assert(location != -1);
+	if (location == -1)
+		return location;
+	glUniformMatrix4fv(location, 1, true, matrix.GetEntries());
+	return 0;
 }

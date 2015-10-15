@@ -14,10 +14,10 @@ public:
 	const float &GetAlpha();
 
 	// Setters
-	void SetRed(float &red);
-	void SetGreen(float &green);
-	void SetBlue(float &blue);
-	void SetAlpha(float &alpha);
+	void SetRed(float const& red);
+	void SetGreen(float const& green);
+	void SetBlue(float const& blue);
+	void SetAlpha(float const& alpha);
 
 private:
 	float r;

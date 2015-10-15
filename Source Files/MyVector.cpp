@@ -32,6 +32,11 @@ void MyVector2D::Normalize()
 	(*this) /= GetLength();
 }
 
+MyVector2D MyVector2D::operator-()
+{
+	return MyVector2D(-x_, -y_);
+}
+
 MyVector2D MyVector2D::operator+(const MyVector2D & other) const
 {
 	return MyVector2D(x_ + other.x_, y_ + other.y_);
@@ -103,6 +108,11 @@ std::ostream &operator<<(std::ostream &os, const MyVector2D &vector)
 	return os;
 }
 
+MyVector3D::MyVector3D(MyVector2D & vector, float z):
+	MyPoint3D(vector.GetX(), vector.GetY(), z)
+{
+}
+
 MyVector3D::MyVector3D(float x, float y, float z) :
 	MyPoint3D(x, y, z)
 {
@@ -135,6 +145,11 @@ float MyVector3D::Dot(const MyVector3D & other) const
 void MyVector3D::Normalize()
 {
 	(*this) /= GetLength();
+}
+
+MyVector3D MyVector3D::operator-()
+{
+	return MyVector3D(-x_, -y_, -z_);
 }
 
 MyVector3D MyVector3D::operator+(const MyVector3D & other) const
@@ -212,6 +227,16 @@ std::ostream &operator<<(std::ostream &os, const MyVector3D &vector)
 	return os;
 }
 
+MyVector4D::MyVector4D(MyVector2D & vector, float z, float w) :
+	MyPoint4D(vector.GetX(), vector.GetY(), z, w)
+{
+}
+
+MyVector4D::MyVector4D(MyVector3D & vector, float w) :
+	MyPoint4D(vector.GetX(), vector.GetY(), vector.GetZ(), w)
+{
+}
+
 MyVector4D::MyVector4D(float x, float y, float z, float w) :
 	MyPoint4D(x, y, z, w)
 {
@@ -249,6 +274,11 @@ float MyVector4D::Dot3(const MyVector4D & other) const
 void MyVector4D::Normalize()
 {
 	(*this) /= GetLength();
+}
+
+MyVector4D MyVector4D::operator-()
+{
+	return MyVector4D(-x_, -y_, -z_, -w_);
 }
 
 MyVector4D MyVector4D::operator+(const MyVector4D & other) const

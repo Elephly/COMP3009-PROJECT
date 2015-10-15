@@ -34,22 +34,22 @@ const float &MyColorRGBA::GetAlpha()
 	return a;
 }
 
-void MyColorRGBA::SetRed(float &red)
+void MyColorRGBA::SetRed(float const& red)
 {
 	r = red;
 }
 
-void MyColorRGBA::SetGreen(float &green)
+void MyColorRGBA::SetGreen(float const& green)
 {
 	g = green;
 }
 
-void MyColorRGBA::SetBlue(float &blue)
+void MyColorRGBA::SetBlue(float const& blue)
 {
 	b = blue;
 }
 
-void MyColorRGBA::SetAlpha(float &alpha)
+void MyColorRGBA::SetAlpha(float const& alpha)
 {
 	a = alpha;
 }

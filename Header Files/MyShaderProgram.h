@@ -1,6 +1,8 @@
 #ifndef MYSHADERPROGRAM_H
 #define MYSHADERPROGRAM_H
 
+#include "MyMatrix.h"
+
 class MyShaderProgram
 {
 public:
@@ -11,6 +13,8 @@ public:
 
 	// Getters
 	int GetShaderProgram();
+
+	int BindUniformMatrix(MyMatrix4 &matrix, const char *uniformName);
 
 private:
 	char *vertexShaderFileName;

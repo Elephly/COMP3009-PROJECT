@@ -52,7 +52,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),
 		(int)((float)(glutGet(GLUT_SCREEN_HEIGHT) - windowHeight) / 4.0f));
 	windowID = glutCreateWindow(applicationName);
-	/*
+	//*
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -78,15 +78,19 @@ void MyApplication::Update()
 
 void MyApplication::Draw()
 {
-	MyVector3D viewerPosition(0.0f, 0.0f, 5.0f);
-	MyVector3D lookAtPoint(0.0f, 0.0f, 0.0f);
-	MyVector3D upVector(0.0f, 1.0f, 0.0f);
-	MyMatrix4 viewMat, projMat;
-
 	MyColorRGBA c = MyColors::CornflowerBlue;
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	MyVector3D cameraPosition(0.0f, 0.0f, 5.0f);
+	MyVector3D cameraLookAt(0.0f, 0.0f, 0.0f);
+	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
+	MyMatrix4 viewMatrix = MyMatrix4::CameraMatrix(cameraPosition, cameraLookAt, cameraUpVector);
+	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, 1.0f, 0.1f, 1000.0f);
+
+	colorShader->BindUniformMatrix(viewMatrix, "view");
+	colorShader->BindUniformMatrix(projectionMatrix, "projection");
 
 	testQuad->Draw();
 

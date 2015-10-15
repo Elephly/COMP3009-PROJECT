@@ -14,8 +14,8 @@ public:
 	const float &GetY();
 
 	// Setters
-	void SetX(float &x);
-	void SetY(float &y);
+	void SetX(float const& x);
+	void SetY(float const& y);
 
 protected:
 	float x_;
@@ -34,9 +34,9 @@ public:
 	const float &GetZ();
 
 	// Setters
-	void SetX(float &x);
-	void SetY(float &y);
-	void SetZ(float &z);
+	void SetX(float const& x);
+	void SetY(float const& y);
+	void SetZ(float const& z);
 
 protected:
 	float x_;
@@ -57,10 +57,10 @@ public:
 	const float &GetW();
 
 	// Setters
-	void SetX(float &x);
-	void SetY(float &y);
-	void SetZ(float &z);
-	void SetW(float &w);
+	void SetX(float const& x);
+	void SetY(float const& y);
+	void SetZ(float const& z);
+	void SetW(float const& w);
 
 protected:
 	float x_;

@@ -1,6 +1,8 @@
 #ifndef MYMATH_H
 #define MYMATH_H
 
+#include "MyDefines.h"
+#include <math.h>
 #include <cmath>
 
 #ifndef DegreeToRadian

@@ -27,6 +27,7 @@ public:
 	virtual void Normalize();
 
 	// Operators
+	MyVector2D operator-();
 	MyVector2D operator+(const MyVector2D &other) const;
 	MyVector2D operator-(const MyVector2D &other) const;
 	MyVector2D operator*(const MyVector2D &other) const;
@@ -43,6 +44,7 @@ public:
 class MyVector3D : public MyPoint3D, public MyVector
 {
 public:
+	MyVector3D(MyVector2D &vector, float z = 0.0f);
 	MyVector3D(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 	~MyVector3D();
 
@@ -54,6 +56,7 @@ public:
 	virtual void Normalize();
 
 	// Operators
+	MyVector3D operator-();
 	MyVector3D operator+(const MyVector3D &other) const;
 	MyVector3D operator-(const MyVector3D &other) const;
 	MyVector3D operator*(const MyVector3D &other) const;
@@ -70,6 +73,8 @@ public:
 class MyVector4D : public MyPoint4D, public MyVector
 {
 public:
+	MyVector4D(MyVector2D &vector, float z = 0.0f, float w = 1.0f);
+	MyVector4D(MyVector3D &vector, float w = 1.0f);
 	MyVector4D(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 1.0f);
 	~MyVector4D();
 
@@ -82,6 +87,7 @@ public:
 	virtual void Normalize();
 
 	// Operators
+	MyVector4D operator-();
 	MyVector4D operator+(const MyVector4D &other) const;
 	MyVector4D operator-(const MyVector4D &other) const;
 	MyVector4D operator*(const MyVector4D &other) const;

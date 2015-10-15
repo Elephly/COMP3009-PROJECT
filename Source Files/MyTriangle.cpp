@@ -6,8 +6,8 @@ MyTriangle::MyTriangle(MyVertex3D &vertex1, MyVertex3D &vertex2, MyVertex3D &ver
 {
 	currentVertex = 0;
 	vertices[0] = vertex1;
-	vertices[1] = vertex2;
-	vertices[2] = vertex3;
+	vertices[1] = vertex3;
+	vertices[2] = vertex2;
 	shaderProgram = 0;
 	vertexArrayObject = 0;
 }

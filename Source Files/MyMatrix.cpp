@@ -1,5 +1,7 @@
 #include "MyMatrix.h"
 
+#include "MyIncludes.h"
+
 MyMatrix::~MyMatrix()
 {
 }
@@ -19,14 +21,110 @@ MyMatrix4 MyMatrix4::RotateMatrix()
 	return MyMatrix4();
 }
 
-MyMatrix4 MyMatrix4::ScaleMatrix()
+MyMatrix4 MyMatrix4::ScaleMatrix(float const& x, float const& y, float const& z)
 {
-	return MyMatrix4();
+	return MyMatrix4(MyVector4D(x, 0.0f, 0.0f, 0.0f), MyVector4D(0.0f, y, 0.0f, 0.0f), MyVector4D(0.0f, 0.0f, z, 0.0f), MyVector4D());
 }
 
-MyMatrix4 MyMatrix4::TranslationMatrix()
+MyMatrix4 MyMatrix4::TranslationMatrix(float const& x, float const& y, float const& z)
 {
-	return MyMatrix4();
+	MyMatrix4 matrix = IdentityMatrix();
+	matrix.entries[0][3] = x;
+	matrix.entries[1][3] = y;
+	matrix.entries[2][3] = z;
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::TranslationMatrix(MyVector3D & vector)
+{
+	float x = vector.GetX(), y = vector.GetY(), z = vector.GetZ();
+	return TranslationMatrix(x, y, z);
+}
+
+MyMatrix4 MyMatrix4::TranslationMatrix(MyVector4D & vector)
+{
+	float x = vector.GetX(), y = vector.GetY(), z = vector.GetZ();
+	return TranslationMatrix(x, y, z);
+}
+
+MyMatrix4 MyMatrix4::CameraMatrix(MyVector3D & position, MyVector3D & lookAt, MyVector3D & upVector)
+{
+	MyVector3D n3 = (position - lookAt);
+	n3.Normalize();
+
+	upVector.Normalize();
+
+	MyVector3D u3 = upVector.Cross(n3);
+	u3.Normalize();
+
+	MyVector3D v3 = n3.Cross(u3);
+
+	MyVector4D u = MyVector4D(u3, 0.0f);
+	MyVector4D v = MyVector4D(v3, 0.0f);
+	MyVector4D n = MyVector4D(n3, 0.0f);
+
+	MyMatrix4 matrix = MyMatrix4(u, v, n, MyVector4D());
+	matrix.entries[0][3] = (-u).Dot(position);
+	matrix.entries[1][3] = (-v).Dot(position);
+	matrix.entries[2][3] = (-n).Dot(position);
+
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::CameraMatrix(MyVector4D & position, MyVector4D & lookAt, MyVector4D & upVector)
+{
+	MyVector4D n = (position - lookAt);
+	n.SetW(0.0f);
+	n.Normalize();
+
+	upVector.SetW(0.0f);
+	upVector.Normalize();
+
+	MyVector4D u = upVector.Cross(n);
+	u.SetW(0.0f);
+	u.Normalize();
+
+	MyVector4D v = n.Cross(u);
+	v.SetW(0.0f);
+
+	MyMatrix4 matrix = MyMatrix4(u, v, n, MyVector4D());
+	matrix.entries[0][3] = (-u).Dot(position);
+	matrix.entries[1][3] = (-v).Dot(position);
+	matrix.entries[2][3] = (-n).Dot(position);
+
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::FrustrumProjetionMatrix(float const& xMin, float const& yMin, float const& xMax, float const& yMax, float const& nearPlane, float const& farPlane)
+{
+	MyMatrix4 matrix = IdentityMatrix();
+
+	/*
+	m1.vm[0].x = 2 * nearPlane / (winMaxX - winMinX);		// check why it is not "-2"
+	m1.vm[0].z = (winMaxX + winMinX) / (winMaxX - winMinX);
+	m1.vm[1].y = 2 * nearPlane / (winMaxY - winMinY);		// check why it is not "-2"
+	m1.vm[1].z = (winMaxY + winMinY) / (winMaxY - winMinY);
+	m1.vm[2].z = (nearPlane + farPlane) / (nearPlane - farPlane);
+	m1.vm[2].w = (2 * nearPlane * farPlane) / (nearPlane - farPlane);
+	m1.vm[3].z = -1;
+	m1.vm[3].w = 0;
+	// ADD CODE
+	*/
+
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::SymmetricPerspectiveProjectionMatrix(float const& fieldOfView, float const& aspectRatio, float const& nearPlane, float const& farPlane)
+{
+	MyMatrix4 matrix = IdentityMatrix();
+	float cot = 1.0f / tan(DegreeToRadian(fieldOfView / 2.0f));
+	matrix.entries[0][0] = cot / aspectRatio;
+	matrix.entries[1][1] = cot;
+	matrix.entries[2][2] = (nearPlane + farPlane) / (nearPlane - farPlane);
+	matrix.entries[2][3] = 2.0f * nearPlane * farPlane / (nearPlane - farPlane);
+	matrix.entries[3][2] = -1;
+	matrix.entries[3][3] = 0;
+	return matrix;
 }
 
 MyMatrix4::MyMatrix4(MyVector4D vector1, MyVector4D vector2, MyVector4D vector3, MyVector4D vector4)
@@ -58,7 +156,7 @@ float * MyMatrix4::GetEntries()
 	return (float *)entries;
 }
 
-MyMatrix4 MyMatrix4::GetTranspose()
+MyMatrix4 MyMatrix4::GetTranspose() const
 {
 	MyMatrix4 m = *this;
 	return m.Transpose();
@@ -94,55 +192,90 @@ MyMatrix4 & MyMatrix4::Transpose()
 
 MyMatrix4 MyMatrix4::operator+(const MyMatrix4 & other) const
 {
-	return MyMatrix4();
+	MyMatrix4 matrix = *this;
+	return matrix += other;
 }
 
 MyMatrix4 MyMatrix4::operator-(const MyMatrix4 & other) const
 {
-	return MyMatrix4();
+	MyMatrix4 matrix = *this;
+	return matrix -= other;
 }
 
 MyMatrix4 MyMatrix4::operator*(const MyMatrix4 & other) const
 {
-	return MyMatrix4();
+	MyMatrix4 matrix = *this;
+	return matrix *= other;
 }
 
 MyMatrix4 MyMatrix4::operator*(const float & multiplier) const
 {
-	return MyMatrix4();
-}
-
-MyVector3D MyMatrix4::operator*(const MyVector3D & other) const
-{
-	return MyVector3D();
+	MyMatrix4 matrix = *this;
+	return matrix *= multiplier;
 }
 
 MyVector4D MyMatrix4::operator*(const MyVector4D & vector) const
 {
-	return MyVector4D();
+	MyVector4D rows[4];
+
+	for (int i = 0; i < 4; i++)
+	{
+		rows[i] = MyVector4D(entries[i][0], entries[i][1], entries[i][2], entries[i][3]);
+	}
+
+	return MyVector4D(rows[0].Dot(vector), rows[1].Dot(vector), rows[2].Dot(vector), rows[3].Dot(vector));
 }
 
 MyMatrix4 & MyMatrix4::operator+=(const MyMatrix4 & other)
 {
-	// TODO: insert return statement here
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			entries[i][j] += other.entries[i][j];
+		}
+	}
 	return *this;
 }
 
 MyMatrix4 & MyMatrix4::operator-=(const MyMatrix4 & other)
 {
-	// TODO: insert return statement here
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			entries[i][j] -= other.entries[i][j];
+		}
+	}
 	return *this;
 }
 
 MyMatrix4 & MyMatrix4::operator*=(const MyMatrix4 & other)
 {
-	// TODO: insert return statement here
+	MyMatrix4 matrix = other.GetTranspose();
+
+	for (int i = 0; i < 4; i++)
+	{
+		MyVector4D vector1 = MyVector4D(entries[i][0], entries[i][1], entries[i][2], entries[i][3]);
+		for (int j = 0; j < 4; j++)
+		{
+			MyVector4D vector2 = MyVector4D(matrix.entries[j][0], matrix.entries[j][1], matrix.entries[j][2], matrix.entries[j][3]);
+			entries[i][j] = vector1.Dot(vector2);
+		}
+	}
+
 	return *this;
 }
 
 MyMatrix4 & MyMatrix4::operator*=(const float & multiplier)
 {
-	// TODO: insert return statement here
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			entries[i][j] *= multiplier;
+		}
+	}
 	return *this;
 }
 
