@@ -1,5 +1,9 @@
 #include "MyMath.h"
 
+const long double MyMath::MY_PI_LD = 3.141592653589793238L;
+const double MyMath::MY_PI_D = 3.141592653589793;
+const float MyMath::MY_PI_F = 3.1415927f;
+
 double Lerp(double a, double b, double t)
 {
 	if (t > 1 || t < 0)

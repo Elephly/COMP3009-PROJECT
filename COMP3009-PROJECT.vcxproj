@@ -132,6 +132,7 @@
     <ClInclude Include="Header Files\MyInputManager.h" />
     <ClInclude Include="Header Files\MyMath.h" />
     <ClInclude Include="Header Files\MyMatrix.h" />
+    <ClInclude Include="Header Files\MyObject3D.h" />
     <ClInclude Include="Header Files\MyQuad.h" />
     <ClInclude Include="Header Files\MyShaderProgram.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
@@ -144,6 +145,7 @@
     <Image Include="Resource Files\sample.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Shader Files\MyObject3D.cpp" />
     <ClCompile Include="Source Files\MyMatrix.cpp" />
     <ClCompile Include="Source Files\MyQuad.cpp" />
     <ClCompile Include="Source Files\MyTriangle.cpp" />

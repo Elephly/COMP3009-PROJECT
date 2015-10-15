@@ -83,7 +83,7 @@ void MyApplication::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	MyVector3D cameraPosition(0.0f, 0.0f, 5.0f);
+	MyVector3D cameraPosition(0.0f, 0.0f, 50.0f);
 	MyVector3D cameraLookAt(0.0f, 0.0f, 0.0f);
 	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
 	MyMatrix4 viewMatrix = MyMatrix4::CameraMatrix(cameraPosition, cameraLookAt, cameraUpVector);

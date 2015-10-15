@@ -1,16 +1,22 @@
 #ifndef MYMATH_H
 #define MYMATH_H
 
-#include "MyDefines.h"
-#include <math.h>
 #include <cmath>
 
+class MyMath
+{
+public:
+	static const long double MY_PI_LD;
+	static const double MY_PI_D;
+	static const float MY_PI_F;
+};
+
 #ifndef DegreeToRadian
-#define DegreeToRadian(x) (float)(((x) * M_PI / 180.0f))
+#define DegreeToRadian(x) (float)(((x) * MyMath::MY_PI_F / 180.0f))
 #endif // DegreeToRadian
 
 #ifndef RadianToDegree
-#define RadianToDegree(x) (float)(((x) * 180.0f / M_PI))
+#define RadianToDegree(x) (float)(((x) * 180.0f / MyMath::MY_PI_F))
 #endif // RadianToDegree
 
 double Lerp(double a, double b, double t);

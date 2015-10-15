@@ -198,7 +198,7 @@ void MyImageUtil::SwirlEffect(MyImage * src, MyCircle areaOfEffect, int nTwists)
 	int y1 = max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
 	int x2 = min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
 	int y2 = min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
-	double angle = (nTwists * (2 * M_PI)) / r;
+	double angle = (nTwists * (2 * MyMath::MY_PI_D)) / r;
 
 	MyImage *temp = new MyImage(*src);
 	int channels = temp->GetImageChannels();
