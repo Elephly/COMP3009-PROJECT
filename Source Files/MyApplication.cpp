@@ -24,10 +24,10 @@ MyApplication::MyApplication(char * name)
 
 	colorShader = new MyShaderProgram();
 
-	testQuad = new MyQuad(MyVertex3D(-0.5f, -0.5f, 0.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex3D(-0.5f, 0.5f, 0.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex3D(0.5f, 0.5f, 0.0f, MyColorRGBA(1.0f, 1.0f)),
-		MyVertex3D(0.5f, -0.5f, 0.0f, MyColorRGBA(1.0f, 1.0f)));
+	testQuad = new MyQuad(MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
+		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
 }
 
 MyApplication::~MyApplication()

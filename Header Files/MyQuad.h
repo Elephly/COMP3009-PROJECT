@@ -7,7 +7,7 @@
 class MyQuad
 {
 public:
-	MyQuad(MyVertex3D &vertex1 = MyVertex3D(), MyVertex3D &vertex2 = MyVertex3D(), MyVertex3D &vertex3 = MyVertex3D(), MyVertex3D &vertex4 = MyVertex3D());
+	MyQuad(MyVertex4D &vertex1 = MyVertex4D(), MyVertex4D &vertex2 = MyVertex4D(), MyVertex4D &vertex3 = MyVertex4D(), MyVertex4D &vertex4 = MyVertex4D());
 	~MyQuad();
 
 	void Initialize(MyShaderProgram *shader);

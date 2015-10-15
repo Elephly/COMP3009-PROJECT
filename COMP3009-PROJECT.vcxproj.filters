@@ -128,5 +128,6 @@
   <ItemGroup>
     <None Include="Shader Files\Color.vert" />
     <None Include="Shader Files\Color.frag" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

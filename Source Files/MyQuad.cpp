@@ -1,6 +1,6 @@
 #include "MyQuad.h"
 
-MyQuad::MyQuad(MyVertex3D &vertex1, MyVertex3D &vertex2, MyVertex3D &vertex3, MyVertex3D &vertex4)
+MyQuad::MyQuad(MyVertex4D &vertex1, MyVertex4D &vertex2, MyVertex4D &vertex3, MyVertex4D &vertex4)
 {
 	t1 = new MyTriangle(vertex1, vertex2, vertex4);
 	t2 = new MyTriangle(vertex2, vertex3, vertex4);

@@ -162,6 +162,7 @@
     <ClCompile Include="Source Files\MyVertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Shader Files\Color.frag" />
     <None Include="Shader Files\Color.vert" />
   </ItemGroup>
