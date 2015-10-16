@@ -1,17 +1,23 @@
 #ifndef MYTRIANGLE_H
 #define MYTRIANGLE_H
 
+#include "MyMath.h"
+#include "MyGraphicsObject3D.h"
 #include "MyVertex.h"
 #include "MyShaderProgram.h"
 
-class MyTriangle
+class MyTriangle : public MyObject3D
 {
 public:
-	MyTriangle(MyVertex4D &vertex1 = MyVertex4D(), MyVertex4D &vertex2 = MyVertex4D(), MyVertex4D &vertex3 = MyVertex4D());
-	~MyTriangle();
+	MyTriangle(MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D(),
+		MyVertex4D &vertex1 = MyVertex4D(MyVector4D(0.0f, sin(DegreeToRadian(60.0f)) / 2.0f)),
+		MyVertex4D &vertex2 = MyVertex4D(MyVector4D(cos(DegreeToRadian(60.0f)), -sin(DegreeToRadian(60.0f)) / 2.0f)),
+		MyVertex4D &vertex3 = MyVertex4D(MyVector4D(-cos(DegreeToRadian(60.0f)), -sin(DegreeToRadian(60.0f)) / 2.0f)));
+	virtual ~MyTriangle();
 
-	void Initialize(MyShaderProgram *shader);
-	void Draw();
+	virtual void Initialize(MyShaderProgram *shader);
+	virtual void Update();
+	virtual void Draw();
 
 	// Getters
 	MyVertex4D &GetCurrentVertex();
@@ -27,7 +33,6 @@ public:
 private:
 	int currentVertex;
 	MyVertex4D vertices[3];
-	MyShaderProgram *shaderProgram;
 	unsigned int vertexArrayObject;
 };
 

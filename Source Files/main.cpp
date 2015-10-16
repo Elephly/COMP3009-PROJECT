@@ -43,49 +43,73 @@ int main(int argc, char *argv[])
 
 void MainReshapeFunc(int width, int height)
 {
-	myApplication->ReshapeFunc(width, height);
+	if (myApplication != 0)
+	{
+		myApplication->ReshapeFunc(width, height);
+	}
 }
 
 void MainTimerFunc(int operation)
 {
-	myApplication->RegisterTimerFunc(MainTimerFunc);
-	myApplication->TimerFunc(operation);
+	if (myApplication != 0)
+	{
+		myApplication->RegisterTimerFunc(MainTimerFunc);
+		myApplication->TimerFunc(operation);
+	}
 }
 
 void MainDisplayFunc()
 {
-	myApplication->DisplayFunc();
+	if (myApplication != 0)
+	{
+		myApplication->DisplayFunc();
+	}
 }
 
 void MainKeyboardFunc(unsigned char key, int x, int y)
 {
-	if (key == 27)
+	if (myApplication != 0)
 	{
-		MyDelete(myApplication);
+		if (key == 27)
+		{
+			MyDelete(myApplication);
 #ifdef _CRTDBG_MAP_ALLOC
-		_CrtDumpMemoryLeaks();
+			_CrtDumpMemoryLeaks();
 #endif
-	}
-	else
-	{
-		myApplication->KeyboardFunc(key, x, y);
+		}
+		else
+		{
+			myApplication->KeyboardFunc(key, x, y);
+		}
 	}
 }
 
 void MainKeyboardUpFunc(unsigned char key, int x, int y)
 {
-	myApplication->KeyboardUpFunc(key, x, y);
+	if (myApplication != 0)
+	{
+		myApplication->KeyboardUpFunc(key, x, y);
+	}
 }
 
 void MainMouseFunc(int button, int state, int x, int y)
 {
-	myApplication->MouseFunc(button, state, x, y);
+	if (myApplication != 0)
+	{
+		myApplication->MouseFunc(button, state, x, y);
+	}
 }
 void MainMouseMoveFunc(int x, int y)
 {
-	myApplication->MouseMoveFunc(x, y);
+	if (myApplication != 0)
+	{
+		myApplication->MouseMoveFunc(x, y);
+	}
 }
 void MainMouseMovePassiveFunc(int x, int y)
 {
-	myApplication->MouseMovePassiveFunc(x, y);
+	if (myApplication != 0)
+	{
+		myApplication->MouseMovePassiveFunc(x, y);
+	}
 }

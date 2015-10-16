@@ -12,10 +12,6 @@ public:
 
 	virtual void Update();
 
-	virtual void Translate(float const & x, float const & y, float const & z);
-	virtual void Translate(MyVector3D const & vector);
-	virtual void Translate(MyVector4D const & vector);
-
 	// Getters
 	const MyVector3D &GetLookAt() const;
 	const MyVector3D &GetUpVector() const;

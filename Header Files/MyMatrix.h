@@ -48,7 +48,7 @@ public :
 	where a = angle.
 	*/
 	static MyMatrix4 RotationAboutZMatrix(float const & angle, bool isDegree = true);
-	static MyMatrix4 RollPitchYarRotationMatrix(float const & roll, float const & pitch, float const & yaw, bool isDegree = true);
+	static MyMatrix4 RollPitchYawRotationMatrix(float const & roll, float const & pitch, float const & yaw, bool isDegree = true);
 	static MyMatrix4 RotationAboutVectorAxisMatrix(MyVector3D const & vector, float const & angle, bool isDegree = true);
 	static MyMatrix4 RotationAboutVectorAxisMatrix(MyVector4D const & vector, float const & angle, bool isDegree = true);
 	static MyMatrix4 ScaleMatrix(float const & x, float const & y, float const & z);

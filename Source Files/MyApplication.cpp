@@ -31,19 +31,21 @@ MyApplication::MyApplication(char * name)
 	colorShader = new MyShaderProgram();
 
 	MyVector3D cameraPosition(0.0f, 0.0f, 5.0f);
-	MyVector3D cameraLookAt(0.0f, 0.0f, 0.0f);
+	MyVector3D cameraLookAt(0.0f, 0.0f, -1.0f);
 	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
-	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, 1.0f, 0.1f, 1000.0f);
+	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix);
 
-	testTriangle = new MyTriangle(MyVertex4D(-0.25f, -0.0f, 0.5f, 1.0f, MyColorRGBA(1.0f, 0.0f, 0.0f, 1.0f)),
-		MyVertex4D(0.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)),
-		MyVertex4D(-1.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
+	//testTriangle = new MyTriangle(MyVertex4D(-0.25f, -0.0f, 0.5f, 1.0f, MyColorRGBA(1.0f, 0.0f, 0.0f, 1.0f)),
+	//	MyVertex4D(0.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)),
+	//	MyVertex4D(-1.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
+	testTriangle = new MyTriangle();
 
-	testQuad = new MyQuad(MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
-		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
-		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
+	testQuad = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
+		MyVertex4D(-0.5f, -0.5f, -1.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
+		MyVertex4D(-0.5f, 0.5f, -1.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex4D(0.5f, 0.5f, -1.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
+		MyVertex4D(0.5f, -0.5f, -1.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
 }
 
 MyApplication::~MyApplication()
@@ -98,24 +100,25 @@ void MyApplication::Update()
 	bool cameraTransformed = false;
 	if (inputManager != 0)
 	{
+		MyVector3D direction = (camera->GetLookAt() - camera->GetPosition()).GetNormalized();
 		if (inputManager->Keys['W'] == GLUT_DOWN || inputManager->Keys['w'] == GLUT_DOWN)
 		{
-			camera->Translate(0.0f, 0.0f, -0.1f);
+			camera->Translate(direction * 0.1f);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['A'] == GLUT_DOWN || inputManager->Keys['a'] == GLUT_DOWN)
 		{
-			camera->Translate(-0.1f, 0.0f, 0.0f);
+			camera->Translate(camera->GetUpVector().Cross(direction) * 0.1f);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['S'] == GLUT_DOWN || inputManager->Keys['s'] == GLUT_DOWN)
 		{
-			camera->Translate(0.0f, 0.0f, 0.1f);
+			camera->Translate(direction * -0.1f);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['D'] == GLUT_DOWN || inputManager->Keys['d'] == GLUT_DOWN)
 		{
-			camera->Translate(0.1f, 0.0f, 0.0f);
+			camera->Translate(direction.Cross(camera->GetUpVector()) * 0.1f);
 			cameraTransformed = true;
 		}
 	}
@@ -124,6 +127,8 @@ void MyApplication::Update()
 	{
 		ShadersUpdateCameraMatrix();
 	}
+	testTriangle->Update();
+	testQuad->Update();
 }
 
 void MyApplication::Draw()

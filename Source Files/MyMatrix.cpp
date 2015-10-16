@@ -54,7 +54,7 @@ MyMatrix4 MyMatrix4::RotationAboutZMatrix(float const & angle, bool isDegree)
 	return matrix;
 }
 
-MyMatrix4 MyMatrix4::RollPitchYarRotationMatrix(float const & roll, float const & pitch, float const & yaw, bool isDegree)
+MyMatrix4 MyMatrix4::RollPitchYawRotationMatrix(float const & roll, float const & pitch, float const & yaw, bool isDegree)
 {
 	return (RotationAboutYMatrix(yaw, isDegree) * RotationAboutXMatrix(pitch, isDegree) * RotationAboutZMatrix(roll, isDegree));
 }

@@ -2,15 +2,18 @@
 #define MYOBJECT3D_H
 
 #include "MyMatrix.h"
+#include "MyShaderProgram.h"
 
 class MyObject3D
 {
 public:
-	MyObject3D(MyVector3D &initialPosition = MyVector3D(), MyVector3D &initialScale = MyVector3D(), MyVector3D &initialRotation = MyVector3D());
+	MyObject3D(MyVector3D &initialPosition = MyVector3D(), MyVector3D &initialScale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &initialRotation = MyVector3D());
 	virtual ~MyObject3D() = 0;
 
+	virtual void Initialize(MyShaderProgram *shader);
 	virtual void Update();
 
+	// Transformations
 	virtual void Rotate(float const & x, float const & y, float const & z, bool isDegree = true);
 	virtual void Rotate(MyVector3D const & vector, bool isDegree = true);
 	virtual void Rotate(MyVector4D const & vector, bool isDegree = true);
@@ -20,6 +23,14 @@ public:
 	virtual void Translate(float const & x, float const & y, float const & z);
 	virtual void Translate(MyVector3D const & vector);
 	virtual void Translate(MyVector4D const & vector);
+
+	// Special Rotations
+	/* TODO */
+	virtual void Roll(float const & angle, bool isDegree = true);
+	/* TODO */
+	virtual void Pitch(float const & angle, bool isDegree = true);
+	/* TODO */
+	virtual void Yaw(float const & angle, bool isDegree = true);
 
 	// Getters
 	virtual const MyVector3D &GetPosition() const;
@@ -41,6 +52,7 @@ protected:
 	MyVector3D position;
 	MyVector3D rotation;
 	MyVector3D scale;
+	MyShaderProgram *shaderProgram;
 };
 
 #endif // MYOBJECT3D_H

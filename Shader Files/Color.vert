@@ -1,6 +1,6 @@
 #version 150
 
-uniform mat4 model;
+uniform mat4 transform;
 uniform mat4 view;
 uniform mat4 projection;
 
@@ -12,7 +12,6 @@ varying vec4 vColor;
 void main(void)
 
 {
-	//gl_Position = projection * view * model * vtxPos;
-	gl_Position = projection * view * vtxPos;
+	gl_Position = projection * view * transform * vtxPos;
 	vColor = vtxColor;
 }
