@@ -112,12 +112,13 @@ int MyShaderProgram::GetShaderProgram()
 	return shaderProgram;
 }
 
-int MyShaderProgram::BindUniformMatrix(MyMatrix4 & matrix, const char * uniformName)
+int MyShaderProgram::BindUniformMatrix(MyMatrix4 const & matrix, const char * uniformName)
 {
+	MyMatrix4 m = matrix;
 	int location = glGetUniformLocation(shaderProgram, uniformName);
 	assert(location != -1);
 	if (location == -1)
 		return location;
-	glUniformMatrix4fv(location, 1, true, matrix.GetEntries());
+	glUniformMatrix4fv(location, 1, true, m.GetEntries());
 	return 0;
 }

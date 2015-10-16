@@ -14,6 +14,12 @@
 #include "MyStringUtil.h"
 #include "MyMatrix.h"
 
+#if (MY_DEBUG == 1)
+#include <iostream>
+#endif // MY_DEBUG
+
+using namespace std;
+
 MyApplication::MyApplication(char * name)
 {
 	applicationName = MyStringUtil::CopyString(name);
@@ -24,7 +30,17 @@ MyApplication::MyApplication(char * name)
 
 	colorShader = new MyShaderProgram();
 
-	testQuad = new MyQuad(MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
+	MyVector3D cameraPosition(0.0f, 0.0f, 5.0f);
+	MyVector3D cameraLookAt(0.0f, 0.0f, 0.0f);
+	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
+	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, 1.0f, 0.1f, 1000.0f);
+	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix);
+
+	testTriangle = new MyTriangle(MyVertex4D(-0.25f, -0.0f, 0.5f, 1.0f, MyColorRGBA(1.0f, 0.0f, 0.0f, 1.0f)),
+		MyVertex4D(0.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)),
+		MyVertex4D(-1.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
+
+	testQuad = new MyQuad(MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
 		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
 		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
 		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
@@ -32,7 +48,9 @@ MyApplication::MyApplication(char * name)
 
 MyApplication::~MyApplication()
 {
+	MyDelete(testTriangle);
 	MyDelete(testQuad);
+	MyDelete(camera);
 	MyDelete(colorShader);
 	if (windowID != 0)
 	{
@@ -64,7 +82,11 @@ void MyApplication::Initialize(int *argc, char **argv)
 	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
 	glUseProgram(colorShader->GetShaderProgram());
 
+	testTriangle->Initialize(colorShader);
 	testQuad->Initialize(colorShader);
+
+	ShadersUpdateCameraMatrix();
+	ShadersUpdateProjectionMatrix();
 }
 
 void MyApplication::LoadContent()
@@ -73,7 +95,35 @@ void MyApplication::LoadContent()
 
 void MyApplication::Update()
 {
-
+	bool cameraTransformed = false;
+	if (inputManager != 0)
+	{
+		if (inputManager->Keys['W'] == GLUT_DOWN || inputManager->Keys['w'] == GLUT_DOWN)
+		{
+			camera->Translate(0.0f, 0.0f, -0.1f);
+			cameraTransformed = true;
+		}
+		if (inputManager->Keys['A'] == GLUT_DOWN || inputManager->Keys['a'] == GLUT_DOWN)
+		{
+			camera->Translate(-0.1f, 0.0f, 0.0f);
+			cameraTransformed = true;
+		}
+		if (inputManager->Keys['S'] == GLUT_DOWN || inputManager->Keys['s'] == GLUT_DOWN)
+		{
+			camera->Translate(0.0f, 0.0f, 0.1f);
+			cameraTransformed = true;
+		}
+		if (inputManager->Keys['D'] == GLUT_DOWN || inputManager->Keys['d'] == GLUT_DOWN)
+		{
+			camera->Translate(0.1f, 0.0f, 0.0f);
+			cameraTransformed = true;
+		}
+	}
+	camera->Update();
+	if (cameraTransformed)
+	{
+		ShadersUpdateCameraMatrix();
+	}
 }
 
 void MyApplication::Draw()
@@ -83,16 +133,8 @@ void MyApplication::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	MyVector3D cameraPosition(0.0f, 0.0f, 50.0f);
-	MyVector3D cameraLookAt(0.0f, 0.0f, 0.0f);
-	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
-	MyMatrix4 viewMatrix = MyMatrix4::CameraMatrix(cameraPosition, cameraLookAt, cameraUpVector);
-	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, 1.0f, 0.1f, 1000.0f);
-
-	colorShader->BindUniformMatrix(viewMatrix, "view");
-	colorShader->BindUniformMatrix(projectionMatrix, "projection");
-
 	testQuad->Draw();
+	testTriangle->Draw();
 
 	glutSwapBuffers();
 
@@ -200,6 +242,11 @@ void MyApplication::KeyboardFunc(unsigned char key, int x, int y)
 			// exit
 		}
 	}
+	else
+	{
+
+	}
+
 	if (inputManager != 0)
 	{
 		inputManager->Keys[key] = GLUT_DOWN;
@@ -288,4 +335,14 @@ void MyApplication::MouseMovePassiveFunc(int x, int y)
 	int glY = winHeight - y;
 	inputManager->MouseLocation.SetX((float &)glX);
 	inputManager->MouseLocation.SetY((float &)glY);
+}
+
+void MyApplication::ShadersUpdateCameraMatrix()
+{
+	colorShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
+}
+
+void MyApplication::ShadersUpdateProjectionMatrix()
+{
+	colorShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
 }

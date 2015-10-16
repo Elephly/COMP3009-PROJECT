@@ -14,7 +14,7 @@ public:
 	MyColorRGBA &GetColor();
 
 	// Setters
-	void SetColor(float const& red, float const& green, float const& blue, float const& alpha);
+	void SetColor(float const & red, float const & green, float const & blue, float const & alpha);
 	void SetColor(MyColorRGBA &color);
 
 private:
@@ -32,7 +32,7 @@ public:
 	MyVector2D &GetVector();
 
 	// Setters
-	void SetVector(float const& x, float const& y);
+	void SetVector(float const & x, float const & y);
 	void SetVector(MyVector2D &vector);
 
 private:
@@ -50,8 +50,8 @@ public:
 	MyVector3D &GetVector();
 
 	// Setters
-	void SetVector(float const& x, float const& y, float const& z);
-	void SetVector(MyVector2D &vector, float const& z);
+	void SetVector(float const & x, float const & y, float const & z);
+	void SetVector(MyVector2D &vector, float const & z);
 	void SetVector(MyVector3D &vector);
 
 private:
@@ -69,9 +69,9 @@ public:
 	MyVector4D &GetVector();
 
 	// Setters
-	void SetVector(float const& x, float const& y, float const& z, float const& w);
-	void SetVector(MyVector2D &vector, float const& z, float const& w);
-	void SetVector(MyVector3D &vector, float const& w);
+	void SetVector(float const & x, float const & y, float const & z, float const & w);
+	void SetVector(MyVector2D &vector, float const & z, float const & w);
+	void SetVector(MyVector3D &vector, float const & w);
 	void SetVector(MyVector4D &vector);
 
 private:

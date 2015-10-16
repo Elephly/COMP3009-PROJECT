@@ -11,22 +11,84 @@ MyMatrix4 MyMatrix4::NullMatrix()
 	return MyMatrix4();
 }
 
+MyMatrix4 MyMatrix4::ZeroMatrix()
+{
+	return MyMatrix4(MyVector4D(0.0f, 0.0f, 0.0f, 0.0f), MyVector4D(0.0f, 0.0f, 0.0f, 0.0f), MyVector4D(0.0f, 0.0f, 0.0f, 0.0f), MyVector4D(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
 MyMatrix4 MyMatrix4::IdentityMatrix()
 {
 	return MyMatrix4(MyVector4D(1.0f, 0.0f, 0.0f, 0.0f), MyVector4D(0.0f, 1.0f, 0.0f, 0.0f), MyVector4D(0.0f, 0.0f, 1.0f, 0.0f), MyVector4D(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-MyMatrix4 MyMatrix4::RotateMatrix()
+MyMatrix4 MyMatrix4::RotationAboutXMatrix(float const & angle, bool isDegree)
 {
-	return MyMatrix4();
+	float a = (isDegree ? DegreeToRadian(angle) : angle);
+
+	MyMatrix4 matrix = MyMatrix4::IdentityMatrix();
+	matrix.entries[1][1] = matrix.entries[2][2] = cos(a);
+	matrix.entries[1][2] = -(matrix.entries[2][1] = sin(a));
+
+	return matrix;
 }
 
-MyMatrix4 MyMatrix4::ScaleMatrix(float const& x, float const& y, float const& z)
+MyMatrix4 MyMatrix4::RotationAboutYMatrix(float const & angle, bool isDegree)
+{
+	float a = (isDegree ? DegreeToRadian(angle) : angle);
+
+	MyMatrix4 matrix = MyMatrix4::IdentityMatrix();
+	matrix.entries[0][0] = matrix.entries[2][2] = cos(a);
+	matrix.entries[0][2] = -(matrix.entries[2][0] = -sin(a));
+
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::RotationAboutZMatrix(float const & angle, bool isDegree)
+{
+	float a = (isDegree ? DegreeToRadian(angle) : angle);
+
+	MyMatrix4 matrix = MyMatrix4::IdentityMatrix();
+	matrix.entries[0][0] = matrix.entries[1][1] = cos(a);
+	matrix.entries[0][1] = -(matrix.entries[1][0] = sin(a));
+
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::RollPitchYarRotationMatrix(float const & roll, float const & pitch, float const & yaw, bool isDegree)
+{
+	return (RotationAboutYMatrix(yaw, isDegree) * RotationAboutXMatrix(pitch, isDegree) * RotationAboutZMatrix(roll, isDegree));
+}
+
+MyMatrix4 MyMatrix4::RotationAboutVectorAxisMatrix(MyVector3D const & vector, float const & angle, bool isDegree)
+{
+	float a = (isDegree ? DegreeToRadian(angle) : angle);
+	MyVector3D v = vector.GetNormalized();
+
+	float x = v.GetX();
+	float y = v.GetY();
+	float z = v.GetZ();
+	float c = cos(a);
+	float s = sin(a);
+
+	MyMatrix4 matrix = MyMatrix4(MyVector4D(c + (x * x * (1 - c)), (x * y * (1 - c)) - (z * s), (x * z * (1 - c)) + (y * s), 0.0f),
+		MyVector4D((x * y * (1 - c)) + (z * s), c + (y * y * (1 - c)), (y * z * (1 - c)) - (x * s), 0.0f),
+		MyVector4D((z * x * (1 - c)) - (y * s), (z * y * (1 - c)) + (x * s), c + (z * z * (1 - c)), 0.0f),
+		MyVector4D());
+
+	return matrix;
+}
+
+MyMatrix4 MyMatrix4::RotationAboutVectorAxisMatrix(MyVector4D const & vector, float const & angle, bool isDegree)
+{
+	return RotationAboutVectorAxisMatrix(MyVector3D(vector.GetX(), vector.GetY(), vector.GetZ()), angle, isDegree);
+}
+
+MyMatrix4 MyMatrix4::ScaleMatrix(float const & x, float const & y, float const & z)
 {
 	return MyMatrix4(MyVector4D(x, 0.0f, 0.0f, 0.0f), MyVector4D(0.0f, y, 0.0f, 0.0f), MyVector4D(0.0f, 0.0f, z, 0.0f), MyVector4D());
 }
 
-MyMatrix4 MyMatrix4::TranslationMatrix(float const& x, float const& y, float const& z)
+MyMatrix4 MyMatrix4::TranslationMatrix(float const & x, float const & y, float const & z)
 {
 	MyMatrix4 matrix = IdentityMatrix();
 	matrix.entries[0][3] = x;
@@ -35,26 +97,24 @@ MyMatrix4 MyMatrix4::TranslationMatrix(float const& x, float const& y, float con
 	return matrix;
 }
 
-MyMatrix4 MyMatrix4::TranslationMatrix(MyVector3D & vector)
+MyMatrix4 MyMatrix4::TranslationMatrix(MyVector3D const & vector)
 {
-	float x = vector.GetX(), y = vector.GetY(), z = vector.GetZ();
-	return TranslationMatrix(x, y, z);
+	MyVector3D v = vector;
+	return TranslationMatrix(v.GetX(), v.GetY(), v.GetZ());
 }
 
-MyMatrix4 MyMatrix4::TranslationMatrix(MyVector4D & vector)
+MyMatrix4 MyMatrix4::TranslationMatrix(MyVector4D const & vector)
 {
-	float x = vector.GetX(), y = vector.GetY(), z = vector.GetZ();
-	return TranslationMatrix(x, y, z);
+	MyVector4D v = vector;
+	return TranslationMatrix(v.GetX(), v.GetY(), v.GetZ());
 }
 
-MyMatrix4 MyMatrix4::CameraMatrix(MyVector3D & position, MyVector3D & lookAt, MyVector3D & upVector)
+MyMatrix4 MyMatrix4::CameraMatrix(MyVector3D const & position, MyVector3D const & lookAt, MyVector3D const & upVector)
 {
 	MyVector3D n3 = (position - lookAt);
 	n3.Normalize();
 
-	upVector.Normalize();
-
-	MyVector3D u3 = upVector.Cross(n3);
+	MyVector3D u3 = upVector.GetNormalized().Cross(n3);
 	u3.Normalize();
 
 	MyVector3D v3 = n3.Cross(u3);
@@ -62,25 +122,26 @@ MyMatrix4 MyMatrix4::CameraMatrix(MyVector3D & position, MyVector3D & lookAt, My
 	MyVector4D u = MyVector4D(u3, 0.0f);
 	MyVector4D v = MyVector4D(v3, 0.0f);
 	MyVector4D n = MyVector4D(n3, 0.0f);
+	
+	MyVector4D pos = MyVector4D(position.GetX(), position.GetY(), position.GetZ());
 
 	MyMatrix4 matrix = MyMatrix4(u, v, n, MyVector4D());
-	matrix.entries[0][3] = (-u).Dot(position);
-	matrix.entries[1][3] = (-v).Dot(position);
-	matrix.entries[2][3] = (-n).Dot(position);
+	matrix.entries[0][3] = (-u).Dot(pos);
+	matrix.entries[1][3] = (-v).Dot(pos);
+	matrix.entries[2][3] = (-n).Dot(pos);
 
 	return matrix;
 }
 
-MyMatrix4 MyMatrix4::CameraMatrix(MyVector4D & position, MyVector4D & lookAt, MyVector4D & upVector)
+MyMatrix4 MyMatrix4::CameraMatrix(MyVector4D const & position, MyVector4D const & lookAt, MyVector4D const & upVector)
 {
 	MyVector4D n = (position - lookAt);
 	n.SetW(0.0f);
 	n.Normalize();
 
-	upVector.SetW(0.0f);
-	upVector.Normalize();
+	MyVector4D up = MyVector4D(upVector.GetX(), upVector.GetY(), upVector.GetZ(), 0.0f);
 
-	MyVector4D u = upVector.Cross(n);
+	MyVector4D u = up.GetNormalized().Cross(n);
 	u.SetW(0.0f);
 	u.Normalize();
 
@@ -95,7 +156,7 @@ MyMatrix4 MyMatrix4::CameraMatrix(MyVector4D & position, MyVector4D & lookAt, My
 	return matrix;
 }
 
-MyMatrix4 MyMatrix4::FrustrumProjetionMatrix(float const& xMin, float const& yMin, float const& xMax, float const& yMax, float const& nearPlane, float const& farPlane)
+MyMatrix4 MyMatrix4::FrustrumProjetionMatrix(float const & xMin, float const & yMin, float const & xMax, float const & yMax, float const & nearPlane, float const & farPlane)
 {
 	MyMatrix4 matrix = IdentityMatrix();
 
@@ -114,7 +175,7 @@ MyMatrix4 MyMatrix4::FrustrumProjetionMatrix(float const& xMin, float const& yMi
 	return matrix;
 }
 
-MyMatrix4 MyMatrix4::SymmetricPerspectiveProjectionMatrix(float const& fieldOfView, float const& aspectRatio, float const& nearPlane, float const& farPlane)
+MyMatrix4 MyMatrix4::SymmetricPerspectiveProjectionMatrix(float const & fieldOfView, float const & aspectRatio, float const & nearPlane, float const & farPlane)
 {
 	MyMatrix4 matrix = IdentityMatrix();
 	float cot = 1.0f / tan(DegreeToRadian(fieldOfView / 2.0f));

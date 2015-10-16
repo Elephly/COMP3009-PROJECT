@@ -10,12 +10,14 @@ public:
 	~MyPoint2D();
 
 	// Getters
-	const float &GetX();
-	const float &GetY();
+	float GetX() const;
+	float GetY() const;
+	const float &GetXAddr() const;
+	const float &GetYAddr() const;
 
 	// Setters
-	void SetX(float const& x);
-	void SetY(float const& y);
+	void SetX(float const & x);
+	void SetY(float const & y);
 
 protected:
 	float x_;
@@ -29,14 +31,17 @@ public:
 	~MyPoint3D();
 
 	// Getters
-	const float &GetX();
-	const float &GetY();
-	const float &GetZ();
+	float GetX() const;
+	float GetY() const;
+	float GetZ() const;
+	const float &GetXAddr() const;
+	const float &GetYAddr() const;
+	const float &GetZAddr() const;
 
 	// Setters
-	void SetX(float const& x);
-	void SetY(float const& y);
-	void SetZ(float const& z);
+	void SetX(float const & x);
+	void SetY(float const & y);
+	void SetZ(float const & z);
 
 protected:
 	float x_;
@@ -51,16 +56,20 @@ public:
 	~MyPoint4D();
 
 	// Getters
-	const float &GetX();
-	const float &GetY();
-	const float &GetZ();
-	const float &GetW();
+	float GetX() const;
+	float GetY() const;
+	float GetZ() const;
+	float GetW() const;
+	const float &GetXAddr() const;
+	const float &GetYAddr() const;
+	const float &GetZAddr() const;
+	const float &GetWAddr() const;
 
 	// Setters
-	void SetX(float const& x);
-	void SetY(float const& y);
-	void SetZ(float const& z);
-	void SetW(float const& w);
+	void SetX(float const & x);
+	void SetY(float const & y);
+	void SetZ(float const & z);
+	void SetW(float const & w);
 
 protected:
 	float x_;

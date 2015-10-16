@@ -25,8 +25,8 @@ void MyTriangle::Initialize(MyShaderProgram *shader)
 	MyVertex4D v;
 
 	unsigned int *addr_ver = (unsigned int *)&v;
-	unsigned int *addr_vec = (unsigned int *)&v.GetVector().GetX();
-	unsigned int *addr_col = (unsigned int *)&v.GetColor().GetRed();
+	unsigned int *addr_vec = (unsigned int *)&v.GetVector().GetXAddr();
+	unsigned int *addr_col = (unsigned int *)&v.GetColor().GetRedAddr();
 
 	glGenVertexArrays(1, &vertexArrayObject);
 	glBindVertexArray(vertexArrayObject);

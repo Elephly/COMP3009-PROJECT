@@ -9,7 +9,7 @@ class MyVector
 public:
 	virtual ~MyVector() = 0;
 
-	virtual float GetLength() = 0;
+	virtual float GetLength() const = 0;
 
 	virtual void Normalize() = 0;
 };
@@ -20,7 +20,7 @@ public:
 	MyVector2D(float x = 0.0f, float y = 0.0f);
 	~MyVector2D();
 
-	virtual float GetLength();
+	virtual float GetLength() const;
 	MyVector2D GetNormalized();
 
 	float Dot(const MyVector2D &other) const;
@@ -48,8 +48,8 @@ public:
 	MyVector3D(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 	~MyVector3D();
 
-	virtual float GetLength();
-	virtual MyVector3D GetNormalized();
+	virtual float GetLength() const;
+	virtual MyVector3D GetNormalized() const;
 
 	MyVector3D Cross(const MyVector3D &other) const;
 	float Dot(const MyVector3D &other) const;
@@ -78,7 +78,7 @@ public:
 	MyVector4D(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 1.0f);
 	~MyVector4D();
 
-	virtual float GetLength();
+	virtual float GetLength() const;
 	virtual MyVector4D GetNormalized();
 
 	MyVector4D Cross(const MyVector4D &other) const;

@@ -4,6 +4,7 @@
 #include "MyIncludes.h"
 #include "MyInputManager.h"
 #include "MyShaderProgram.h"
+#include "MyCamera.h"
 #include "MyTriangle.h"
 #include "MyQuad.h"
 
@@ -55,7 +56,16 @@ private:
 	// Shaders
 	MyShaderProgram *colorShader;
 
+	// Camera
+	MyCamera *camera;
+
+	// Objects
+	MyTriangle *testTriangle;
 	MyQuad *testQuad;
+
+	// Private Functions
+	void ShadersUpdateCameraMatrix();
+	void ShadersUpdateProjectionMatrix();
 };
 
 #endif // MYAPPLICATION_H

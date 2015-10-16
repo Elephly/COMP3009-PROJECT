@@ -1,6 +1,10 @@
 #ifndef MYDEFINES_H
 #define MYDEFINES_H
 
+#ifndef MY_DEBUG
+#define MY_DEBUG 1
+#endif // MY_DEBUG
+
 #ifndef PROJECT_NAME
 #define PROJECT_NAME "COMP3009-PROJECT"
 #endif

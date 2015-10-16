@@ -14,7 +14,7 @@ public:
 	// Getters
 	int GetShaderProgram();
 
-	int BindUniformMatrix(MyMatrix4 &matrix, const char *uniformName);
+	int BindUniformMatrix(MyMatrix4 const & matrix, const char *uniformName);
 
 private:
 	char *vertexShaderFileName;

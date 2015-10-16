@@ -12,7 +12,7 @@ MyVector2D::~MyVector2D()
 {
 }
 
-float MyVector2D::GetLength()
+float MyVector2D::GetLength() const
 {
 	return sqrt(x_ * x_ + y_ * y_);
 }
@@ -122,12 +122,12 @@ MyVector3D::~MyVector3D()
 {
 }
 
-float MyVector3D::GetLength()
+float MyVector3D::GetLength() const
 {
 	return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
 }
 
-MyVector3D MyVector3D::GetNormalized()
+MyVector3D MyVector3D::GetNormalized() const
 {
 	return (*this) / GetLength();
 }
@@ -246,7 +246,7 @@ MyVector4D::~MyVector4D()
 {
 }
 
-float MyVector4D::GetLength()
+float MyVector4D::GetLength() const
 {
 	return sqrt(x_ * x_ + y_ * y_ + z_ * z_ + w_ * w_);
 }

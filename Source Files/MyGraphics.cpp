@@ -14,42 +14,62 @@ MyColorRGBA::~MyColorRGBA()
 {
 }
 
-const float &MyColorRGBA::GetRed()
+float MyColorRGBA::GetRed() const
 {
 	return r;
 }
 
-const float &MyColorRGBA::GetGreen()
+float MyColorRGBA::GetGreen() const
 {
 	return g;
 }
 
-const float &MyColorRGBA::GetBlue()
+float MyColorRGBA::GetBlue() const
 {
 	return b;
 }
 
-const float &MyColorRGBA::GetAlpha()
+float MyColorRGBA::GetAlpha() const
 {
 	return a;
 }
 
-void MyColorRGBA::SetRed(float const& red)
+const float & MyColorRGBA::GetRedAddr() const
+{
+	return r;
+}
+
+const float & MyColorRGBA::GetGreenAddr() const
+{
+	return g;
+}
+
+const float & MyColorRGBA::GetBlueAddr() const
+{
+	return b;
+}
+
+const float & MyColorRGBA::GetAlphaAddr() const
+{
+	return a;
+}
+
+void MyColorRGBA::SetRed(float const & red)
 {
 	r = red;
 }
 
-void MyColorRGBA::SetGreen(float const& green)
+void MyColorRGBA::SetGreen(float const & green)
 {
 	g = green;
 }
 
-void MyColorRGBA::SetBlue(float const& blue)
+void MyColorRGBA::SetBlue(float const & blue)
 {
 	b = blue;
 }
 
-void MyColorRGBA::SetAlpha(float const& alpha)
+void MyColorRGBA::SetAlpha(float const & alpha)
 {
 	a = alpha;
 }

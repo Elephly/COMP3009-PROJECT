@@ -8,16 +8,20 @@ public:
 	~MyColorRGBA();
 
 	// Getters
-	const float &GetRed();
-	const float &GetGreen();
-	const float &GetBlue();
-	const float &GetAlpha();
+	float GetRed() const;
+	float GetGreen() const;
+	float GetBlue() const;
+	float GetAlpha() const;
+	const float &GetRedAddr() const;
+	const float &GetGreenAddr() const;
+	const float &GetBlueAddr() const;
+	const float &GetAlphaAddr() const;
 
 	// Setters
-	void SetRed(float const& red);
-	void SetGreen(float const& green);
-	void SetBlue(float const& blue);
-	void SetAlpha(float const& alpha);
+	void SetRed(float const & red);
+	void SetGreen(float const & green);
+	void SetBlue(float const & blue);
+	void SetAlpha(float const & alpha);
 
 private:
 	float r;
