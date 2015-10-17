@@ -6,4 +6,4 @@ COMP3009 Term Project
 2. Create environment variable %GL_DIR% and set it to your GL directory
 
 ### TODO
-- MyObject3D to hold a vector of children MyObject3D instances for the sake of applying all transformations to all children entities.
+- 

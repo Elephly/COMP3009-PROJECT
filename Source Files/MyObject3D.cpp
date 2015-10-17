@@ -17,6 +17,14 @@ MyObject3D::~MyObject3D()
 	}
 }
 
+void MyObject3D::Update()
+{
+	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	{
+		(*it)->Update();
+	}
+}
+
 void MyObject3D::Rotate(float const & x, float const & y, float const & z, bool isDegree)
 {
 	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)

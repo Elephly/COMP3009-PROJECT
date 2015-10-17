@@ -12,11 +12,20 @@ MyGraphicsObject3D::~MyGraphicsObject3D()
 
 void MyGraphicsObject3D::Initialize(MyShaderProgram * shader)
 {
+	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	{
+		((MyGraphicsObject3D *)(*it))->Initialize(shader);
+	}
 	shaderProgram = shader;
 }
 
 void MyGraphicsObject3D::Draw()
 {
+	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	{
+		((MyGraphicsObject3D *)(*it))->Draw();
+	}
+
 	// ISROT
 	if (shaderProgram != 0)
 	{

@@ -13,10 +13,6 @@ public:
 		MyVertex4D &vertex3 = MyVertex4D(MyVector4D(1.0f, 1.0f)),
 		MyVertex4D &vertex4 = MyVertex4D(MyVector4D(1.0f, -1.0f)));
 	~MyQuad();
-
-	virtual void Initialize(MyShaderProgram *shader);
-	virtual void Update();
-	virtual void Draw();
 };
 
 #endif // MYQUAD_H

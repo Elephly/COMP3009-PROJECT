@@ -10,28 +10,3 @@ MyQuad::MyQuad(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation,
 MyQuad::~MyQuad()
 {
 }
-
-void MyQuad::Initialize(MyShaderProgram * shader)
-{
-	MyGraphicsObject3D::Initialize(shader);
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	{
-		((MyGraphicsObject3D *)(*it))->Initialize(shader);
-	}
-}
-
-void MyQuad::Update()
-{
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	{
-		((MyGraphicsObject3D *)(*it))->Update();
-	}
-}
-
-void MyQuad::Draw()
-{
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	{
-		((MyGraphicsObject3D *)(*it))->Draw();
-	}
-}
