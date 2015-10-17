@@ -10,6 +10,8 @@ void MainKeyboardUpFunc(unsigned char key, int x, int y);
 void MainMouseFunc(int button, int state, int x, int y);
 void MainMouseMoveFunc(int x, int y);
 void MainMouseMovePassiveFunc(int x, int y);
+void MainSpecialFunc(int key, int x, int y);
+void MainSpecialUpFunc(int key, int x, int y);
 
 MyApplication *myApplication;
 
@@ -27,6 +29,8 @@ int main(int argc, char *argv[])
 		myApplication->RegisterMouseFunc(MainMouseFunc);
 		myApplication->RegisterMouseMoveFunc(MainMouseMoveFunc);
 		myApplication->RegisterMouseMovePassiveFunc(MainMouseMovePassiveFunc);
+		myApplication->RegisterSpecialFunc(MainSpecialFunc);
+		myApplication->RegisterSpecialUpFunc(MainSpecialUpFunc);
 		myApplication->LoadContent();
 		myApplication->Run();
 	}
@@ -99,6 +103,7 @@ void MainMouseFunc(int button, int state, int x, int y)
 		myApplication->MouseFunc(button, state, x, y);
 	}
 }
+
 void MainMouseMoveFunc(int x, int y)
 {
 	if (myApplication != 0)
@@ -106,10 +111,27 @@ void MainMouseMoveFunc(int x, int y)
 		myApplication->MouseMoveFunc(x, y);
 	}
 }
+
 void MainMouseMovePassiveFunc(int x, int y)
 {
 	if (myApplication != 0)
 	{
 		myApplication->MouseMovePassiveFunc(x, y);
+	}
+}
+
+void MainSpecialFunc(int key, int x, int y)
+{
+	if (myApplication != 0)
+	{
+		myApplication->SpecialFunc(key, x, y);
+	}
+}
+
+void MainSpecialUpFunc(int key, int x, int y)
+{
+	if (myApplication != 0)
+	{
+		myApplication->SpecialUpFunc(key, x, y);
 	}
 }

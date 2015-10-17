@@ -35,6 +35,8 @@ public:
 	void RegisterMouseFunc(void(*callback)(int button, int state, int x, int y));
 	void RegisterMouseMoveFunc(void(*callback)(int x, int y));
 	void RegisterMouseMovePassiveFunc(void(*callback)(int x, int y));
+	void RegisterSpecialFunc(void(*callback)(int key, int x, int y));
+	void RegisterSpecialUpFunc(void(*callback)(int key, int x, int y));
 
 	// Callback Functions
 	void ReshapeFunc(int width, int height);
@@ -45,6 +47,8 @@ public:
 	void MouseFunc(int button, int state, int x, int y);
 	void MouseMoveFunc(int x, int y);
 	void MouseMovePassiveFunc(int x, int y);
+	void SpecialFunc(int key, int x, int);
+	void SpecialUpFunc(int key, int x, int);
 
 private:
 	char *applicationName;

@@ -53,11 +53,11 @@ void MyTriangle::Initialize(MyShaderProgram *shader)
 
 void MyTriangle::Update()
 {
-	MyObject3D::Update();
 }
 
 void MyTriangle::Draw()
 {
+	MyObject3D::Draw();
 	glUseProgram(shaderProgram->GetShaderProgram());
 	glBindVertexArray(vertexArrayObject);
 	glDrawArrays(GL_TRIANGLES, 0, 3);

@@ -11,7 +11,7 @@ public:
 	virtual ~MyObject3D() = 0;
 
 	virtual void Initialize(MyShaderProgram *shader);
-	virtual void Update();
+	virtual void Draw();
 
 	// Transformations
 	virtual void Rotate(float const & x, float const & y, float const & z, bool isDegree = true);

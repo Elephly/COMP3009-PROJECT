@@ -100,7 +100,8 @@ void MyApplication::Update()
 	bool cameraTransformed = false;
 	if (inputManager != 0)
 	{
-		MyVector3D direction = (camera->GetLookAt() - camera->GetPosition()).GetNormalized();
+		MyVector3D direction = camera->GetDirection();
+		MyVector3D right = camera->GetRightVector();
 		if (inputManager->Keys['W'] == GLUT_DOWN || inputManager->Keys['w'] == GLUT_DOWN)
 		{
 			camera->Translate(direction * 0.1f);
@@ -108,18 +109,34 @@ void MyApplication::Update()
 		}
 		if (inputManager->Keys['A'] == GLUT_DOWN || inputManager->Keys['a'] == GLUT_DOWN)
 		{
-			camera->Translate(camera->GetUpVector().Cross(direction) * 0.1f);
+			camera->Translate(-right * 0.1f);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['S'] == GLUT_DOWN || inputManager->Keys['s'] == GLUT_DOWN)
 		{
-			camera->Translate(direction * -0.1f);
+			camera->Translate(-direction * 0.1f);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['D'] == GLUT_DOWN || inputManager->Keys['d'] == GLUT_DOWN)
 		{
-			camera->Translate(direction.Cross(camera->GetUpVector()) * 0.1f);
+			camera->Translate(right * 0.1f);
 			cameraTransformed = true;
+		}
+		if (inputManager->SpecialKeys[GLUT_KEY_UP] == GLUT_DOWN)
+		{
+			// Rotate camera
+		}
+		if (inputManager->SpecialKeys[GLUT_KEY_LEFT] == GLUT_DOWN)
+		{
+			// Rotate camera
+		}
+		if (inputManager->SpecialKeys[GLUT_KEY_DOWN] == GLUT_DOWN)
+		{
+			// Rotate camera
+		}
+		if (inputManager->SpecialKeys[GLUT_KEY_RIGHT] == GLUT_DOWN)
+		{
+			// Rotate camera
 		}
 	}
 	camera->Update();
@@ -206,6 +223,16 @@ void MyApplication::RegisterMouseMovePassiveFunc(void(*callback)(int x, int y))
 	glutPassiveMotionFunc(callback);
 }
 
+void MyApplication::RegisterSpecialFunc(void(*callback)(int key, int x, int y))
+{
+	glutSpecialFunc(callback);
+}
+
+void MyApplication::RegisterSpecialUpFunc(void(*callback)(int key, int x, int y))
+{
+	glutSpecialUpFunc(callback);
+}
+
 void MyApplication::ReshapeFunc(int width, int height)
 {
 	windowWidth = width;
@@ -239,28 +266,26 @@ void MyApplication::DisplayFunc()
 
 void MyApplication::KeyboardFunc(unsigned char key, int x, int y)
 {
-	if (inputManager->Keys[key] == GLUT_UP)
-	{
-		// UNREACHABLE
-		if (key == 27)
-		{
-			// exit
-		}
-	}
-	else
-	{
-
-	}
-
 	if (inputManager != 0)
 	{
+		if (inputManager->Keys[key] == GLUT_UP)
+		{
+
+		}
+		else
+		{
+
+		}
 		inputManager->Keys[key] = GLUT_DOWN;
 	}
 }
 
 void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 {
-	inputManager->Keys[key] = GLUT_UP;
+	if (inputManager != 0)
+	{
+		inputManager->Keys[key] = GLUT_UP;
+	}
 }
 
 void MyApplication::MouseFunc(int button, int state, int x, int y)
@@ -340,6 +365,30 @@ void MyApplication::MouseMovePassiveFunc(int x, int y)
 	int glY = winHeight - y;
 	inputManager->MouseLocation.SetX((float &)glX);
 	inputManager->MouseLocation.SetY((float &)glY);
+}
+
+void MyApplication::SpecialFunc(int key, int x, int)
+{
+	if (inputManager != 0)
+	{
+		if (inputManager->SpecialKeys[key] == GLUT_UP)
+		{
+
+		}
+		else
+		{
+
+		}
+		inputManager->SpecialKeys[key] = GLUT_DOWN;
+	}
+}
+
+void MyApplication::SpecialUpFunc(int key, int x, int)
+{
+	if (inputManager != 0)
+	{
+		inputManager->SpecialKeys[key] = GLUT_UP;
+	}
 }
 
 void MyApplication::ShadersUpdateCameraMatrix()

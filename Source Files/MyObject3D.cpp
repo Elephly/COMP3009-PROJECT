@@ -16,7 +16,7 @@ void MyObject3D::Initialize(MyShaderProgram * shader)
 	shaderProgram = shader;
 }
 
-void MyObject3D::Update()
+void MyObject3D::Draw()
 {
 	// ISROT
 	if (shaderProgram != 0)
