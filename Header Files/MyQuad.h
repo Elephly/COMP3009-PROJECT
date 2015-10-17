@@ -4,7 +4,7 @@
 #include "MyDefines.h"
 #include "MyTriangle.h"
 
-class MyQuad : MyObject3D
+class MyQuad : MyGraphicsObject3D
 {
 public:
 	MyQuad(MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D(),
@@ -17,6 +17,9 @@ public:
 	virtual void Initialize(MyShaderProgram *shader);
 	virtual void Update();
 	virtual void Draw();
+
+	// Setters
+	virtual void SetShader(MyShaderProgram *shader);
 
 private:
 	MyTriangle *t1;

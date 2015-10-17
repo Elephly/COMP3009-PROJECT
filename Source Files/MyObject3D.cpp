@@ -11,25 +11,6 @@ MyObject3D::~MyObject3D()
 {
 }
 
-void MyObject3D::Initialize(MyShaderProgram * shader)
-{
-	shaderProgram = shader;
-}
-
-void MyObject3D::Draw()
-{
-	// ISROT
-	if (shaderProgram != 0)
-	{
-		MyMatrix4 transformation = MyMatrix4::TranslationMatrix(position) *
-			MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
-			MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ()) *
-			MyMatrix4::IdentityMatrix();
-
-		shaderProgram->BindUniformMatrix(transformation, "transform");
-	}
-}
-
 void MyObject3D::Rotate(float const & x, float const & y, float const & z, bool isDegree)
 {
 	rotation += MyVector3D((!isDegree ? RadianToDegree(x) : x),

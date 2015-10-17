@@ -10,9 +10,6 @@ public:
 	MyObject3D(MyVector3D &initialPosition = MyVector3D(), MyVector3D &initialScale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &initialRotation = MyVector3D());
 	virtual ~MyObject3D() = 0;
 
-	virtual void Initialize(MyShaderProgram *shader);
-	virtual void Draw();
-
 	// Transformations
 	virtual void Rotate(float const & x, float const & y, float const & z, bool isDegree = true);
 	virtual void Rotate(MyVector3D const & vector, bool isDegree = true);
@@ -52,7 +49,6 @@ protected:
 	MyVector3D position;
 	MyVector3D rotation;
 	MyVector3D scale;
-	MyShaderProgram *shaderProgram;
 };
 
 #endif // MYOBJECT3D_H

@@ -6,7 +6,7 @@
 #include "MyVertex.h"
 #include "MyShaderProgram.h"
 
-class MyTriangle : public MyObject3D
+class MyTriangle : public MyGraphicsObject3D
 {
 public:
 	MyTriangle(MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D(),
@@ -24,7 +24,6 @@ public:
 	MyVertex4D &GetNextVertex();
 
 	// Setters
-	void SetShader(MyShaderProgram *shader);
 	void SetCurrentVertex(MyVertex4D &vertex);
 	void SetNextVertex(MyVertex4D &vertex);
 	void SetCurrentVertex(float x, float y, float z, float w, MyColorRGBA &color = MyColorRGBA());

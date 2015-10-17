@@ -1,7 +1,7 @@
 #include "MyQuad.h"
 
 MyQuad::MyQuad(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation, MyVertex4D & vertex1, MyVertex4D & vertex2, MyVertex4D & vertex3, MyVertex4D & vertex4) :
-	MyObject3D(position, scale, rotation)
+	MyGraphicsObject3D(position, scale, rotation)
 {
 	t1 = new MyTriangle(position, scale, rotation, vertex1, vertex2, vertex4);
 	t2 = new MyTriangle(position, scale, rotation, vertex2, vertex3, vertex4);
@@ -15,7 +15,7 @@ MyQuad::~MyQuad()
 
 void MyQuad::Initialize(MyShaderProgram * shader)
 {
-	MyObject3D::Initialize(shader);
+	MyGraphicsObject3D::Initialize(shader);
 	t1->Initialize(shader);
 	t2->Initialize(shader);
 }
@@ -30,4 +30,11 @@ void MyQuad::Draw()
 {
 	t1->Draw();
 	t2->Draw();
+}
+
+void MyQuad::SetShader(MyShaderProgram * shader)
+{
+	MyGraphicsObject3D::SetShader(shader);
+	t1->SetShader(shader);
+	t2->SetShader(shader);
 }

@@ -3,13 +3,12 @@
 #include <glew.h>
 
 MyTriangle::MyTriangle(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation, MyVertex4D & vertex1, MyVertex4D & vertex2, MyVertex4D & vertex3) :
-	MyObject3D(position, scale, rotation)
+	MyGraphicsObject3D(position, scale, rotation)
 {
 	currentVertex = 0;
 	vertices[0] = vertex1;
 	vertices[1] = vertex3;
 	vertices[2] = vertex2;
-	shaderProgram = 0;
 	vertexArrayObject = 0;
 }
 
@@ -20,7 +19,7 @@ MyTriangle::~MyTriangle()
 
 void MyTriangle::Initialize(MyShaderProgram *shader)
 {
-	MyObject3D::Initialize(shader);
+	MyGraphicsObject3D::Initialize(shader);
 
 	GLuint vbo;
 	MyVertex4D v;
@@ -57,7 +56,7 @@ void MyTriangle::Update()
 
 void MyTriangle::Draw()
 {
-	MyObject3D::Draw();
+	MyGraphicsObject3D::Draw();
 	glUseProgram(shaderProgram->GetShaderProgram());
 	glBindVertexArray(vertexArrayObject);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -74,11 +73,6 @@ MyVertex4D & MyTriangle::GetNextVertex()
 	int i = currentVertex;
 	currentVertex = (currentVertex + 1) % 3;
 	return vertices[i];
-}
-
-void MyTriangle::SetShader(MyShaderProgram *shader)
-{
-	shaderProgram = shader;
 }
 
 void MyTriangle::SetCurrentVertex(MyVertex4D & vertex)
