@@ -16,17 +16,20 @@ void MyCamera::Update()
 
 void MyCamera::Rotate(float const & x, float const & y, float const & z, bool isDegree)
 {
-	MyObject3D::Rotate(x, y, z, isDegree);
+	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, y, isDegree) * MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), x, isDegree) *
+		MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), z, isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 void MyCamera::Rotate(MyVector3D const & vector, bool isDegree)
 {
-	MyObject3D::Rotate(vector, isDegree);
+	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, vector.GetY(), isDegree) * MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), vector.GetX(), isDegree) *
+		MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), vector.GetZ(), isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 void MyCamera::Rotate(MyVector4D const & vector, bool isDegree)
 {
-	MyObject3D::Rotate(vector, isDegree);
+	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, vector.GetY(), isDegree) * MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), vector.GetX(), isDegree) *
+		MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), vector.GetZ(), isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 void MyCamera::Scale(float const & x, float const & y, float const & z)

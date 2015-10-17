@@ -3,6 +3,16 @@
 
 MyVector::~MyVector() { }
 
+MyVector2D::MyVector2D(MyVector3D & vector) :
+	MyPoint2D(vector.GetX(), vector.GetY())
+{
+}
+
+MyVector2D::MyVector2D(MyVector4D & vector) :
+	MyPoint2D(vector.GetX(), vector.GetY())
+{
+}
+
 MyVector2D::MyVector2D(float x, float y) :
 	MyPoint2D(x, y)
 {
@@ -110,6 +120,11 @@ std::ostream &operator<<(std::ostream &os, const MyVector2D &vector)
 
 MyVector3D::MyVector3D(MyVector2D & vector, float z):
 	MyPoint3D(vector.GetX(), vector.GetY(), z)
+{
+}
+
+MyVector3D::MyVector3D(MyVector4D & vector) :
+	MyPoint3D(vector.GetX(), vector.GetY(), vector.GetZ())
 {
 }
 

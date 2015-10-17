@@ -36,12 +36,10 @@ MyApplication::MyApplication(char * name)
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix);
 
-	//testTriangle = new MyTriangle(MyVertex4D(-0.25f, -0.0f, 0.5f, 1.0f, MyColorRGBA(1.0f, 0.0f, 0.0f, 1.0f)),
-	//	MyVertex4D(0.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)),
-	//	MyVertex4D(-1.0f, -1.0f, 0.5f, 1.0f, MyColorRGBA(0.0f, 0.0f, 1.0f)));
-	testTriangle = new MyTriangle();
+	testTriangleFront = new MyTriangle();
+	testTriangleBack = new MyTriangle();
 
-	testQuad = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
+	testQuadFront = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
 		MyVertex4D(-0.5f, -0.5f, -1.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
 		MyVertex4D(-0.5f, 0.5f, -1.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
 		MyVertex4D(0.5f, 0.5f, -1.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
@@ -50,8 +48,8 @@ MyApplication::MyApplication(char * name)
 
 MyApplication::~MyApplication()
 {
-	MyDelete(testTriangle);
-	MyDelete(testQuad);
+	MyDelete(testTriangleFront);
+	MyDelete(testQuadFront);
 	MyDelete(camera);
 	MyDelete(colorShader);
 	if (windowID != 0)
@@ -72,11 +70,10 @@ void MyApplication::Initialize(int *argc, char **argv)
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),
 		(int)((float)(glutGet(GLUT_SCREEN_HEIGHT) - windowHeight) / 4.0f));
 	windowID = glutCreateWindow(applicationName);
-	//*
+	
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	//*/
 	if (GLenum err = glewInit() != GLEW_OK)
 	{
 		throw glewGetErrorString(err);
@@ -84,8 +81,10 @@ void MyApplication::Initialize(int *argc, char **argv)
 	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
 	glUseProgram(colorShader->GetShaderProgram());
 
-	testTriangle->Initialize(colorShader);
-	testQuad->Initialize(colorShader);
+	testTriangleFront->Initialize(colorShader);
+	testTriangleBack->Initialize(colorShader);
+	testTriangleBack->Yaw(180.0f);
+	testQuadFront->Initialize(colorShader);
 
 	ShadersUpdateCameraMatrix();
 	ShadersUpdateProjectionMatrix();
@@ -124,19 +123,23 @@ void MyApplication::Update()
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_UP] == GLUT_DOWN)
 		{
-			// Rotate camera
+			camera->Rotate(2.0f, 0.0f, 0.0f);
+			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_LEFT] == GLUT_DOWN)
 		{
-			// Rotate camera
+			camera->Rotate(0.0f, 2.0f, 0.0f);
+			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_DOWN] == GLUT_DOWN)
 		{
-			// Rotate camera
+			camera->Rotate(-2.0f, 0.0f, 0.0f);
+			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_RIGHT] == GLUT_DOWN)
 		{
-			// Rotate camera
+			camera->Rotate(0.0f, -2.0f, 0.0f);
+			cameraTransformed = true;
 		}
 	}
 	camera->Update();
@@ -144,8 +147,9 @@ void MyApplication::Update()
 	{
 		ShadersUpdateCameraMatrix();
 	}
-	testTriangle->Update();
-	testQuad->Update();
+	testTriangleFront->Update();
+	testTriangleBack->Update();
+	testQuadFront->Update();
 }
 
 void MyApplication::Draw()
@@ -155,8 +159,9 @@ void MyApplication::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	testQuad->Draw();
-	testTriangle->Draw();
+	testTriangleFront->Draw();
+	testTriangleBack->Draw();
+	testQuadFront->Draw();
 
 	glutSwapBuffers();
 

@@ -3,6 +3,7 @@
 
 #include "MyMatrix.h"
 #include "MyShaderProgram.h"
+#include <vector>
 
 class MyObject3D
 {
@@ -49,6 +50,7 @@ protected:
 	MyVector3D position;
 	MyVector3D rotation;
 	MyVector3D scale;
+	std::vector<MyObject3D *> children;
 };
 
 #endif // MYOBJECT3D_H

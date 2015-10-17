@@ -4,6 +4,11 @@
 #include <iostream>
 #include "MyGeometry.h"
 
+class MyVector;
+class MyVector2D;
+class MyVector3D;
+class MyVector4D;
+
 class MyVector
 {
 public:
@@ -17,6 +22,8 @@ public:
 class MyVector2D : public MyPoint2D, public MyVector
 {
 public:
+	MyVector2D(MyVector3D &vector);
+	MyVector2D(MyVector4D &vector);
 	MyVector2D(float x = 0.0f, float y = 0.0f);
 	~MyVector2D();
 
@@ -45,6 +52,7 @@ class MyVector3D : public MyPoint3D, public MyVector
 {
 public:
 	MyVector3D(MyVector2D &vector, float z = 0.0f);
+	MyVector3D(MyVector4D &vector);
 	MyVector3D(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 	~MyVector3D();
 

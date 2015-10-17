@@ -64,8 +64,9 @@ private:
 	MyCamera *camera;
 
 	// Objects
-	MyTriangle *testTriangle;
-	MyQuad *testQuad;
+	MyTriangle *testTriangleFront;
+	MyTriangle *testTriangleBack;
+	MyQuad *testQuadFront;
 
 	// Private Functions
 	void ShadersUpdateCameraMatrix();
