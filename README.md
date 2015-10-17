@@ -6,4 +6,4 @@ COMP3009 Term Project
 2. Create environment variable %GL_DIR% and set it to your GL directory
 
 ### TODO
-- GraphicsObject base class and model transformation matrix for all instances of GraphicsObject
+- Camera rotation
