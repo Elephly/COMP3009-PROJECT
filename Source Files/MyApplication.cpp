@@ -40,16 +40,23 @@ MyApplication::MyApplication(char * name)
 	testTriangleBack = new MyTriangle();
 
 	testQuadFront = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
-		MyVertex4D(-0.5f, -0.5f, -1.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
-		MyVertex4D(-0.5f, 0.5f, -1.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex4D(0.5f, 0.5f, -1.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
-		MyVertex4D(0.5f, -0.5f, -1.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
+		MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
+		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
+		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
+	testQuadBack = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
+		MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
+		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
+		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
+		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
 }
 
 MyApplication::~MyApplication()
 {
 	MyDelete(testTriangleFront);
+	MyDelete(testTriangleBack);
 	MyDelete(testQuadFront);
+	MyDelete(testQuadBack);
 	MyDelete(camera);
 	MyDelete(colorShader);
 	if (windowID != 0)
@@ -84,7 +91,13 @@ void MyApplication::Initialize(int *argc, char **argv)
 	testTriangleFront->Initialize(colorShader);
 	testTriangleBack->Initialize(colorShader);
 	testTriangleBack->Yaw(180.0f);
+	testTriangleFront->Translate(MyVector3D(-0.5f, 0.0f, 0.5f));
+	testTriangleBack->Translate(MyVector3D(-0.5f, 0.0f, 0.5f));
 	testQuadFront->Initialize(colorShader);
+	testQuadBack->Initialize(colorShader);
+	testQuadBack->Yaw(180.0f);
+	testQuadFront->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
+	testQuadBack->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
 
 	ShadersUpdateCameraMatrix();
 	ShadersUpdateProjectionMatrix();
@@ -150,6 +163,7 @@ void MyApplication::Update()
 	testTriangleFront->Update();
 	testTriangleBack->Update();
 	testQuadFront->Update();
+	testQuadBack->Update();
 }
 
 void MyApplication::Draw()
@@ -162,6 +176,7 @@ void MyApplication::Draw()
 	testTriangleFront->Draw();
 	testTriangleBack->Draw();
 	testQuadFront->Draw();
+	testQuadBack->Draw();
 
 	glutSwapBuffers();
 

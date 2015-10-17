@@ -67,6 +67,7 @@ private:
 	MyTriangle *testTriangleFront;
 	MyTriangle *testTriangleBack;
 	MyQuad *testQuadFront;
+	MyQuad *testQuadBack;
 
 	// Private Functions
 	void ShadersUpdateCameraMatrix();

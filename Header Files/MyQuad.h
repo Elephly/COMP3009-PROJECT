@@ -17,13 +17,6 @@ public:
 	virtual void Initialize(MyShaderProgram *shader);
 	virtual void Update();
 	virtual void Draw();
-
-	// Setters
-	virtual void SetShader(MyShaderProgram *shader);
-
-private:
-	MyTriangle *t1;
-	MyTriangle *t2;
 };
 
 #endif // MYQUAD_H

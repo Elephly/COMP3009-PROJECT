@@ -36,5 +36,9 @@ MyShaderProgram * MyGraphicsObject3D::GetShader()
 
 void MyGraphicsObject3D::SetShader(MyShaderProgram * shader)
 {
+	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	{
+		((MyGraphicsObject3D *)(*it))->SetShader(shader);
+	}
 	shaderProgram = shader;
 }

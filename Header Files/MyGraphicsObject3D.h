@@ -10,6 +10,7 @@ public:
 	virtual ~MyGraphicsObject3D() = 0;
 
 	virtual void Initialize(MyShaderProgram *shader);
+	virtual void Update() = 0;
 	virtual void Draw();
 
 	// Getters

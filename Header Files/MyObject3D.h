@@ -34,6 +34,7 @@ public:
 	virtual const MyVector3D &GetPosition() const;
 	virtual const MyVector3D &GetRotation() const;
 	virtual const MyVector3D &GetScale() const;
+	virtual std::vector<MyObject3D *> *GetChildren() const;
 
 	// Setters
 	virtual void SetPosition(float const & x, float const & y, float const & z);
@@ -50,7 +51,7 @@ protected:
 	MyVector3D position;
 	MyVector3D rotation;
 	MyVector3D scale;
-	std::vector<MyObject3D *> children;
+	std::vector<MyObject3D *> *children;
 };
 
 #endif // MYOBJECT3D_H
