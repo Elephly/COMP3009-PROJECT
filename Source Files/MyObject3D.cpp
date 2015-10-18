@@ -1,5 +1,6 @@
 #include "MyObject3D.h"
 
+#include "MyDefines.h"
 #include "MyMath.h"
 
 MyObject3D::MyObject3D(MyVector3D & initialPosition, MyVector3D & initialScale, MyVector3D & initialRotation) :
@@ -12,8 +13,13 @@ MyObject3D::~MyObject3D()
 {
 	if (children != 0)
 	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			MyDelete(*it);
+		}
 		children->clear();
 		delete children;
+		children = 0;
 	}
 }
 

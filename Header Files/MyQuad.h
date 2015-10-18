@@ -12,7 +12,6 @@ public:
 		MyVertex4D &vertex2 = MyVertex4D(MyVector4D(-1.0f, 1.0f)),
 		MyVertex4D &vertex3 = MyVertex4D(MyVector4D(1.0f, 1.0f)),
 		MyVertex4D &vertex4 = MyVertex4D(MyVector4D(1.0f, -1.0f)));
-	~MyQuad();
 };
 
 #endif // MYQUAD_H

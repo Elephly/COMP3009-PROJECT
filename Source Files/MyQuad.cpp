@@ -6,7 +6,3 @@ MyQuad::MyQuad(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation,
 	children->push_back(new MyTriangle(position, scale, rotation, vertex1, vertex2, vertex4));
 	children->push_back(new MyTriangle(position, scale, rotation, vertex2, vertex3, vertex4));
 }
-
-MyQuad::~MyQuad()
-{
-}
