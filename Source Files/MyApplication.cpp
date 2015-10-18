@@ -49,6 +49,10 @@ MyApplication::MyApplication(char * name)
 		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
 		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
 		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
+
+	testCube = new MyCube(MyVector3D(-1.0f, 1.0f, -1.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
+		MyColorRGBA(1.0f), MyColorRGBA(0.0f, 1.0f), MyColorRGBA(0.0f, 0.0f, 1.0f),
+		MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
 }
 
 MyApplication::~MyApplication()
@@ -57,6 +61,7 @@ MyApplication::~MyApplication()
 	MyDelete(testTriangleBack);
 	MyDelete(testQuadFront);
 	MyDelete(testQuadBack);
+	MyDelete(testCube);
 	MyDelete(camera);
 	MyDelete(colorShader);
 	if (windowID != 0)
@@ -98,6 +103,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	testQuadBack->Yaw(180.0f);
 	testQuadFront->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
 	testQuadBack->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
+	testCube->Initialize(colorShader);
 
 	ShadersUpdateCameraMatrix();
 	ShadersUpdateProjectionMatrix();
@@ -164,6 +170,7 @@ void MyApplication::Update()
 	testTriangleBack->Update();
 	testQuadFront->Update();
 	testQuadBack->Update();
+	testCube->Update();
 }
 
 void MyApplication::Draw()
@@ -177,6 +184,7 @@ void MyApplication::Draw()
 	testTriangleBack->Draw();
 	testQuadFront->Draw();
 	testQuadBack->Draw();
+	testCube->Draw();
 
 	glutSwapBuffers();
 

@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="Header Files\MyApplication.h" />
     <ClInclude Include="Header Files\MyCamera.h" />
+    <ClInclude Include="Header Files\MyCube.h" />
     <ClInclude Include="Header Files\MyDefines.h" />
     <ClInclude Include="Header Files\MyFileIO.h" />
     <ClInclude Include="Header Files\MyGeometry.h" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\MyCamera.cpp" />
+    <ClCompile Include="Source Files\MyCube.cpp" />
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp" />
     <ClCompile Include="Source Files\MyObject3D.cpp" />
     <ClCompile Include="Source Files\MyMatrix.cpp" />

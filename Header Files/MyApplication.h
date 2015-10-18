@@ -7,6 +7,7 @@
 #include "MyCamera.h"
 #include "MyTriangle.h"
 #include "MyQuad.h"
+#include "MyCube.h"
 
 class MyApplication
 {
@@ -68,6 +69,7 @@ private:
 	MyTriangle *testTriangleBack;
 	MyQuad *testQuadFront;
 	MyQuad *testQuadBack;
+	MyCube *testCube;
 
 	// Private Functions
 	void ShadersUpdateCameraMatrix();

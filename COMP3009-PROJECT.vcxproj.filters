@@ -78,6 +78,9 @@
     <ClInclude Include="Header Files\MyGraphicsObject3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\MyCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png">
@@ -140,6 +143,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
