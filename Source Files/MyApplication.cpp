@@ -166,6 +166,8 @@ void MyApplication::Update()
 	{
 		ShadersUpdateCameraMatrix();
 	}
+
+	testCube->Yaw(2.0f);
 	testTriangleFront->Update();
 	testTriangleBack->Update();
 	testQuadFront->Update();
