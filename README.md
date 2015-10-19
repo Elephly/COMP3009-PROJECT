@@ -8,6 +8,7 @@ COMP3009 Term Project
 ### TODO (Unordered)
 - Object origin for orbital rotation
 - Lighting
+- Blending
 - Textured meshes
 - Normal mapping (?)
 - Wavefront (.OBJ) file parser
