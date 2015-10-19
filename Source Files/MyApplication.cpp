@@ -120,6 +120,7 @@ void MyApplication::Update()
 	{
 		MyVector3D direction = camera->GetDirection();
 		MyVector3D right = camera->GetRightVector();
+		MyVector3D up = camera->GetUpVector();
 		if (inputManager->Keys['W'] == GLUT_DOWN || inputManager->Keys['w'] == GLUT_DOWN)
 		{
 			camera->Translate(direction * 0.1f);
@@ -138,6 +139,16 @@ void MyApplication::Update()
 		if (inputManager->Keys['D'] == GLUT_DOWN || inputManager->Keys['d'] == GLUT_DOWN)
 		{
 			camera->Translate(right * 0.1f);
+			cameraTransformed = true;
+		}
+		if (inputManager->Keys['Q'] == GLUT_DOWN || inputManager->Keys['q'] == GLUT_DOWN)
+		{
+			camera->Translate(up * 0.1f);
+			cameraTransformed = true;
+		}
+		if (inputManager->Keys['C'] == GLUT_DOWN || inputManager->Keys['c'] == GLUT_DOWN)
+		{
+			camera->Translate(-up * 0.1f);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_UP] == GLUT_DOWN)
