@@ -142,22 +142,22 @@ void MyApplication::Update()
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_UP] == GLUT_DOWN)
 		{
-			camera->Rotate(2.0f, 0.0f, 0.0f);
+			camera->Pitch(2.0f);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_LEFT] == GLUT_DOWN)
 		{
-			camera->Rotate(0.0f, 2.0f, 0.0f);
+			camera->Yaw(2.0f);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_DOWN] == GLUT_DOWN)
 		{
-			camera->Rotate(-2.0f, 0.0f, 0.0f);
+			camera->Pitch(-2.0f);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_RIGHT] == GLUT_DOWN)
 		{
-			camera->Rotate(0.0f, -2.0f, 0.0f);
+			camera->Yaw(-2.0f);
 			cameraTransformed = true;
 		}
 	}

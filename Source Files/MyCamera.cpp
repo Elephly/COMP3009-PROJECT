@@ -1,5 +1,7 @@
 #include "MyCamera.h"
 
+#include "MyIncludes.h"
+
 MyCamera::MyCamera(MyVector3D & position, MyVector3D & lookAtVector, MyVector3D upVector, MyMatrix4 & projection) : lookAt(lookAtVector),
 	up(upVector), projectionMatrix(projection),	MyObject3D(position)
 {
@@ -16,18 +18,21 @@ void MyCamera::Update()
 
 void MyCamera::Rotate(float const & x, float const & y, float const & z, bool isDegree)
 {
+	MyObject3D::Rotate(x, y, z, isDegree);
 	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, y, isDegree) * MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), x, isDegree) *
 		MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), z, isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 void MyCamera::Rotate(MyVector3D const & vector, bool isDegree)
 {
+	MyObject3D::Rotate(vector, isDegree);
 	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, vector.GetY(), isDegree) * MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), vector.GetX(), isDegree) *
 		MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), vector.GetZ(), isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 void MyCamera::Rotate(MyVector4D const & vector, bool isDegree)
 {
+	MyObject3D::Rotate(vector, isDegree);
 	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, vector.GetY(), isDegree) * MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), vector.GetX(), isDegree) *
 		MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), vector.GetZ(), isDegree) * MyVector4D(lookAt - position)) + position;
 }
@@ -68,16 +73,25 @@ void MyCamera::Translate(MyVector4D const & vector)
 void MyCamera::Roll(float const & angle, bool isDegree)
 {
 	MyObject3D::Roll(angle, isDegree);
+	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(GetDirection(), angle, isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 void MyCamera::Pitch(float const & angle, bool isDegree)
 {
-	MyObject3D::Pitch(angle, isDegree);
+	float angleBetweenUpAndDir = acos(up.Dot(GetDirection() /* / (up.GetLength() / GetDirection().GetLengt())*/));
+	float a = abs(isDegree ? DegreeToRadian(angle) : angle);
+	if ((angle > 0 && angleBetweenUpAndDir > (a * 2.0f)) ||
+		(angle < 0 && angleBetweenUpAndDir < (MyMath::MY_PI_F - (a * 2.0f))))
+	{
+		MyObject3D::Pitch(angle, isDegree);
+		lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(GetRightVector(), angle, isDegree) * MyVector4D(lookAt - position)) + position;
+	}
 }
 
 void MyCamera::Yaw(float const & angle, bool isDegree)
 {
 	MyObject3D::Yaw(isDegree);
+	lookAt = (MyMatrix4::RotationAboutVectorAxisMatrix(up, angle, isDegree) * MyVector4D(lookAt - position)) + position;
 }
 
 MyVector3D MyCamera::GetDirection() const
@@ -92,7 +106,7 @@ const MyVector3D & MyCamera::GetLookAt() const
 
 MyVector3D MyCamera::GetRightVector() const
 {
-	return GetDirection().Cross(up);
+	return GetDirection().Cross(up).GetNormalized();
 }
 
 const MyVector3D & MyCamera::GetUpVector() const
