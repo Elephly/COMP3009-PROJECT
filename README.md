@@ -6,9 +6,9 @@ COMP3009 Term Project
 2. Create environment variable %GL_DIR% and set it to your GL directory
 
 ### TODO (Unordered)
-- Object origin for orbital rotation
-- Lighting
-- Blending
-- Textured meshes
-- Normal mapping (?)
-- Wavefront (.OBJ) file parser
+- [ ] Object origin for orbital rotation
+- [ ] Lighting
+- [ ] Blending
+- [ ] Textured meshes
+- [ ] Normal mapping (?)
+- [ ] Wavefront (.OBJ) file parser
