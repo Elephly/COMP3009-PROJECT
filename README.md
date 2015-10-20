@@ -6,6 +6,7 @@ COMP3009 Term Project
 2. Create environment variable %GL_DIR% and set it to your GL directory
 
 ### TODO (Unordered)
+- [ ] Modify camera to use a quaternion orientation
 - [ ] Object origin for orbital rotation
 - [ ] Lighting
 - [ ] Blending
