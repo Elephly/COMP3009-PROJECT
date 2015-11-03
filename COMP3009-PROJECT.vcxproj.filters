@@ -150,8 +150,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader Files\Color.vert" />
-    <None Include="Shader Files\Color.frag" />
     <None Include="README.md" />
+    <None Include="Shader Files\ColorFrag.glsl" />
+    <None Include="Shader Files\ColorVert.glsl" />
+    <None Include="Shader Files\WhiteVert.glsl" />
   </ItemGroup>
 </Project>

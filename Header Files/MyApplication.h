@@ -33,6 +33,7 @@ public:
 	void RegisterDisplayFunc(void(*callback)());
 	void RegisterKeyboardFunc(void(*callback)(unsigned char key, int x, int y));
 	void RegisterKeyboardUpFunc(void(*callback)(unsigned char key, int x, int y));
+	void RegisterMouseEntryFunc(void(*callback)(int state));
 	void RegisterMouseFunc(void(*callback)(int button, int state, int x, int y));
 	void RegisterMouseMoveFunc(void(*callback)(int x, int y));
 	void RegisterMouseMovePassiveFunc(void(*callback)(int x, int y));
@@ -45,6 +46,7 @@ public:
 	void DisplayFunc();
 	void KeyboardFunc(unsigned char key, int x, int y);
 	void KeyboardUpFunc(unsigned char key, int x, int y);
+	void MouseEntryFunc(int state);
 	void MouseFunc(int button, int state, int x, int y);
 	void MouseMoveFunc(int x, int y);
 	void MouseMovePassiveFunc(int x, int y);

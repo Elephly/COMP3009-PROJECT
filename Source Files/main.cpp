@@ -7,6 +7,7 @@ void MainTimerFunc(int operation);
 void MainDisplayFunc();
 void MainKeyboardFunc(unsigned char key, int x, int y);
 void MainKeyboardUpFunc(unsigned char key, int x, int y);
+void MainMouseEntryFunc(int state);
 void MainMouseFunc(int button, int state, int x, int y);
 void MainMouseMoveFunc(int x, int y);
 void MainMouseMovePassiveFunc(int x, int y);
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
 		myApplication->RegisterDisplayFunc(MainDisplayFunc);
 		myApplication->RegisterKeyboardFunc(MainKeyboardFunc);
 		myApplication->RegisterKeyboardUpFunc(MainKeyboardUpFunc);
+		myApplication->RegisterMouseEntryFunc(MainMouseEntryFunc);
 		myApplication->RegisterMouseFunc(MainMouseFunc);
 		myApplication->RegisterMouseMoveFunc(MainMouseMoveFunc);
 		myApplication->RegisterMouseMovePassiveFunc(MainMouseMovePassiveFunc);
@@ -93,6 +95,14 @@ void MainKeyboardUpFunc(unsigned char key, int x, int y)
 	if (myApplication != 0)
 	{
 		myApplication->KeyboardUpFunc(key, x, y);
+	}
+}
+
+void MainMouseEntryFunc(int state)
+{
+	if (myApplication != 0)
+	{
+		myApplication->MouseEntryFunc(state);
 	}
 }
 

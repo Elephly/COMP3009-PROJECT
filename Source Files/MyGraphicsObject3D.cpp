@@ -1,5 +1,7 @@
 #include "MyGraphicsObject3D.h"
 
+#include <glew.h>
+
 MyGraphicsObject3D::MyGraphicsObject3D(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation) :
 	MyObject3D(position, scale, rotation)
 {
@@ -33,6 +35,8 @@ void MyGraphicsObject3D::Draw()
 			MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
 			MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ()) *
 			MyMatrix4::IdentityMatrix();
+
+		glUseProgram(shaderProgram->GetShaderProgram());
 
 		shaderProgram->BindUniformMatrix(transformation, "transform");
 	}

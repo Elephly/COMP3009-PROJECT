@@ -90,7 +90,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	{
 		throw glewGetErrorString(err);
 	}
-	colorShader->InitializeShaderProgram("Shader Files\\Color.vert", "Shader Files\\Color.frag");
+	colorShader->InitializeShaderProgram("Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
 	glUseProgram(colorShader->GetShaderProgram());
 
 	testTriangleFront->Initialize(colorShader);
@@ -249,6 +249,11 @@ void MyApplication::RegisterKeyboardUpFunc(void(*callback)(unsigned char key, in
 	glutKeyboardUpFunc(callback);
 }
 
+void MyApplication::RegisterMouseEntryFunc(void(*callback)(int state))
+{
+	glutEntryFunc(callback);
+}
+
 void MyApplication::RegisterMouseFunc(void(*callback)(int button, int state, int x, int y))
 {
 	glutMouseFunc(callback);
@@ -326,6 +331,19 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 	if (inputManager != 0)
 	{
 		inputManager->Keys[key] = GLUT_UP;
+	}
+}
+
+void MyApplication::MouseEntryFunc(int state)
+{
+	switch (state)
+	{
+	case GLUT_ENTERED:
+		break;
+	case GLUT_LEFT:
+		break;
+	default:
+		break;
 	}
 }
 

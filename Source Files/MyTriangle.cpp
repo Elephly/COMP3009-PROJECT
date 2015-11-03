@@ -57,7 +57,6 @@ void MyTriangle::Update()
 void MyTriangle::Draw()
 {
 	MyGraphicsObject3D::Draw();
-	glUseProgram(shaderProgram->GetShaderProgram());
 	glBindVertexArray(vertexArrayObject);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glBindVertexArray(0);
