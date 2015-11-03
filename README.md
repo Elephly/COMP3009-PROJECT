@@ -7,7 +7,8 @@ COMP3009 Term Project
 
 ### TODO (Unordered)
 - [ ] Modify camera to use a quaternion orientation
-- [ ] Object origin for orbital rotation
+- [x] Object origin for orbital rotation
+  - No longer an issue - proper hierarchical object transformations inherently solves this problem
 - [ ] Lighting
 - [ ] Blending
 - [ ] Textured meshes
