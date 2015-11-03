@@ -21,21 +21,22 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader)
 	shaderProgram = shader;
 }
 
-void MyGraphicsObject3D::Draw()
+void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 {
+	// ISROT
+	MyMatrix4 transformation = (parentTransformation *
+		(MyMatrix4::TranslationMatrix(position) *
+		(MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
+		(MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ()) *
+		MyMatrix4::IdentityMatrix()))));
+
 	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
 	{
-		((MyGraphicsObject3D *)(*it))->Draw();
+		((MyGraphicsObject3D *)(*it))->Draw(transformation);
 	}
 
-	// ISROT
 	if (shaderProgram != 0)
 	{
-		MyMatrix4 transformation = MyMatrix4::TranslationMatrix(position) *
-			MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
-			MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ()) *
-			MyMatrix4::IdentityMatrix();
-
 		glUseProgram(shaderProgram->GetShaderProgram());
 
 		shaderProgram->BindUniformMatrix(transformation, "transform");

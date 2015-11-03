@@ -54,9 +54,9 @@ void MyTriangle::Update()
 {
 }
 
-void MyTriangle::Draw()
+void MyTriangle::Draw(MyMatrix4 const & parentTransformation)
 {
-	MyGraphicsObject3D::Draw();
+	MyGraphicsObject3D::Draw(parentTransformation);
 	glBindVertexArray(vertexArrayObject);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glBindVertexArray(0);

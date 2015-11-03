@@ -17,7 +17,7 @@ public:
 
 	virtual void Initialize(MyShaderProgram *shader);
 	virtual void Update();
-	virtual void Draw();
+	virtual void Draw(MyMatrix4 const & parentTransformation = MyMatrix4::IdentityMatrix());
 
 	// Getters
 	MyVertex4D &GetCurrentVertex();

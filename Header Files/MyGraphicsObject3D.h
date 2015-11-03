@@ -10,7 +10,7 @@ public:
 	virtual ~MyGraphicsObject3D() = 0;
 
 	virtual void Initialize(MyShaderProgram *shader);
-	virtual void Draw();
+	virtual void Draw(MyMatrix4 const & parentTransformation = MyMatrix4::IdentityMatrix());
 
 	// Getters
 	virtual MyShaderProgram *GetShader();
