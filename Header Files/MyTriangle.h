@@ -13,11 +13,6 @@ public:
 		MyVertex4D &vertex1 = MyVertex4D(MyVector4D(0.0f, sin(DegreeToRadian(60.0f)) / 2.0f)),
 		MyVertex4D &vertex2 = MyVertex4D(MyVector4D(cos(DegreeToRadian(60.0f)), -sin(DegreeToRadian(60.0f)) / 2.0f)),
 		MyVertex4D &vertex3 = MyVertex4D(MyVector4D(-cos(DegreeToRadian(60.0f)), -sin(DegreeToRadian(60.0f)) / 2.0f)));
-	virtual ~MyTriangle();
-
-	virtual void Initialize(MyShaderProgram *shader);
-	virtual void Update();
-	virtual void Draw(MyMatrix4 const & parentTransformation = MyMatrix4::IdentityMatrix());
 
 	// Getters
 	MyVertex4D &GetCurrentVertex();
@@ -31,8 +26,7 @@ public:
 
 private:
 	int currentVertex;
-	MyVertex4D vertices[3];
-	unsigned int vertexArrayObject;
+	MyVertex4D myVertices[3];
 };
 
 #endif // MYTRIANGLE_H

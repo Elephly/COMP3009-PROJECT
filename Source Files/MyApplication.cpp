@@ -40,15 +40,9 @@ MyApplication::MyApplication(char * name)
 	testTriangleBack = new MyTriangle();
 
 	testQuadFront = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
-		MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
-		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
-		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
+		MyColorRGBA(0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f), MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 1.0f));
 	testQuadBack = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
-		MyVertex4D(-0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f, 0.0f, 1.0f)),
-		MyVertex4D(-0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(0.0f, 1.0f)),
-		MyVertex4D(0.5f, 0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)),
-		MyVertex4D(0.5f, -0.5f, 0.0f, 1.0f, MyColorRGBA(1.0f, 1.0f)));
+		MyColorRGBA(0.0f, 1.0f),  MyColorRGBA(0.0f, 1.0f), MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 1.0f));
 
 	testCube = new MyCube(MyVector3D(-1.0f, 1.0f, -1.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
 		MyColorRGBA(1.0f), MyColorRGBA(0.0f, 1.0f), MyColorRGBA(0.0f, 0.0f, 1.0f),
@@ -178,11 +172,12 @@ void MyApplication::Update()
 		ShadersUpdateCameraMatrix();
 	}
 
-	testCube->Yaw(2.0f);
 	testTriangleFront->Update();
 	testTriangleBack->Update();
 	testQuadFront->Update();
 	testQuadBack->Update();
+	testCube->Rotate(2.0f, 1.5f, 1.0f);
+	testCube->Scale(1.0001f, 1.0001f, 1.0001f);
 	testCube->Update();
 }
 

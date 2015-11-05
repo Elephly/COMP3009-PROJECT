@@ -2,6 +2,7 @@
 #define MYGRAPHICSOBJECT3D_H
 
 #include "MyObject3D.h"
+#include "MyVertex.h"
 
 class MyGraphicsObject3D : public MyObject3D
 {
@@ -20,6 +21,10 @@ public:
 
 protected:
 	MyShaderProgram *shaderProgram;
+	unsigned int vertexArrayObject;
+	MyVertex4D **vertices;
+	int numVertices;
+	bool hasVAO;
 };
 
 #endif // !MYGRAPHICSOBJECT3D_H

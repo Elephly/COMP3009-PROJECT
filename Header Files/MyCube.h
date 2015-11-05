@@ -12,6 +12,9 @@ public:
 		MyColorRGBA &color4 = MyColorRGBA(), MyColorRGBA &color5 = MyColorRGBA(), MyColorRGBA &color6 = MyColorRGBA());
 	MyCube(bool solidColor, MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D(),
 		MyColorRGBA &color = MyColorRGBA());
+
+private:
+	MyVertex4D myVertices[36];
 };
 
 #endif // MYCUBE_H
