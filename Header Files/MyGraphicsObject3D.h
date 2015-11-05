@@ -25,6 +25,7 @@ protected:
 	MyVertex4D **vertices;
 	int numVertices;
 	bool hasVAO;
+	bool isDynamicArray;
 };
 
 #endif // !MYGRAPHICSOBJECT3D_H

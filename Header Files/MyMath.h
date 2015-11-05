@@ -19,6 +19,7 @@ public:
 #define RadianToDegree(x) (float)(((x) * 180.0f / MyMath::MY_PI_F))
 #endif // RadianToDegree
 
-double Lerp(double a, double b, double t);
+float LerpF(float a, float b, float t);
+double LerpD(double a, double b, double t);
 
 #endif // MYMATH_H

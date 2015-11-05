@@ -398,7 +398,7 @@ GLubyte * MyImageUtil::LerpPixels(GLubyte * a, GLubyte * b, double t, int channe
 	GLubyte *lerp = new GLubyte[channels]();
 	for (int i = 0; i < channels; i++)
 	{
-		lerp[i] = (int)Lerp((double)a[i], (double)b[i], t);
+		lerp[i] = (int)LerpD((double)a[i], (double)b[i], t);
 	}
 	return lerp;
 }

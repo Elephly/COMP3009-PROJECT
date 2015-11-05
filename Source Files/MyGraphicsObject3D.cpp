@@ -10,6 +10,7 @@ MyGraphicsObject3D::MyGraphicsObject3D(MyVector3D & position, MyVector3D & scale
 	vertices = 0;
 	numVertices = 0;
 	hasVAO = 0;
+	isDynamicArray = false;
 }
 
 MyGraphicsObject3D::~MyGraphicsObject3D()
@@ -39,7 +40,14 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader)
 
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, vertices, GL_STATIC_DRAW);
+		if (isDynamicArray)
+		{
+			glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, *vertices, GL_STATIC_DRAW);
+		}
+		else
+		{
+			glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, vertices, GL_STATIC_DRAW);
+		}
 
 		GLuint positionLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxPos");
 		glEnableVertexAttribArray(positionLoc);

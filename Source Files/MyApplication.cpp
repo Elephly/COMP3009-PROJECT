@@ -47,6 +47,9 @@ MyApplication::MyApplication(char * name)
 	testCube = new MyCube(MyVector3D(-1.0f, 1.0f, -1.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
 		MyColorRGBA(1.0f), MyColorRGBA(0.0f, 1.0f), MyColorRGBA(0.0f, 0.0f, 1.0f),
 		MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
+
+	testSphere = new MySphere(MyVector3D(0.0f, 0.0f, -3.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), 32, 64,
+		MyColorRGBA(1.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
 }
 
 MyApplication::~MyApplication()
@@ -56,6 +59,7 @@ MyApplication::~MyApplication()
 	MyDelete(testQuadFront);
 	MyDelete(testQuadBack);
 	MyDelete(testCube);
+	MyDelete(testSphere);
 	MyDelete(camera);
 	MyDelete(colorShader);
 	if (windowID != 0)
@@ -98,6 +102,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	testQuadFront->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
 	testQuadBack->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
 	testCube->Initialize(colorShader);
+	testSphere->Initialize(colorShader);
 
 	ShadersUpdateCameraMatrix();
 	ShadersUpdateProjectionMatrix();
@@ -179,6 +184,8 @@ void MyApplication::Update()
 	testCube->Rotate(2.0f, 1.5f, 1.0f);
 	testCube->Scale(1.0001f, 1.0001f, 1.0001f);
 	testCube->Update();
+	testSphere->Yaw(10.0f);
+	testSphere->Update();
 }
 
 void MyApplication::Draw()
@@ -186,13 +193,14 @@ void MyApplication::Draw()
 	MyColorRGBA c = MyColors::CornflowerBlue;
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	testTriangleFront->Draw();
 	testTriangleBack->Draw();
 	testQuadFront->Draw();
 	testQuadBack->Draw();
 	testCube->Draw();
+	testSphere->Draw();
 
 	glutSwapBuffers();
 
