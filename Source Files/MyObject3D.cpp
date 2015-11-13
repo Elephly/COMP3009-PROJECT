@@ -23,7 +23,7 @@ MyObject3D::~MyObject3D()
 	}
 }
 
-void MyObject3D::Update(float deltaTime)
+void MyObject3D::Update(float const & deltaTime)
 {
 	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
 	{

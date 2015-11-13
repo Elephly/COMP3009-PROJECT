@@ -117,7 +117,7 @@ void MyApplication::LoadContent()
 {
 }
 
-void MyApplication::Update(float deltaTime)
+void MyApplication::Update(float const & deltaTime)
 {
 	bool cameraTransformed = false;
 	if (inputManager != 0)

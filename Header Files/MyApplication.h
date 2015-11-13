@@ -18,7 +18,7 @@ public:
 
 	void Initialize(int *argc, char **argv);
 	void LoadContent();
-	void Update(float deltaTime);
+	void Update(float const & deltaTime);
 	void Draw();
 
 	void Run();
