@@ -114,6 +114,7 @@ int MyShaderProgram::GetShaderProgram()
 
 int MyShaderProgram::BindUniformMatrix(MyMatrix4 const & matrix, const char * uniformName)
 {
+	glUseProgram(shaderProgram);
 	MyMatrix4 m = matrix;
 	int location = glGetUniformLocation(shaderProgram, uniformName);
 	assert(location != -1);

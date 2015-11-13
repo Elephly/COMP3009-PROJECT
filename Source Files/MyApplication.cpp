@@ -26,15 +26,17 @@ MyApplication::MyApplication(char * name)
 	windowWidth = 0;
 	windowHeight = 0;
 	windowID = 0;
+	totalElapsedTime = 0;
+	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
 	colorShader = new MyShaderProgram();
 
-	MyVector3D cameraPosition(0.0f, 0.0f, 5.0f);
+	MyVector3D cameraPosition(0.0f, 0.0f, 0.0f);
 	MyVector3D cameraLookAt(0.0f, 0.0f, -1.0f);
 	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
-	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix);
+	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
 
 	testTriangleFront = new MyTriangle();
 	testTriangleBack = new MyTriangle();
@@ -60,8 +62,10 @@ MyApplication::~MyApplication()
 	MyDelete(testQuadBack);
 	MyDelete(testCube);
 	MyDelete(testSphere);
+
 	MyDelete(camera);
 	MyDelete(colorShader);
+
 	if (windowID != 0)
 	{
 		glutDestroyWindow(windowID);
@@ -80,7 +84,8 @@ void MyApplication::Initialize(int *argc, char **argv)
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),
 		(int)((float)(glutGet(GLUT_SCREEN_HEIGHT) - windowHeight) / 4.0f));
 	windowID = glutCreateWindow(applicationName);
-	
+	totalElapsedTime = glutGet(GLUT_ELAPSED_TIME);
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -88,8 +93,8 @@ void MyApplication::Initialize(int *argc, char **argv)
 	{
 		throw glewGetErrorString(err);
 	}
+
 	colorShader->InitializeShaderProgram("Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
-	glUseProgram(colorShader->GetShaderProgram());
 
 	testTriangleFront->Initialize(colorShader);
 	testTriangleBack->Initialize(colorShader);
@@ -112,7 +117,7 @@ void MyApplication::LoadContent()
 {
 }
 
-void MyApplication::Update()
+void MyApplication::Update(float deltaTime)
 {
 	bool cameraTransformed = false;
 	if (inputManager != 0)
@@ -122,70 +127,70 @@ void MyApplication::Update()
 		MyVector3D up = camera->GetUpVector();
 		if (inputManager->Keys['W'] == GLUT_DOWN || inputManager->Keys['w'] == GLUT_DOWN)
 		{
-			camera->Translate(direction * 0.1f);
+			camera->Translate(direction * 5.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['A'] == GLUT_DOWN || inputManager->Keys['a'] == GLUT_DOWN)
 		{
-			camera->Translate(-right * 0.1f);
+			camera->Translate(-right * 5.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['S'] == GLUT_DOWN || inputManager->Keys['s'] == GLUT_DOWN)
 		{
-			camera->Translate(-direction * 0.1f);
+			camera->Translate(-direction * 5.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['D'] == GLUT_DOWN || inputManager->Keys['d'] == GLUT_DOWN)
 		{
-			camera->Translate(right * 0.1f);
+			camera->Translate(right * 5.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['Q'] == GLUT_DOWN || inputManager->Keys['q'] == GLUT_DOWN)
 		{
-			camera->Translate(up * 0.1f);
+			camera->Translate(up * 5.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['C'] == GLUT_DOWN || inputManager->Keys['c'] == GLUT_DOWN)
 		{
-			camera->Translate(-up * 0.1f);
+			camera->Translate(-up * 5.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_UP] == GLUT_DOWN)
 		{
-			camera->Pitch(2.0f);
+			camera->Pitch(90.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_LEFT] == GLUT_DOWN)
 		{
-			camera->Yaw(2.0f);
+			camera->Yaw(90.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_DOWN] == GLUT_DOWN)
 		{
-			camera->Pitch(-2.0f);
+			camera->Pitch(-90.0f * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_RIGHT] == GLUT_DOWN)
 		{
-			camera->Yaw(-2.0f);
+			camera->Yaw(-90.0f * deltaTime);
 			cameraTransformed = true;
 		}
 	}
-	camera->Update();
+	camera->Update(deltaTime);
 	if (cameraTransformed)
 	{
 		ShadersUpdateCameraMatrix();
 	}
 
-	testTriangleFront->Update();
-	testTriangleBack->Update();
-	testQuadFront->Update();
-	testQuadBack->Update();
-	testCube->Rotate(2.0f, 1.5f, 1.0f);
-	testCube->Scale(1.0001f, 1.0001f, 1.0001f);
-	testCube->Update();
-	testSphere->Yaw(10.0f);
-	testSphere->Update();
+	testTriangleFront->Update(deltaTime);
+	testTriangleBack->Update(deltaTime);
+	testQuadFront->Update(deltaTime);
+	testQuadBack->Update(deltaTime);
+	testCube->Rotate(10.0f * deltaTime, 7.5f * deltaTime, 5.0f * deltaTime);
+	testCube->Scale(1.0f + 0.001f * deltaTime, 1.0f + 0.001f * deltaTime, 1.0f + 0.001f * deltaTime);
+	testCube->Update(deltaTime);
+	testSphere->Yaw(50.0f * deltaTime);
+	testSphere->Update(deltaTime);
 }
 
 void MyApplication::Draw()
@@ -193,7 +198,7 @@ void MyApplication::Draw()
 	MyColorRGBA c = MyColors::CornflowerBlue;
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	testTriangleFront->Draw();
 	testTriangleBack->Draw();
@@ -298,10 +303,13 @@ void MyApplication::ReshapeFunc(int width, int height)
 
 void MyApplication::TimerFunc(int operation)
 {
+	int previousTime = totalElapsedTime;
+	totalElapsedTime = glutGet(GLUT_ELAPSED_TIME);
+	elapsedTime = totalElapsedTime - previousTime;
 	switch (operation)
 	{
 	case TIMER_UPDATE_OPERATION:
-		Update();
+		Update((float)elapsedTime / 1000.0f);
 		break;
 	default:
 		break;

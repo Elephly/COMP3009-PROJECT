@@ -18,7 +18,7 @@ public:
 
 	void Initialize(int *argc, char **argv);
 	void LoadContent();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	void Run();
@@ -59,6 +59,8 @@ private:
 	int windowWidth;
 	int windowHeight;
 	int windowID;
+	int totalElapsedTime;
+	int elapsedTime;
 	MyInputManager *inputManager;
 
 	// Shaders
