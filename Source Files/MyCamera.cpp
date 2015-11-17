@@ -3,7 +3,7 @@
 #include "MyIncludes.h"
 
 MyCamera::MyCamera(MyVector3D & position, MyVector3D & lookAtVector, MyVector3D upVector, MyMatrix4 & projection, bool yawLocked) : lookAt(lookAtVector),
-up(upVector), projectionMatrix(projection), MyObject3D(position), yawLock(yawLocked)
+	up(upVector), projectionMatrix(projection),	MyObject3D(position), yawLock(yawLocked)
 {
 }
 

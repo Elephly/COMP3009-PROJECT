@@ -6,10 +6,10 @@ MyGraphicsObject3D::MyGraphicsObject3D(MyVector3D & position, MyVector3D & scale
 	MyObject3D(position, scale, rotation)
 {
 	shaderProgram = 0;
+	objectMaterial = 0;
 	vertexArrayObject = 0;
 	vertices = 0;
 	numVertices = 0;
-	hasVAO = 0;
 	isDynamicArray = false;
 }
 
@@ -18,13 +18,14 @@ MyGraphicsObject3D::~MyGraphicsObject3D()
 	glDeleteVertexArrays(1, &vertexArrayObject);
 }
 
-void MyGraphicsObject3D::Initialize(MyShaderProgram * shader)
+void MyGraphicsObject3D::Initialize(MyShaderProgram * shader, MyMaterial * material)
 {
 	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
 	{
-		((MyGraphicsObject3D *)(*it))->Initialize(shader);
+		((MyGraphicsObject3D *)(*it))->Initialize(shader, material);
 	}
 	shaderProgram = shader;
+	objectMaterial = material;
 
 	if (numVertices > 0)
 	{
@@ -32,8 +33,10 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader)
 		MyVertex4D v;
 
 		unsigned int *addr_ver = (unsigned int *)&v;
-		unsigned int *addr_vec = (unsigned int *)&v.GetVector().GetXAddr();
+		unsigned int *addr_pos = (unsigned int *)&v.GetPosition().GetXAddr();
+		unsigned int *addr_nor = (unsigned int *)&v.GetNormal().GetXAddr();
 		unsigned int *addr_col = (unsigned int *)&v.GetColor().GetRedAddr();
+		unsigned int *addr_tex = (unsigned int *)&v.GetTextureCoord().GetXAddr();
 
 		glGenVertexArrays(1, &vertexArrayObject);
 		glBindVertexArray(vertexArrayObject);
@@ -49,21 +52,30 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader)
 			glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, vertices, GL_STATIC_DRAW);
 		}
 
-		GLuint positionLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxPos");
+		GLuint positionLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxPosition");
 		glEnableVertexAttribArray(positionLoc);
-		unsigned int attAddress = (unsigned int)addr_vec - (unsigned int)addr_ver;
+		unsigned int attAddress = (unsigned int)addr_pos - (unsigned int)addr_ver;
 		glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+
+		GLuint normalLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxNormal");
+		glEnableVertexAttribArray(normalLoc);
+		attAddress = (unsigned int)addr_nor - (unsigned int)addr_ver;
+		glVertexAttribPointer(normalLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+
 		GLuint colorLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxColor");
 		glEnableVertexAttribArray(colorLoc);
 		attAddress = (unsigned int)addr_col - (unsigned int)addr_ver;
 		glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
 
+		GLuint textureCoordLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxTextureCoord");
+		glEnableVertexAttribArray(textureCoordLoc);
+		attAddress = (unsigned int)addr_tex - (unsigned int)addr_ver;
+		glVertexAttribPointer(textureCoordLoc, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);
 
 		glDeleteBuffers(1, &vbo);
-
-		hasVAO = true;
 	}
 }
 
@@ -86,9 +98,13 @@ void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 		glUseProgram(shaderProgram->GetShaderProgram());
 
 		shaderProgram->BindUniformMatrix(transformation, "transform");
+		shaderProgram->BindUniformVector(MyVector4D(objectMaterial->GetAmbient()), "ambient");
+		shaderProgram->BindUniformVector(MyVector4D(objectMaterial->GetDiffuse()), "diffuse");
+		shaderProgram->BindUniformVector(MyVector4D(objectMaterial->GetSpecular()), "specular");
+		shaderProgram->BindUniformFloat(objectMaterial->GetShine(), "shine");
 	}
 
-	if (hasVAO)
+	if (vertexArrayObject != 0)
 	{
 		glBindVertexArray(vertexArrayObject);
 		glDrawArrays(GL_TRIANGLES, 0, numVertices);
@@ -101,11 +117,25 @@ MyShaderProgram * MyGraphicsObject3D::GetShader()
 	return shaderProgram;
 }
 
+MyMaterial * MyGraphicsObject3D::GetMaterial()
+{
+	return objectMaterial;
+}
+
 void MyGraphicsObject3D::SetShader(MyShaderProgram * shader)
 {
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	{
-		((MyGraphicsObject3D *)(*it))->SetShader(shader);
-	}
+	//for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	//{
+	//	((MyGraphicsObject3D *)(*it))->SetShader(shader);
+	//}
 	shaderProgram = shader;
+}
+
+void MyGraphicsObject3D::SetMaterial(MyMaterial * material)
+{
+	//for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	//{
+	//	((MyGraphicsObject3D *)(*it))->SetMaterial(material);
+	//}
+	objectMaterial = material;
 }

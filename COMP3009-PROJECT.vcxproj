@@ -133,6 +133,8 @@
     <ClInclude Include="Header Files\MyImageUtil.h" />
     <ClInclude Include="Header Files\MyIncludes.h" />
     <ClInclude Include="Header Files\MyInputManager.h" />
+    <ClInclude Include="Header Files\MyLightSource.h" />
+    <ClInclude Include="Header Files\MyMaterial.h" />
     <ClInclude Include="Header Files\MyMath.h" />
     <ClInclude Include="Header Files\MyMatrix.h" />
     <ClInclude Include="Header Files\MyObject3D.h" />
@@ -152,6 +154,8 @@
     <ClCompile Include="Source Files\MyCamera.cpp" />
     <ClCompile Include="Source Files\MyCube.cpp" />
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp" />
+    <ClCompile Include="Source Files\MyLightSource.cpp" />
+    <ClCompile Include="Source Files\MyMaterial.cpp" />
     <ClCompile Include="Source Files\MyObject3D.cpp" />
     <ClCompile Include="Source Files\MyMatrix.cpp" />
     <ClCompile Include="Source Files\MyQuad.cpp" />
@@ -175,6 +179,10 @@
     <None Include="README.md" />
     <None Include="Shader Files\ColorFrag.glsl" />
     <None Include="Shader Files\ColorVert.glsl" />
+    <None Include="Shader Files\GouraudFrag.glsl" />
+    <None Include="Shader Files\GouraudVert.glsl" />
+    <None Include="Shader Files\PhongFrag.glsl" />
+    <None Include="Shader Files\PhongVert.glsl" />
     <None Include="Shader Files\WhiteVert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

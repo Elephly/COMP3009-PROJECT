@@ -16,20 +16,18 @@ MySphere::MySphere(MyVector3D & position, MyVector3D & scale, MyVector3D & rotat
 		for (int j = 0; j < latitudeSamples; j++)
 		{
 			phi = MyMath::MY_PI_F * j / (latitudeSamples - 1);
-			MyVector4D normal = MyVector4D(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi));
+			MyVector3D normal = MyVector3D(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi));
 
 			float t = (float)j / latitudeSamples;
 			MyColorRGBA color = MyColorRGBA(LerpF(color1.GetRed(), color2.GetRed(), t), LerpF(color1.GetGreen(), color2.GetGreen(), t),
 				LerpF(color1.GetBlue(), color2.GetBlue(), t), LerpF(color1.GetAlpha(), color2.GetAlpha(), t));
 
-			//float s = abs(((float)i / ((float)longitudeSamples / 2.0f)) - 1);
-			//MyColorRGBA color = MyColorRGBA(LerpF(color1.GetRed(), color2.GetRed(), s), LerpF(color1.GetGreen(), color2.GetGreen(), s),
-			//	LerpF(color1.GetBlue(), color2.GetBlue(), s), LerpF(color1.GetAlpha(), color2.GetAlpha(), s));
-
 			MyVector4D position = normal * 0.5f;
-			position.SetW(1.0f);
 			
-			v[k++] = MyVertex4D(position, color);
+			MyVertex4D vertex = MyVertex4D(position, color);
+			vertex.SetNormal(normal);
+
+			v[k++] = vertex;
 		}
 	}
 

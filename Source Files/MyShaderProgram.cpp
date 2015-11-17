@@ -117,9 +117,56 @@ int MyShaderProgram::BindUniformMatrix(MyMatrix4 const & matrix, const char * un
 	glUseProgram(shaderProgram);
 	MyMatrix4 m = matrix;
 	int location = glGetUniformLocation(shaderProgram, uniformName);
-	assert(location != -1);
+	//assert(location != -1);
 	if (location == -1)
 		return location;
 	glUniformMatrix4fv(location, 1, true, m.GetEntries());
+	return 0;
+}
+
+int MyShaderProgram::BindUniformVector(MyVector2D const & vector, const char * uniformName)
+{
+	glUseProgram(shaderProgram);
+	float v[2] = { vector.GetX(), vector.GetY() };
+	int location = glGetUniformLocation(shaderProgram, uniformName);
+	//assert(location != -1);
+	if (location == -1)
+		return location;
+	glUniform2fv(location, 1, v);
+	return 0;
+}
+
+int MyShaderProgram::BindUniformVector(MyVector3D const & vector, const char * uniformName)
+{
+	glUseProgram(shaderProgram);
+	float v[3] = { vector.GetX(), vector.GetY(), vector.GetZ() };
+	int location = glGetUniformLocation(shaderProgram, uniformName);
+	//assert(location != -1);
+	if (location == -1)
+		return location;
+	glUniform3fv(location, 1, v);
+	return 0;
+}
+
+int MyShaderProgram::BindUniformVector(MyVector4D const & vector, const char * uniformName)
+{
+	glUseProgram(shaderProgram);
+	float v[4] = { vector.GetX(), vector.GetY(), vector.GetZ(), vector.GetW() };
+	int location = glGetUniformLocation(shaderProgram, uniformName);
+	//assert(location != -1);
+	if (location == -1)
+		return location;
+	glUniform4fv(location, 1, v);
+	return 0;
+}
+
+int MyShaderProgram::BindUniformFloat(float const & f, const char * uniformName)
+{
+	glUseProgram(shaderProgram);
+	int location = glGetUniformLocation(shaderProgram, uniformName);
+	//assert(location != -1);
+	if (location == -1)
+		return location;
+	glUniform1f(location, f);
 	return 0;
 }

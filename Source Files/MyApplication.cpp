@@ -31,6 +31,12 @@ MyApplication::MyApplication(char * name)
 	inputManager = new MyInputManager();
 
 	colorShader = new MyShaderProgram();
+	gouraudShader = new MyShaderProgram();
+	phongShader = new MyShaderProgram();
+
+	shinyMaterial = new MyMaterial(MyColorRGBA(0.4f, 0.4f, 0.4f), MyColorRGBA(0.8f, 0.8f, 0.8f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+
+	primaryLightSource = MyLightSource(240.0f, 210.0f, 200.0f);
 
 	MyVector3D cameraPosition(0.0f, 0.0f, 0.0f);
 	MyVector3D cameraLookAt(0.0f, 0.0f, -1.0f);
@@ -64,7 +70,12 @@ MyApplication::~MyApplication()
 	MyDelete(testSphere);
 
 	MyDelete(camera);
+
+	MyDelete(shinyMaterial);
+
 	MyDelete(colorShader);
+	MyDelete(gouraudShader);
+	MyDelete(phongShader);
 
 	if (windowID != 0)
 	{
@@ -95,20 +106,23 @@ void MyApplication::Initialize(int *argc, char **argv)
 	}
 
 	colorShader->InitializeShaderProgram("Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
+	gouraudShader->InitializeShaderProgram("Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
+	phongShader->InitializeShaderProgram("Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
-	testTriangleFront->Initialize(colorShader);
-	testTriangleBack->Initialize(colorShader);
+	testTriangleFront->Initialize(phongShader, shinyMaterial);
+	testTriangleBack->Initialize(phongShader, shinyMaterial);
 	testTriangleBack->Yaw(180.0f);
 	testTriangleFront->Translate(MyVector3D(-0.5f, 0.0f, 0.5f));
 	testTriangleBack->Translate(MyVector3D(-0.5f, 0.0f, 0.5f));
-	testQuadFront->Initialize(colorShader);
-	testQuadBack->Initialize(colorShader);
+	testQuadFront->Initialize(phongShader, shinyMaterial);
+	testQuadBack->Initialize(phongShader, shinyMaterial);
 	testQuadBack->Yaw(180.0f);
 	testQuadFront->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
 	testQuadBack->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
-	testCube->Initialize(colorShader);
-	testSphere->Initialize(colorShader);
+	testCube->Initialize(phongShader, shinyMaterial);
+	testSphere->Initialize(phongShader, shinyMaterial);
 
+	ShadersUpdateLightSource();
 	ShadersUpdateCameraMatrix();
 	ShadersUpdateProjectionMatrix();
 }
@@ -341,6 +355,14 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 {
 	if (inputManager != 0)
 	{
+		if (inputManager->Keys[key] == GLUT_DOWN)
+		{
+
+		}
+		else
+		{
+
+		}
 		inputManager->Keys[key] = GLUT_UP;
 	}
 }
@@ -461,12 +483,26 @@ void MyApplication::SpecialUpFunc(int key, int x, int)
 	}
 }
 
+void MyApplication::ShadersUpdateLightSource()
+{
+	colorShader->BindUniformVector(primaryLightSource, "lightPosition");
+	colorShader->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
+	gouraudShader->BindUniformVector(primaryLightSource, "lightPosition");
+	gouraudShader->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
+	phongShader->BindUniformVector(primaryLightSource, "lightPosition");
+	phongShader->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
+}
+
 void MyApplication::ShadersUpdateCameraMatrix()
 {
 	colorShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
+	gouraudShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
+	phongShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
 }
 
 void MyApplication::ShadersUpdateProjectionMatrix()
 {
 	colorShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
+	gouraudShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
+	phongShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
 }

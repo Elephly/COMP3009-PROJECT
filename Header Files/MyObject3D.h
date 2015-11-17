@@ -2,7 +2,6 @@
 #define MYOBJECT3D_H
 
 #include "MyMatrix.h"
-#include "MyShaderProgram.h"
 #include <vector>
 
 class MyObject3D

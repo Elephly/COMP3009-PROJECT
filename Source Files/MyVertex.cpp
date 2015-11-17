@@ -1,15 +1,20 @@
 #include "MyVertex.h"
 
-MyVertex::MyVertex(MyColorRGBA & color)
+MyVertex::MyVertex(MyColorRGBA const & color) :
+	c(color), t(MyVector2D())
 {
-	c = color;
 }
 
 MyVertex::~MyVertex() { }
 
-MyColorRGBA & MyVertex::GetColor()
+const MyColorRGBA & MyVertex::GetColor() const
 {
 	return c;
+}
+
+const MyVector2D & MyVertex::GetTextureCoord() const
+{
+	return t;
 }
 
 void MyVertex::SetColor(float const & red, float const & green, float const & blue, float const & alpha)
@@ -17,115 +22,164 @@ void MyVertex::SetColor(float const & red, float const & green, float const & bl
 	c = MyColorRGBA(red, green, blue, alpha);
 }
 
-void MyVertex::SetColor(MyColorRGBA & color)
+void MyVertex::SetColor(MyColorRGBA const & color)
 {
 	c = color;
 }
 
-MyVertex2D::MyVertex2D(float x, float y, MyColorRGBA & color) :
-	MyVertex(color)
+void MyVertex::SetTextureCoord(float const & x, float const & y)
 {
-	v = MyVector2D(x, y);
+	t = MyVector2D(x, y);
 }
 
-MyVertex2D::MyVertex2D(MyVector2D &vector, MyColorRGBA &color) :
-	MyVertex(color)
+void MyVertex::SetTextureCoord(MyVector2D const & textureCoord)
 {
-	v = vector;
+	t = textureCoord;
+}
+
+MyVertex2D::MyVertex2D(float x, float y, MyColorRGBA const & color) :
+	p(MyVector2D(x, y)), MyVertex(color)
+{
+}
+
+MyVertex2D::MyVertex2D(MyVector2D & position, MyColorRGBA const & color) :
+	p(position), MyVertex(color)
+{
 }
 
 MyVertex2D::~MyVertex2D()
 {
 }
 
-MyVector2D & MyVertex2D::GetVector()
+const MyVector2D & MyVertex2D::GetPosition() const
 {
-	return v;
+	return p;
 }
 
-void MyVertex2D::SetVector(float const & x, float const & y)
+void MyVertex2D::SetPosition(float const & x, float const & y)
 {
-	v = MyVector2D(x, y);
+	p = MyVector2D(x, y);
 }
 
-void MyVertex2D::SetVector(MyVector2D & vector)
+void MyVertex2D::SetPosition(MyVector2D const & position)
 {
-	v = vector;
+	p = position;
 }
 
-MyVertex3D::MyVertex3D(float x, float y, float z, MyColorRGBA &color) :
-	MyVertex(color)
+MyVertex3D::MyVertex3D(float x, float y, float z, MyColorRGBA const & color) :
+	p(MyVector3D(x, y, z)), n(MyVector3D()), MyVertex(color)
 {
-	v = MyVector3D(x, y, z);
 }
 
-MyVertex3D::MyVertex3D(MyVector3D &vector, MyColorRGBA &color) :
-	MyVertex(color)
+MyVertex3D::MyVertex3D(MyVector3D const & position, MyColorRGBA const & color) :
+	p(position), n(MyVector3D()), MyVertex(color)
 {
-	v = vector;
 }
 
 MyVertex3D::~MyVertex3D()
 {
 }
 
-MyVector3D & MyVertex3D::GetVector()
+const MyVector3D & MyVertex3D::GetPosition() const
 {
-	return v;
+	return p;
 }
 
-void MyVertex3D::SetVector(float const & x, float const & y, float const & z)
+const MyVector3D & MyVertex3D::GetNormal() const
 {
-	v = MyVector3D(x, y, z);
+	return n;
 }
 
-void MyVertex3D::SetVector(MyVector2D & vector, float const & z)
+void MyVertex3D::SetPosition(float const & x, float const & y, float const & z)
 {
-	v = MyVector3D(vector, z);
+	p = MyVector3D(x, y, z);
 }
 
-void MyVertex3D::SetVector(MyVector3D & vector)
+void MyVertex3D::SetPosition(MyVector2D const & position, float const & z)
 {
-	v = vector;
+	p = MyVector3D(position, z);
 }
 
-MyVertex4D::MyVertex4D(float x, float y, float z, float w, MyColorRGBA &color) :
-	MyVertex(color)
+void MyVertex3D::SetPosition(MyVector3D const & position)
 {
-	v = MyVector4D(x, y, z, w);
+	p = position;
 }
 
-MyVertex4D::MyVertex4D(MyVector4D &vector, MyColorRGBA &color) :
-	MyVertex(color)
+void MyVertex3D::SetNormal(float const & x, float const & y, float const & z)
 {
-	v = vector;
+	n = MyVector3D(x, y, z);
+}
+
+void MyVertex3D::SetNormal(MyVector2D const & normal, float const & z)
+{
+	n = MyVector3D(normal, z);
+}
+
+void MyVertex3D::SetNormal(MyVector3D const & normal)
+{
+	n = normal;
+}
+
+MyVertex4D::MyVertex4D(float x, float y, float z, float w, MyColorRGBA const & color) :
+	p(MyVector4D(x, y, z, w)), n(MyVector4D()), MyVertex(color)
+{
+}
+
+MyVertex4D::MyVertex4D(MyVector4D const & position, MyColorRGBA const & color) :
+	p(position), n(MyVector4D()), MyVertex(color)
+{
 }
 
 MyVertex4D::~MyVertex4D()
 {
 }
 
-MyVector4D & MyVertex4D::GetVector()
+const MyVector4D & MyVertex4D::GetPosition() const
 {
-	return v;
+	return p;
 }
 
-void MyVertex4D::SetVector(float const & x, float const & y, float const & z, float const & w)
+const MyVector4D & MyVertex4D::GetNormal() const
 {
-	v = MyVector4D(x, y, z, w);
+	return n;
 }
 
-void MyVertex4D::SetVector(MyVector2D & vector, float const & z, float const & w)
+void MyVertex4D::SetPosition(float const & x, float const & y, float const & z, float const & w)
 {
-	v = MyVector4D(vector, z, w);
+	p = MyVector4D(x, y, z, w);
 }
 
-void MyVertex4D::SetVector(MyVector3D & vector, float const & w)
+void MyVertex4D::SetPosition(MyVector2D const & position, float const & z, float const & w)
 {
-	v = MyVector4D(vector, w);
+	p = MyVector4D(position, z, w);
 }
 
-void MyVertex4D::SetVector(MyVector4D & vector)
+void MyVertex4D::SetPosition(MyVector3D const & position, float const & w)
 {
-	v = vector;
+	p = MyVector4D(position, w);
+}
+
+void MyVertex4D::SetPosition(MyVector4D const & position)
+{
+	p = position;
+}
+
+void MyVertex4D::SetNormal(float const & x, float const & y, float const & z, float const & w)
+{
+	n = MyVector4D(x, y, z, w);
+}
+
+void MyVertex4D::SetNormal(MyVector2D const & normal, float const & z, float const & w)
+{
+	n = MyVector4D(normal, z, w);
+}
+
+void MyVertex4D::SetNormal(MyVector3D const & normal, float const & w)
+{
+	n = MyVector4D(normal, w);
+}
+
+void MyVertex4D::SetNormal(MyVector4D const & normal)
+{
+	n = normal;
 }

@@ -4,6 +4,8 @@
 #include "MyIncludes.h"
 #include "MyInputManager.h"
 #include "MyShaderProgram.h"
+#include "MyMaterial.h"
+#include "MyLightSource.h"
 #include "MyCamera.h"
 #include "MyTriangle.h"
 #include "MyQuad.h"
@@ -65,6 +67,14 @@ private:
 
 	// Shaders
 	MyShaderProgram *colorShader;
+	MyShaderProgram *gouraudShader;
+	MyShaderProgram *phongShader;
+
+	// Materials
+	MyMaterial *shinyMaterial;
+
+	// Lights
+	MyLightSource primaryLightSource;
 
 	// Camera
 	MyCamera *camera;
@@ -78,6 +88,7 @@ private:
 	MySphere *testSphere;
 
 	// Private Functions
+	void ShadersUpdateLightSource();
 	void ShadersUpdateCameraMatrix();
 	void ShadersUpdateProjectionMatrix();
 };

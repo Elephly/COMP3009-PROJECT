@@ -3,12 +3,12 @@
 
 MyVector::~MyVector() { }
 
-MyVector2D::MyVector2D(MyVector3D & vector) :
+MyVector2D::MyVector2D(MyVector3D const & vector) :
 	MyPoint2D(vector.GetX(), vector.GetY())
 {
 }
 
-MyVector2D::MyVector2D(MyVector4D & vector) :
+MyVector2D::MyVector2D(MyVector4D const & vector) :
 	MyPoint2D(vector.GetX(), vector.GetY())
 {
 }
@@ -118,18 +118,23 @@ std::ostream &operator<<(std::ostream &os, const MyVector2D &vector)
 	return os;
 }
 
-MyVector3D::MyVector3D(MyVector2D & vector, float z):
+MyVector3D::MyVector3D(MyVector2D const & vector, float z):
 	MyPoint3D(vector.GetX(), vector.GetY(), z)
 {
 }
 
-MyVector3D::MyVector3D(MyVector4D & vector) :
+MyVector3D::MyVector3D(MyVector4D const & vector) :
 	MyPoint3D(vector.GetX(), vector.GetY(), vector.GetZ())
 {
 }
 
 MyVector3D::MyVector3D(float x, float y, float z) :
 	MyPoint3D(x, y, z)
+{
+}
+
+MyVector3D::MyVector3D(MyColorRGBA const & color) :
+	MyPoint3D(color.GetRed(), color.GetGreen(), color.GetBlue())
 {
 }
 
@@ -242,18 +247,23 @@ std::ostream &operator<<(std::ostream &os, const MyVector3D &vector)
 	return os;
 }
 
-MyVector4D::MyVector4D(MyVector2D & vector, float z, float w) :
+MyVector4D::MyVector4D(MyVector2D const & vector, float z, float w) :
 	MyPoint4D(vector.GetX(), vector.GetY(), z, w)
 {
 }
 
-MyVector4D::MyVector4D(MyVector3D & vector, float w) :
+MyVector4D::MyVector4D(MyVector3D const & vector, float w) :
 	MyPoint4D(vector.GetX(), vector.GetY(), vector.GetZ(), w)
 {
 }
 
 MyVector4D::MyVector4D(float x, float y, float z, float w) :
 	MyPoint4D(x, y, z, w)
+{
+}
+
+MyVector4D::MyVector4D(MyColorRGBA const & color) :
+	MyPoint4D(color.GetRed(), color.GetGreen(), color.GetBlue(), color.GetAlpha())
 {
 }
 
@@ -364,12 +374,12 @@ MyVector4D & MyVector4D::operator/=(const float & divisor)
 	return *this;
 }
 
-MyVector4D operator*(const float &multiplier, MyVector4D &vector)
+MyVector4D operator*(const float & multiplier, MyVector4D & vector)
 {
 	return vector * multiplier;
 }
 
-std::ostream &operator<<(std::ostream &os, const MyVector4D &vector)
+std::ostream & operator<<(std::ostream & os, const MyVector4D & vector)
 {
 	os << "(" << vector.x_ << ", " << vector.y_ << ", " << vector.z_ << ", " << vector.w_ << ")";
 	return os;

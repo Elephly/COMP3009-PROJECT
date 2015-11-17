@@ -3,38 +3,61 @@
 MyCube::MyCube(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation, MyColorRGBA & color1, MyColorRGBA & color2, MyColorRGBA & color3, MyColorRGBA & color4, MyColorRGBA & color5, MyColorRGBA & color6) :
 	MyGraphicsObject3D(position, scale, rotation)
 {
-	/*
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), color1, color1, color1, color1));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), color2, color2, color2, color2));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), color3, color3, color3, color3));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), color4, color4, color4, color4));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), color5, color5, color5, color5));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), color6, color6, color6, color6));
-	*/
+	MyVector3D n1 = MyVector3D(0.0f, 0.0f, 1.0f);
+	MyVector3D n2 = MyVector3D(0.0f, 0.0f, -1.0f);
+	MyVector3D n3 = MyVector3D(-1.0f, 0.0f, 0.0f);
+	MyVector3D n4 = MyVector3D(1.0f, 0.0f, 0.0f);
+	MyVector3D n5 = MyVector3D(0.0f, 1.0f, 0.0f);
+	MyVector3D n6 = MyVector3D(0.0f, -1.0f, 0.0f);
+
 	MyVertex4D v01 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, color1);
 	MyVertex4D v02 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, color1);
 	MyVertex4D v03 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, color1);
 	MyVertex4D v04 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, color1);
+	v01.SetNormal(n1);
+	v02.SetNormal(n1);
+	v03.SetNormal(n1);
+	v04.SetNormal(n1);
 	MyVertex4D v05 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, color2);
 	MyVertex4D v06 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, color2);
 	MyVertex4D v07 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, color2);
 	MyVertex4D v08 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, color2);
+	v05.SetNormal(n2);
+	v06.SetNormal(n2);
+	v07.SetNormal(n2);
+	v08.SetNormal(n2);
 	MyVertex4D v09 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, color3);
 	MyVertex4D v10 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, color3);
 	MyVertex4D v11 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, color3);
 	MyVertex4D v12 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, color3);
+	v09.SetNormal(n3);
+	v10.SetNormal(n3);
+	v11.SetNormal(n3);
+	v12.SetNormal(n3);
 	MyVertex4D v13 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, color4);
 	MyVertex4D v14 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, color4);
 	MyVertex4D v15 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, color4);
 	MyVertex4D v16 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, color4);
+	v13.SetNormal(n4);
+	v14.SetNormal(n4);
+	v15.SetNormal(n4);
+	v16.SetNormal(n4);
 	MyVertex4D v17 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, color5);
 	MyVertex4D v18 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, color5);
 	MyVertex4D v19 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, color5);
 	MyVertex4D v20 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, color5);
+	v17.SetNormal(n5);
+	v18.SetNormal(n5);
+	v19.SetNormal(n5);
+	v20.SetNormal(n5);
 	MyVertex4D v21 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, color6);
 	MyVertex4D v22 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, color6);
 	MyVertex4D v23 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, color6);
 	MyVertex4D v24 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, color6);
+	v21.SetNormal(n6);
+	v22.SetNormal(n6);
+	v23.SetNormal(n6);
+	v24.SetNormal(n6);
 
 	myVertices[0] = v01;
 	myVertices[1] = v02;
@@ -83,39 +106,61 @@ MyCube::MyCube(bool solidColor, MyVector3D & position, MyVector3D & scale, MyVec
 	c1 = c2 = c3 = c4 = c5 = c6 = (solidColor ? color : MyColorRGBA());
 	c1 = color;
 
-	/*
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), c1, c1, c1, c1));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), c2, c2, c2, c2));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), c3, c3, c3, c3));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), c4, c4, c4, c4));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), c5, c5, c5, c5));
-	children->push_back(new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), c6, c6, c6, c6));
-	*/
+	MyVector3D n1 = MyVector3D(0.0f, 0.0f, 1.0f);
+	MyVector3D n2 = MyVector3D(0.0f, 0.0f, -1.0f);
+	MyVector3D n3 = MyVector3D(-1.0f, 0.0f, 0.0f);
+	MyVector3D n4 = MyVector3D(1.0f, 0.0f, 0.0f);
+	MyVector3D n5 = MyVector3D(0.0f, 1.0f, 0.0f);
+	MyVector3D n6 = MyVector3D(0.0f, -1.0f, 0.0f);
 
 	MyVertex4D v01 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, c1);
 	MyVertex4D v02 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, c1);
 	MyVertex4D v03 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, c1);
 	MyVertex4D v04 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, c1);
+	v01.SetNormal(n1);
+	v02.SetNormal(n1);
+	v03.SetNormal(n1);
+	v04.SetNormal(n1);
 	MyVertex4D v05 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, c2);
 	MyVertex4D v06 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, c2);
 	MyVertex4D v07 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, c2);
 	MyVertex4D v08 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, c2);
+	v05.SetNormal(n2);
+	v06.SetNormal(n2);
+	v07.SetNormal(n2);
+	v08.SetNormal(n2);
 	MyVertex4D v09 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, c3);
 	MyVertex4D v10 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, c3);
 	MyVertex4D v11 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, c3);
 	MyVertex4D v12 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, c3);
+	v09.SetNormal(n3);
+	v10.SetNormal(n3);
+	v11.SetNormal(n3);
+	v12.SetNormal(n3);
 	MyVertex4D v13 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, c4);
 	MyVertex4D v14 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, c4);
 	MyVertex4D v15 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, c4);
 	MyVertex4D v16 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, c4);
+	v13.SetNormal(n4);
+	v14.SetNormal(n4);
+	v15.SetNormal(n4);
+	v16.SetNormal(n4);
 	MyVertex4D v17 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, c5);
 	MyVertex4D v18 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, c5);
 	MyVertex4D v19 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, c5);
 	MyVertex4D v20 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, c5);
+	v17.SetNormal(n5);
+	v18.SetNormal(n5);
+	v19.SetNormal(n5);
+	v20.SetNormal(n5);
 	MyVertex4D v21 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, c6);
 	MyVertex4D v22 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, c6);
 	MyVertex4D v23 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, c6);
 	MyVertex4D v24 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, c6);
+	v21.SetNormal(n6);
+	v22.SetNormal(n6);
+	v23.SetNormal(n6);
+	v24.SetNormal(n6);
 
 	myVertices[0] = v01;
 	myVertices[1] = v02;

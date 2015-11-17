@@ -15,6 +15,10 @@ public:
 	int GetShaderProgram();
 
 	int BindUniformMatrix(MyMatrix4 const & matrix, const char *uniformName);
+	int BindUniformVector(MyVector2D const & vector, const char *uniformName);
+	int BindUniformVector(MyVector3D const & vector, const char *uniformName);
+	int BindUniformVector(MyVector4D const & vector, const char *uniformName);
+	int BindUniformFloat(float const & f, const char *uniformName);
 
 private:
 	char *vertexShaderFileName;

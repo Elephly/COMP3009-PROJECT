@@ -84,6 +84,12 @@
     <ClInclude Include="Header Files\MySphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\MyLightSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png">
@@ -154,11 +160,21 @@
     <ClCompile Include="Source Files\MySphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\MyLightSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
     <None Include="Shader Files\ColorFrag.glsl" />
     <None Include="Shader Files\ColorVert.glsl" />
     <None Include="Shader Files\WhiteVert.glsl" />
+    <None Include="Shader Files\GouraudFrag.glsl" />
+    <None Include="Shader Files\GouraudVert.glsl" />
+    <None Include="Shader Files\PhongFrag.glsl" />
+    <None Include="Shader Files\PhongVert.glsl" />
   </ItemGroup>
 </Project>
