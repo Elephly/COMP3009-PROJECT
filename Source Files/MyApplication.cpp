@@ -172,9 +172,7 @@ void MyApplication::Update(float const & deltaTime)
 		ShadersUpdateCameraMatrix();
 	}
 
-	testManikin->Yaw(30.0f * deltaTime);
-	testManikin->leftShoulder->Pitch(90.0f * deltaTime);
-	testManikin->rightShoulder->Pitch(-100.0f * deltaTime);
+	//testManikin->leftKnee->Pitch(10.0f * deltaTime);
 	testManikin->Update(deltaTime);
 }
 

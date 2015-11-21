@@ -42,36 +42,36 @@ MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotati
 	rightFoot = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
 
 	children->push_back(abdomen);
+	children->push_back(leftHip);
+	children->push_back(rightHip);
 
 	abdomen->AddChild(midTorso);
-	abdomen->AddChild(leftHip);
-	abdomen->AddChild(rightHip);
-
-	midTorso->AddChild(torso);
 	leftHip->AddChild(leftThigh);
 	rightHip->AddChild(rightThigh);
+
+	midTorso->AddChild(torso);
+	leftThigh->AddChild(leftKnee);
+	rightThigh->AddChild(rightKnee);
 
 	torso->AddChild(neck);
 	torso->AddChild(leftShoulder);
 	torso->AddChild(rightShoulder);
-	leftThigh->AddChild(leftKnee);
-	rightThigh->AddChild(rightKnee);
+	leftKnee->AddChild(leftCalf);
+	rightKnee->AddChild(rightCalf);
 
 	neck->AddChild(head);
 	leftShoulder->AddChild(leftUpperArm);
 	rightShoulder->AddChild(rightUpperArm);
-	leftKnee->AddChild(leftCalf);
-	rightKnee->AddChild(rightCalf);
-
-	leftUpperArm->AddChild(leftElbow);
-	rightUpperArm->AddChild(rightElbow);
 	leftCalf->AddChild(leftAnkle);
 	rightCalf->AddChild(rightAnkle);
 
-	leftElbow->AddChild(leftForearm);
-	rightElbow->AddChild(rightForearm);
+	leftUpperArm->AddChild(leftElbow);
+	rightUpperArm->AddChild(rightElbow);
 	leftAnkle->AddChild(leftFoot);
 	rightAnkle->AddChild(rightFoot);
+
+	leftElbow->AddChild(leftForearm);
+	rightElbow->AddChild(rightForearm);
 
 	leftForearm->AddChild(leftWrist);
 	rightForearm->AddChild(rightWrist);
@@ -90,7 +90,6 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	{
 		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true);
 	}
-
 
 	midTorso->Scale(0.75f, 0.75f, 0.75f);
 	midTorso->Translate(0.0f, 0.5f, 0.0f);

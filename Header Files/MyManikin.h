@@ -12,7 +12,9 @@ public:
 
 	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material);
 
-	MySphere *abdomen; // center of mass
+	MySphere *abdomen; // pivot point for upper body
+	MySphere *leftHip; // pivot point for left leg
+	MySphere *rightHip; // pivot point for right leg
 
 	// Torso - children of abdomen
 	MySphere *midTorso; // pivot point for upper body
@@ -36,18 +38,16 @@ public:
 	MySphere *rightWrist; // pivot point for right hand
 	MySphere *rightHand;
 
-	// Legs - children of abdomen
-	MySphere *leftHip; // pivot point for left leg
+	// Legs - children of hips
 	MySphere *leftThigh; // leg above the knee
 	MySphere *leftKnee; // pivot point for left calf
 	MySphere *leftCalf; // calf and shin area
-	MySphere *leftAnkle; // pivot point for foot
+	MySphere *leftAnkle; // pivot point for left foot
 	MySphere *leftFoot;
-	MySphere *rightHip; // pivot point for left leg
 	MySphere *rightThigh; // leg above the knee
-	MySphere *rightKnee; // pivot point for left calf
+	MySphere *rightKnee; // pivot point for right calf
 	MySphere *rightCalf; // calf and shin area
-	MySphere *rightAnkle; // pivot point for foot
+	MySphere *rightAnkle; // pivot point for right foot
 	MySphere *rightFoot;
 
 };
