@@ -12,7 +12,7 @@ public:
 	MyGraphicsObject3D(MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D());
 	virtual ~MyGraphicsObject3D() = 0;
 
-	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material);
+	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material, bool recursive = false);
 	virtual void Draw(MyMatrix4 const & parentTransformation = MyMatrix4::IdentityMatrix());
 
 	// Getters
@@ -20,8 +20,8 @@ public:
 	virtual MyMaterial *GetMaterial();
 
 	// Setters
-	virtual void SetShader(MyShaderProgram *shader);
-	virtual void SetMaterial(MyMaterial *shader);
+	virtual void SetShader(MyShaderProgram *shader, bool recursive = false);
+	virtual void SetMaterial(MyMaterial *shader, bool recursive = false);
 
 protected:
 	MyShaderProgram *shaderProgram;

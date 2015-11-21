@@ -22,6 +22,9 @@ using namespace std;
 
 MyApplication::MyApplication(char * name)
 {
+	cameraMoveSpeed = 2.5f;
+	cameraRotateSpeed = 45.0f;
+
 	applicationName = MyStringUtil::CopyString(name);
 	windowWidth = 0;
 	windowHeight = 0;
@@ -34,9 +37,9 @@ MyApplication::MyApplication(char * name)
 	gouraudShader = new MyShaderProgram();
 	phongShader = new MyShaderProgram();
 
-	shinyMaterial = new MyMaterial(MyColorRGBA(0.4f, 0.4f, 0.4f), MyColorRGBA(0.8f, 0.8f, 0.8f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+	shinyMaterial = new MyMaterial(MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 
-	primaryLightSource = MyLightSource(240.0f, 210.0f, 200.0f);
+	primaryLightSource = MyLightSource(100.0f, 100.0f, 100.0f);
 
 	MyVector3D cameraPosition(0.0f, 0.0f, 0.0f);
 	MyVector3D cameraLookAt(0.0f, 0.0f, -1.0f);
@@ -44,30 +47,12 @@ MyApplication::MyApplication(char * name)
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
 
-	testTriangleFront = new MyTriangle();
-	testTriangleBack = new MyTriangle();
-
-	testQuadFront = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
-		MyColorRGBA(0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f), MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 1.0f));
-	testQuadBack = new MyQuad(MyVector3D(), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
-		MyColorRGBA(0.0f, 1.0f),  MyColorRGBA(0.0f, 1.0f), MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 1.0f));
-
-	testCube = new MyCube(MyVector3D(-1.0f, 1.0f, -1.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(),
-		MyColorRGBA(1.0f), MyColorRGBA(0.0f, 1.0f), MyColorRGBA(0.0f, 0.0f, 1.0f),
-		MyColorRGBA(1.0f, 1.0f), MyColorRGBA(1.0f, 0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
-
-	testSphere = new MySphere(MyVector3D(0.0f, 0.0f, -3.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), 32, 64,
-		MyColorRGBA(1.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
+	testManikin = new MyManikin();
 }
 
 MyApplication::~MyApplication()
 {
-	MyDelete(testTriangleFront);
-	MyDelete(testTriangleBack);
-	MyDelete(testQuadFront);
-	MyDelete(testQuadBack);
-	MyDelete(testCube);
-	MyDelete(testSphere);
+	MyDelete(testManikin);
 
 	MyDelete(camera);
 
@@ -109,18 +94,9 @@ void MyApplication::Initialize(int *argc, char **argv)
 	gouraudShader->InitializeShaderProgram("Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
 	phongShader->InitializeShaderProgram("Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
-	testTriangleFront->Initialize(phongShader, shinyMaterial);
-	testTriangleBack->Initialize(phongShader, shinyMaterial);
-	testTriangleBack->Yaw(180.0f);
-	testTriangleFront->Translate(MyVector3D(-0.5f, 0.0f, 0.5f));
-	testTriangleBack->Translate(MyVector3D(-0.5f, 0.0f, 0.5f));
-	testQuadFront->Initialize(phongShader, shinyMaterial);
-	testQuadBack->Initialize(phongShader, shinyMaterial);
-	testQuadBack->Yaw(180.0f);
-	testQuadFront->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
-	testQuadBack->Translate(MyVector3D(0.5f, 0.0f, -0.5f));
-	testCube->Initialize(phongShader, shinyMaterial);
-	testSphere->Initialize(phongShader, shinyMaterial);
+	camera->Translate(0.0f, 0.0f, 10.0f);
+
+	testManikin->Initialize(phongShader, shinyMaterial);
 
 	ShadersUpdateLightSource();
 	ShadersUpdateCameraMatrix();
@@ -141,52 +117,52 @@ void MyApplication::Update(float const & deltaTime)
 		MyVector3D up = camera->GetUpVector();
 		if (inputManager->Keys['W'] == GLUT_DOWN || inputManager->Keys['w'] == GLUT_DOWN)
 		{
-			camera->Translate(direction * 5.0f * deltaTime);
+			camera->Translate(direction * cameraMoveSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['A'] == GLUT_DOWN || inputManager->Keys['a'] == GLUT_DOWN)
 		{
-			camera->Translate(-right * 5.0f * deltaTime);
+			camera->Translate(-right * cameraMoveSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['S'] == GLUT_DOWN || inputManager->Keys['s'] == GLUT_DOWN)
 		{
-			camera->Translate(-direction * 5.0f * deltaTime);
+			camera->Translate(-direction * cameraMoveSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['D'] == GLUT_DOWN || inputManager->Keys['d'] == GLUT_DOWN)
 		{
-			camera->Translate(right * 5.0f * deltaTime);
+			camera->Translate(right * cameraMoveSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['Q'] == GLUT_DOWN || inputManager->Keys['q'] == GLUT_DOWN)
 		{
-			camera->Translate(up * 5.0f * deltaTime);
+			camera->Translate(up * cameraMoveSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->Keys['C'] == GLUT_DOWN || inputManager->Keys['c'] == GLUT_DOWN)
 		{
-			camera->Translate(-up * 5.0f * deltaTime);
+			camera->Translate(-up * cameraMoveSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_UP] == GLUT_DOWN)
 		{
-			camera->Pitch(90.0f * deltaTime);
+			camera->Pitch(cameraRotateSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_LEFT] == GLUT_DOWN)
 		{
-			camera->Yaw(90.0f * deltaTime);
+			camera->Yaw(cameraRotateSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_DOWN] == GLUT_DOWN)
 		{
-			camera->Pitch(-90.0f * deltaTime);
+			camera->Pitch(-cameraRotateSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 		if (inputManager->SpecialKeys[GLUT_KEY_RIGHT] == GLUT_DOWN)
 		{
-			camera->Yaw(-90.0f * deltaTime);
+			camera->Yaw(-cameraRotateSpeed * deltaTime);
 			cameraTransformed = true;
 		}
 	}
@@ -196,15 +172,10 @@ void MyApplication::Update(float const & deltaTime)
 		ShadersUpdateCameraMatrix();
 	}
 
-	testTriangleFront->Update(deltaTime);
-	testTriangleBack->Update(deltaTime);
-	testQuadFront->Update(deltaTime);
-	testQuadBack->Update(deltaTime);
-	testCube->Rotate(10.0f * deltaTime, 7.5f * deltaTime, 5.0f * deltaTime);
-	testCube->Scale(1.0f + 0.001f * deltaTime, 1.0f + 0.001f * deltaTime, 1.0f + 0.001f * deltaTime);
-	testCube->Update(deltaTime);
-	testSphere->Yaw(50.0f * deltaTime);
-	testSphere->Update(deltaTime);
+	testManikin->Yaw(30.0f * deltaTime);
+	testManikin->leftShoulder->Pitch(90.0f * deltaTime);
+	testManikin->rightShoulder->Pitch(-100.0f * deltaTime);
+	testManikin->Update(deltaTime);
 }
 
 void MyApplication::Draw()
@@ -214,12 +185,7 @@ void MyApplication::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	testTriangleFront->Draw();
-	testTriangleBack->Draw();
-	testQuadFront->Draw();
-	testQuadBack->Draw();
-	testCube->Draw();
-	testSphere->Draw();
+	testManikin->Draw();
 
 	glutSwapBuffers();
 

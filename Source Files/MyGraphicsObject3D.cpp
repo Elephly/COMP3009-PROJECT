@@ -18,11 +18,14 @@ MyGraphicsObject3D::~MyGraphicsObject3D()
 	glDeleteVertexArrays(1, &vertexArrayObject);
 }
 
-void MyGraphicsObject3D::Initialize(MyShaderProgram * shader, MyMaterial * material)
+void MyGraphicsObject3D::Initialize(MyShaderProgram * shader, MyMaterial * material, bool recursive)
 {
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	if (recursive)
 	{
-		((MyGraphicsObject3D *)(*it))->Initialize(shader, material);
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			((MyGraphicsObject3D *)(*it))->Initialize(shader, material, recursive);
+		}
 	}
 	shaderProgram = shader;
 	objectMaterial = material;
@@ -81,17 +84,7 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader, MyMaterial * mater
 
 void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 {
-	// ISROT
-	MyMatrix4 transformation = (parentTransformation *
-		(MyMatrix4::TranslationMatrix(position) *
-		(MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
-		(MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ()) *
-		MyMatrix4::IdentityMatrix()))));
-
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	{
-		((MyGraphicsObject3D *)(*it))->Draw(transformation);
-	}
+	MyObject3D::Draw(parentTransformation);
 
 	if (shaderProgram != 0)
 	{
@@ -122,20 +115,26 @@ MyMaterial * MyGraphicsObject3D::GetMaterial()
 	return objectMaterial;
 }
 
-void MyGraphicsObject3D::SetShader(MyShaderProgram * shader)
+void MyGraphicsObject3D::SetShader(MyShaderProgram * shader, bool recursive)
 {
-	//for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	//{
-	//	((MyGraphicsObject3D *)(*it))->SetShader(shader);
-	//}
+	if (recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			((MyGraphicsObject3D *)(*it))->SetShader(shader, recursive);
+		}
+	}
 	shaderProgram = shader;
 }
 
-void MyGraphicsObject3D::SetMaterial(MyMaterial * material)
+void MyGraphicsObject3D::SetMaterial(MyMaterial * material, bool recursive)
 {
-	//for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
-	//{
-	//	((MyGraphicsObject3D *)(*it))->SetMaterial(material);
-	//}
+	if (recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			((MyGraphicsObject3D *)(*it))->SetMaterial(material, recursive);
+		}
+	}
 	objectMaterial = material;
 }

@@ -129,6 +129,7 @@
     <ClInclude Include="Header Files\MyGeometry.h" />
     <ClInclude Include="Header Files\MyGraphics.h" />
     <ClInclude Include="Header Files\MyGraphicsObject3D.h" />
+    <ClInclude Include="Header Files\MyManikin.h" />
     <ClInclude Include="Header Files\MyImage.h" />
     <ClInclude Include="Header Files\MyImageUtil.h" />
     <ClInclude Include="Header Files\MyIncludes.h" />
@@ -151,6 +152,7 @@
     <Image Include="Resource Files\sample.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\MyManikin.cpp" />
     <ClCompile Include="Source Files\MyCamera.cpp" />
     <ClCompile Include="Source Files\MyCube.cpp" />
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp" />

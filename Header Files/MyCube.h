@@ -10,8 +10,8 @@ public:
 	MyCube(MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D(),
 		MyColorRGBA &color1 = MyColorRGBA(), MyColorRGBA &color2 = MyColorRGBA(), MyColorRGBA &color3 = MyColorRGBA(),
 		MyColorRGBA &color4 = MyColorRGBA(), MyColorRGBA &color5 = MyColorRGBA(), MyColorRGBA &color6 = MyColorRGBA());
-	MyCube(bool solidColor, MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D(),
-		MyColorRGBA &color = MyColorRGBA());
+	MyCube(MyColorRGBA &solidColor, MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f),
+		MyVector3D &rotation = MyVector3D());
 
 private:
 	MyVertex4D myVertices[36];

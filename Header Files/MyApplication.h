@@ -11,6 +11,7 @@
 #include "MyQuad.h"
 #include "MyCube.h"
 #include "MySphere.h"
+#include "MyManikin.h"
 
 class MyApplication
 {
@@ -57,12 +58,15 @@ public:
 	void SpecialUpFunc(int key, int x, int);
 
 private:
+	// Application Specific Information
 	char *applicationName;
 	int windowWidth;
 	int windowHeight;
 	int windowID;
 	int totalElapsedTime;
 	int elapsedTime;
+
+	// Input Manager
 	MyInputManager *inputManager;
 
 	// Shaders
@@ -80,17 +84,16 @@ private:
 	MyCamera *camera;
 
 	// Objects
-	MyTriangle *testTriangleFront;
-	MyTriangle *testTriangleBack;
-	MyQuad *testQuadFront;
-	MyQuad *testQuadBack;
-	MyCube *testCube;
-	MySphere *testSphere;
+	MyManikin *testManikin;
 
 	// Private Functions
 	void ShadersUpdateLightSource();
 	void ShadersUpdateCameraMatrix();
 	void ShadersUpdateProjectionMatrix();
+
+	// Arbitrary Values
+	float cameraMoveSpeed;
+	float cameraRotateSpeed;
 };
 
 #endif // MYAPPLICATION_H

@@ -31,6 +31,21 @@ void MyObject3D::Update(float const & deltaTime)
 	}
 }
 
+void MyObject3D::Draw(MyMatrix4 const & parentTransformation)
+{
+	// ISROT
+	transformation = (parentTransformation *
+		(MyMatrix4::TranslationMatrix(position) *
+			(MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
+				(MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ()) *
+					MyMatrix4::IdentityMatrix()))));
+
+	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	{
+		(*it)->Draw(transformation);
+	}
+}
+
 void MyObject3D::Rotate(float const & x, float const & y, float const & z, bool isDegree)
 {
 	rotation += MyVector3D((!isDegree ? RadianToDegree(x) : x),
@@ -52,18 +67,39 @@ void MyObject3D::Rotate(MyVector4D const & vector, bool isDegree)
 		(!isDegree ? RadianToDegree(vector.GetZ()) : vector.GetZ()));
 }
 
-void MyObject3D::Scale(float const & x, float const & y, float const & z)
+void MyObject3D::Scale(float const & x, float const & y, float const & z, bool recursive)
 {
+	if (!recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			(*it)->Scale(1.0f / x, 1.0f / y, 1.0f / z);
+		}
+	}
 	scale = MyVector3D(scale.GetX() * x, scale.GetY() * y, scale.GetZ() * z);
 }
 
-void MyObject3D::Scale(MyVector3D const & vector)
+void MyObject3D::Scale(MyVector3D const & vector, bool recursive)
 {
+	if (!recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			(*it)->Scale(MyVector3D(1.0f / vector.GetX(), 1.0f / vector.GetY(), 1.0f / vector.GetZ()));
+		}
+	}
 	scale = MyVector3D(scale.GetX() * vector.GetX(), scale.GetY() * vector.GetY(), scale.GetZ() * vector.GetZ());
 }
 
-void MyObject3D::Scale(MyVector4D const & vector)
+void MyObject3D::Scale(MyVector4D const & vector, bool recursive)
 {
+	if (!recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			(*it)->Scale(MyVector4D(1.0f / vector.GetX(), 1.0f / vector.GetY(), 1.0f / vector.GetZ()));
+		}
+	}
 	scale = MyVector3D(scale.GetX() * vector.GetX(), scale.GetY() * vector.GetY(), scale.GetZ() * vector.GetZ());
 }
 
@@ -147,17 +183,52 @@ void MyObject3D::SetRotation(MyVector4D const & vector)
 	rotation = MyVector3D(vector.GetX(), vector.GetY(), vector.GetZ());
 }
 
-void MyObject3D::SetScale(float const & x, float const & y, float const & z)
+void MyObject3D::SetScale(float const & x, float const & y, float const & z, bool recursive)
 {
+	if (!recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			(*it)->SetScale((*it)->GetScale().GetX() / x, (*it)->GetScale().GetY() / y, (*it)->GetScale().GetZ() / z);
+		}
+	}
 	scale = MyVector3D(x, y, z);
 }
 
-void MyObject3D::SetScale(MyVector3D const & vector)
+void MyObject3D::SetScale(MyVector3D const & vector, bool recursive)
 {
+	if (!recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			(*it)->SetScale(MyVector3D((*it)->GetScale().GetX() / vector.GetX(), (*it)->GetScale().GetY() / vector.GetY(), (*it)->GetScale().GetZ() / vector.GetZ()));
+		}
+	}
 	scale = vector;
 }
 
-void MyObject3D::SetScale(MyVector4D const & vector)
+void MyObject3D::SetScale(MyVector4D const & vector, bool recursive)
 {
+	if (!recursive)
+	{
+		for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+		{
+			(*it)->SetScale(MyVector4D((*it)->GetScale().GetX() / vector.GetX(), (*it)->GetScale().GetY() / vector.GetY(), (*it)->GetScale().GetZ() / vector.GetZ()));
+		}
+	}
 	scale = MyVector3D(vector.GetX(), vector.GetY(), vector.GetZ());
+}
+
+void MyObject3D::AddChild(MyObject3D * child)
+{
+	children->push_back(child);
+}
+
+void MyObject3D::RemoveChild(MyObject3D * child)
+{
+	std::vector<MyObject3D *>::iterator it = std::find(children->begin(), children->end(), child);
+	if (it != children->end())
+	{
+		children->erase(it);
+	}
 }

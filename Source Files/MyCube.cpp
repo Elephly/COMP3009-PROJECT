@@ -99,13 +99,9 @@ MyCube::MyCube(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation,
 	numVertices = 36;
 }
 
-MyCube::MyCube(bool solidColor, MyVector3D & position, MyVector3D & scale, MyVector3D & rotation, MyColorRGBA & color) :
+MyCube::MyCube(MyColorRGBA & solidColor, MyVector3D & position, MyVector3D & scale, MyVector3D & rotation) :
 	MyGraphicsObject3D(position, scale, rotation)
 {
-	MyColorRGBA c1, c2, c3, c4, c5, c6;
-	c1 = c2 = c3 = c4 = c5 = c6 = (solidColor ? color : MyColorRGBA());
-	c1 = color;
-
 	MyVector3D n1 = MyVector3D(0.0f, 0.0f, 1.0f);
 	MyVector3D n2 = MyVector3D(0.0f, 0.0f, -1.0f);
 	MyVector3D n3 = MyVector3D(-1.0f, 0.0f, 0.0f);
@@ -113,50 +109,50 @@ MyCube::MyCube(bool solidColor, MyVector3D & position, MyVector3D & scale, MyVec
 	MyVector3D n5 = MyVector3D(0.0f, 1.0f, 0.0f);
 	MyVector3D n6 = MyVector3D(0.0f, -1.0f, 0.0f);
 
-	MyVertex4D v01 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, c1);
-	MyVertex4D v02 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, c1);
-	MyVertex4D v03 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, c1);
-	MyVertex4D v04 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, c1);
+	MyVertex4D v01 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v02 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v03 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v04 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, solidColor);
 	v01.SetNormal(n1);
 	v02.SetNormal(n1);
 	v03.SetNormal(n1);
 	v04.SetNormal(n1);
-	MyVertex4D v05 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, c2);
-	MyVertex4D v06 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, c2);
-	MyVertex4D v07 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, c2);
-	MyVertex4D v08 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, c2);
+	MyVertex4D v05 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v06 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v07 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v08 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, solidColor);
 	v05.SetNormal(n2);
 	v06.SetNormal(n2);
 	v07.SetNormal(n2);
 	v08.SetNormal(n2);
-	MyVertex4D v09 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, c3);
-	MyVertex4D v10 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, c3);
-	MyVertex4D v11 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, c3);
-	MyVertex4D v12 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, c3);
+	MyVertex4D v09 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v10 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v11 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v12 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, solidColor);
 	v09.SetNormal(n3);
 	v10.SetNormal(n3);
 	v11.SetNormal(n3);
 	v12.SetNormal(n3);
-	MyVertex4D v13 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, c4);
-	MyVertex4D v14 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, c4);
-	MyVertex4D v15 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, c4);
-	MyVertex4D v16 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, c4);
+	MyVertex4D v13 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v14 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v15 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v16 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, solidColor);
 	v13.SetNormal(n4);
 	v14.SetNormal(n4);
 	v15.SetNormal(n4);
 	v16.SetNormal(n4);
-	MyVertex4D v17 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, c5);
-	MyVertex4D v18 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, c5);
-	MyVertex4D v19 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, c5);
-	MyVertex4D v20 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, c5);
+	MyVertex4D v17 = MyVertex4D(-0.5f, 0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v18 = MyVertex4D(0.5f, 0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v19 = MyVertex4D(0.5f, 0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v20 = MyVertex4D(-0.5f, 0.5f, -0.5f, 1.0f, solidColor);
 	v17.SetNormal(n5);
 	v18.SetNormal(n5);
 	v19.SetNormal(n5);
 	v20.SetNormal(n5);
-	MyVertex4D v21 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, c6);
-	MyVertex4D v22 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, c6);
-	MyVertex4D v23 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, c6);
-	MyVertex4D v24 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, c6);
+	MyVertex4D v21 = MyVertex4D(-0.5f, -0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v22 = MyVertex4D(0.5f, -0.5f, -0.5f, 1.0f, solidColor);
+	MyVertex4D v23 = MyVertex4D(0.5f, -0.5f, 0.5f, 1.0f, solidColor);
+	MyVertex4D v24 = MyVertex4D(-0.5f, -0.5f, 0.5f, 1.0f, solidColor);
 	v21.SetNormal(n6);
 	v22.SetNormal(n6);
 	v23.SetNormal(n6);
