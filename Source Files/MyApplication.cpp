@@ -97,6 +97,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
 	testManikin->Initialize(phongShader, shinyMaterial);
+	testManikin->Yaw(180.0f);
 
 	ShadersUpdateLightSource();
 	ShadersUpdateCameraMatrix();
@@ -172,7 +173,6 @@ void MyApplication::Update(float const & deltaTime)
 		ShadersUpdateCameraMatrix();
 	}
 
-	//testManikin->leftKnee->Pitch(10.0f * deltaTime);
 	testManikin->Update(deltaTime);
 }
 
