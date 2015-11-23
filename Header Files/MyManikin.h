@@ -3,6 +3,7 @@
 
 #include "MyObject3D.h"
 #include "MySphere.h"
+#include "MyAnimation.h"
 
 class MyManikin : public MyObject3D
 {
@@ -11,6 +12,7 @@ public:
 	~MyManikin();
 
 	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material);
+	virtual void Update(float const & deltaTime);
 
 	MySphere *abdomen; // pivot point for upper body
 	MySphere *leftHip; // pivot point for left leg
@@ -49,6 +51,9 @@ public:
 	MySphere *rightCalf; // calf and shin area
 	MySphere *rightAnkle; // pivot point for right foot
 	MySphere *rightFoot;
+
+	// Body Animation
+	MyAnimation *animation;
 
 };
 

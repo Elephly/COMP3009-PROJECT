@@ -58,6 +58,7 @@ protected:
 	MyVector3D rotation;
 	MyVector3D scale;
 	std::vector<MyObject3D *> *children;
+
 };
 
 #endif // MYOBJECT3D_H

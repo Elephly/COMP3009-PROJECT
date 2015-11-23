@@ -1,5 +1,7 @@
 #include "MyManikin.h"
 
+#include "MyDefines.h"
+
 MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
 	MyObject3D(position, scale, rotation)
 {
@@ -78,10 +80,13 @@ MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotati
 
 	leftWrist->AddChild(leftHand);
 	rightWrist->AddChild(rightHand);
+
+	animation = new MyAnimation(10, 5, true);
 }
 
 MyManikin::~MyManikin()
 {
+	MyDelete(animation);
 }
 
 void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
@@ -147,4 +152,17 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	rightAnkle->Translate(0.0f, -0.6f, 0.0f);
 	rightFoot->Scale(0.35f, 0.2f, 0.75f);
 	rightFoot->Translate(0.0f, -0.15f, -0.15f);
+
+	MyAnimationTrack *moveTrack = new MyAnimationTrack(this);
+	animation->AddTrack("moveTrack", moveTrack);
+	moveTrack->AddKeyFrame(0, new MyKeyframe(MyVector3D(-1.0f, 0.0f, 0.0f)));
+	moveTrack->AddKeyFrame(5, new MyKeyframe(MyVector3D(1.0f, 0.0f, 0.0f)));
+	animation->Play();
+}
+
+void MyManikin::Update(float const & deltaTime)
+{
+	MyObject3D::Update(deltaTime);
+
+	animation->Update(deltaTime);
 }

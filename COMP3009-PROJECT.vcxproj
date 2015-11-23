@@ -121,6 +121,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Header Files\MyAnimation.h" />
+    <ClInclude Include="Header Files\MyAnimationTrack.h" />
     <ClInclude Include="Header Files\MyApplication.h" />
     <ClInclude Include="Header Files\MyCamera.h" />
     <ClInclude Include="Header Files\MyCube.h" />
@@ -129,6 +131,7 @@
     <ClInclude Include="Header Files\MyGeometry.h" />
     <ClInclude Include="Header Files\MyGraphics.h" />
     <ClInclude Include="Header Files\MyGraphicsObject3D.h" />
+    <ClInclude Include="Header Files\MyKeyframe.h" />
     <ClInclude Include="Header Files\MyManikin.h" />
     <ClInclude Include="Header Files\MyImage.h" />
     <ClInclude Include="Header Files\MyImageUtil.h" />
@@ -152,6 +155,9 @@
     <Image Include="Resource Files\sample.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\MyAnimation.cpp" />
+    <ClCompile Include="Source Files\MyAnimationTrack.cpp" />
+    <ClCompile Include="Source Files\MyKeyframe.cpp" />
     <ClCompile Include="Source Files\MyManikin.cpp" />
     <ClCompile Include="Source Files\MyCamera.cpp" />
     <ClCompile Include="Source Files\MyCube.cpp" />
