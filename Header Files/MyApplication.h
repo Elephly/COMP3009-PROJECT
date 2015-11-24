@@ -84,6 +84,7 @@ private:
 	MyCamera *camera;
 
 	// Objects
+	MySphere *testSphere;
 	MyManikin *testManikin;
 
 	// Private Functions

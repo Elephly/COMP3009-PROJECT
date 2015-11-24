@@ -14,6 +14,17 @@ public:
 	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material);
 	virtual void Update(float const & deltaTime);
 
+	virtual void InitializePose();
+
+	virtual void TogglePlay();
+	virtual void ToggleLooping();
+	virtual void Stop();
+	virtual void ChangeSpeed(float const & factor);
+
+	// TEMP
+	virtual const MyVector3D &GetDirection() const;
+	virtual void Yaw(float const & angle, bool isDegree = true);
+
 private:
 	MyObject3D *body;
 
@@ -57,6 +68,8 @@ private:
 
 	// Body Animation
 	MyAnimation *runAnimation;
+
+	MyVector3D direction; // temp
 
 };
 

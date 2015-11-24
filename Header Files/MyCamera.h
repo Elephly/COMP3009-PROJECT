@@ -27,7 +27,7 @@ public:
 	virtual void Yaw(float const & angle, bool isDegree = true);
 
 	// Getters
-	MyVector3D GetDirection() const;
+	virtual MyVector3D GetDirection() const;
 	const MyVector3D &GetLookAt() const;
 	MyVector3D GetRightVector() const;
 	const MyVector3D &GetUpVector() const;

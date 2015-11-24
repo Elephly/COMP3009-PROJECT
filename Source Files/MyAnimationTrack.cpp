@@ -7,13 +7,18 @@ MyAnimationTrack::MyAnimationTrack(MyObject3D * obj, unsigned int const & frameC
 	object(obj)
 {
 	keyframeIndices = new std::list<unsigned int>();
+	keyframeIndices->push_back(0);
 
 	lastKeyframeIndex = 0;
 
 	frames = new std::vector<MyKeyframe *>();
-	for (unsigned int i = 0; i < frameCount; i++)
+	frames->push_back(new MyKeyframe());
+	if (frameCount != 0)
 	{
-		frames->push_back(0);
+		for (unsigned int i = 0; i < frameCount - 1; i++)
+		{
+			frames->push_back(0);
+		}
 	}
 }
 
@@ -63,17 +68,43 @@ void MyAnimationTrack::Update(float const & frameTime, bool looping)
 			lastKeyframeIndex = *lastKeyframe;
 		}
 
-		float t = (*nextKeyframe > *lastKeyframe) ? ((frameTime - *lastKeyframe) / (*nextKeyframe - *lastKeyframe)) :
-			((frameTime - *lastKeyframe) / (*nextKeyframe + frames->size() - *lastKeyframe));
+		float t;
+		bool interp = true;
+		
+		if (*nextKeyframe > *lastKeyframe)
+		{
+			t = (frameTime - *lastKeyframe) / (*nextKeyframe - *lastKeyframe);
+		}
+		else
+		{
+			if (looping)
+			{
+				t = (frameTime - *lastKeyframe) / (*nextKeyframe + frames->size() - *lastKeyframe);
+			}
+			else
+			{
+				interp = false;
+			}
+		}
 		MyVector3D p1 = (*frames)[*lastKeyframe]->GetPosition();
 		MyVector3D p2 = (*frames)[*nextKeyframe]->GetPosition();
 		MyVector3D r1 = (*frames)[*lastKeyframe]->GetRotation();
 		MyVector3D r2 = (*frames)[*nextKeyframe]->GetRotation();
 		MyVector3D s1 = (*frames)[*lastKeyframe]->GetScale();
 		MyVector3D s2 = (*frames)[*nextKeyframe]->GetScale();
-		object->SetPosition(MyVector4D(LerpF(p1.GetX(), p2.GetX(), t), LerpF(p1.GetY(), p2.GetY(), t), LerpF(p1.GetZ(), p2.GetZ(), t)));
-		object->SetRotation(MyVector4D(LerpF(r1.GetX(), r2.GetX(), t), LerpF(r1.GetY(), r2.GetY(), t), LerpF(r1.GetZ(), r2.GetZ(), t)));
-		object->SetScale(MyVector4D(LerpF(s1.GetX(), s2.GetX(), t), LerpF(s1.GetY(), s2.GetY(), t), LerpF(s1.GetZ(), s2.GetZ(), t)));
+
+		if (interp)
+		{
+			object->SetPosition(MyVector4D(LerpF(p1.GetX(), p2.GetX(), t), LerpF(p1.GetY(), p2.GetY(), t), LerpF(p1.GetZ(), p2.GetZ(), t)));
+			object->SetRotation(MyVector4D(LerpF(r1.GetX(), r2.GetX(), t), LerpF(r1.GetY(), r2.GetY(), t), LerpF(r1.GetZ(), r2.GetZ(), t)));
+			object->SetScale(MyVector4D(LerpF(s1.GetX(), s2.GetX(), t), LerpF(s1.GetY(), s2.GetY(), t), LerpF(s1.GetZ(), s2.GetZ(), t)));
+		}
+		else
+		{
+			object->SetPosition(p1);
+			object->SetRotation(r1);
+			object->SetScale(s1);
+		}
 	}
 }
 
@@ -98,6 +129,11 @@ void MyAnimationTrack::SetFrameCount(unsigned int const & frameCount)
 		MyDelete((*frames)[frames->size() - 1]);
 		frames->pop_back();
 	}
+}
+
+void MyAnimationTrack::RewindTrack()
+{
+	lastKeyframeIndex = 0;
 }
 
 void MyAnimationTrack::AddKeyFrame(unsigned int index, MyKeyframe * keyFrame)
@@ -139,7 +175,7 @@ void MyAnimationTrack::AddKeyFrame(unsigned int index, MyKeyframe * keyFrame)
 
 void MyAnimationTrack::RemoveKeyFrame(unsigned int index)
 {
-	if (index < frames->size())
+	if (index != 0 && index < frames->size())
 	{
 		keyframeIndices->remove(index);
 		MyDelete((*frames)[index]);

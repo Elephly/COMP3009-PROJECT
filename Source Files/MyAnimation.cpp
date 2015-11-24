@@ -84,6 +84,11 @@ void MyAnimation::Stop()
 {
 	playing = false;
 	elapsedTime = 0.0f;
+
+	for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
+	{
+		it->second->RewindTrack();
+	}
 }
 
 void MyAnimation::SetLooping(bool const & loop)
@@ -103,6 +108,12 @@ void MyAnimation::SetFrameCount(unsigned int const & frames)
 void MyAnimation::SetFrameRate(float const & framesPerSecond)
 {
 	frameRate = max(framesPerSecond, 0.0f);
+	elapsedTime = 0.0f;
+
+	for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
+	{
+		it->second->RewindTrack();
+	}
 }
 
 void MyAnimation::AddTrack(char *trackName, MyAnimationTrack * track)

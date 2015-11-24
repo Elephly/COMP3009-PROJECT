@@ -85,7 +85,9 @@ MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotati
 	leftWrist->AddChild(leftHand);
 	rightWrist->AddChild(rightHand);
 
-	runAnimation = new MyAnimation(20, 0.1f, true);
+	runAnimation = new MyAnimation(20, 24.0f, true);
+
+	direction = MyVector3D(0.0f, 0.0f, -1.0f);
 }
 
 MyManikin::~MyManikin()
@@ -100,65 +102,12 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true);
 	}
 
-	midTorso->Scale(0.75f, 0.75f, 0.75f);
-	midTorso->Translate(0.0f, 0.5f, 0.0f);
-	torso->Scale(1.25f, 1.25f, 1.25f);
-	torso->Translate(0.0f, 0.5f, 0.0f);
-	neck->Scale(0.5f, 0.5f, 0.5f);
-	neck->Translate(0.0f, 0.625f, 0.0);
-	head->Scale(0.825f, 0.825f, 0.825f);
-	head->Translate(0.0f, 0.375f, 0.0f);
-	leftShoulder->Scale(0.75f, 0.75f, 0.75f);
-	leftShoulder->Translate(-0.825f, 0.25f, 0.0f);
-	leftUpperArm->Scale(0.5f, 1.5f, 0.5f);
-	leftUpperArm->Translate(0.0f, -0.75f, 0.0f);
-	leftElbow->Scale(0.375f, 0.375f, 0.375f);
-	leftElbow->Translate(0.0f, -0.75f, 0.0f);
-	leftForearm->Scale(0.35f, 1.125f, 0.35f);
-	leftForearm->Translate(0.0f, -0.5f, 0.0f);
-	leftWrist->Scale(0.25f, 0.25f, 0.25f);
-	leftWrist->Translate(0.0f, -0.5f, 0.0f);
-	leftHand->Scale(0.125f, 0.5f, 0.3f);
-	leftHand->Translate(0.0f, -0.25f, 0.0f);
-	rightShoulder->Scale(0.75f, 0.75f, 0.75f);
-	rightShoulder->Translate(0.825f, 0.25f, 0.0f);
-	rightUpperArm->Scale(0.5f, 1.5f, 0.5f);
-	rightUpperArm->Translate(0.0f, -0.75f, 0.0f);
-	rightElbow->Scale(0.375f, 0.375f, 0.375f);
-	rightElbow->Translate(0.0f, -0.75f, 0.0f);
-	rightForearm->Scale(0.35f, 1.125f, 0.35f);
-	rightForearm->Translate(0.0f, -0.5f, 0.0f);
-	rightWrist->Scale(0.25f, 0.25f, 0.25f);
-	rightWrist->Translate(0.0f, -0.5f, 0.0f);
-	rightHand->Scale(0.125f, 0.5f, 0.3f);
-	rightHand->Translate(0.0f, -0.25f, 0.0f);
-	leftHip->Scale(0.6f, 0.6f, 0.6f);
-	leftHip->Translate(-0.325f, -0.5f, 0.0f);
-	leftThigh->Scale(0.6f, 1.6f, 0.6f);
-	leftThigh->Translate(0.0f, -0.75f, 0.0f);
-	leftKnee->Scale(0.4f, 0.4f, 0.4f);
-	leftKnee->Translate(0.0f, -0.8f, 0.0f);
-	leftCalf->Scale(0.4f, 1.2f, 0.4f);
-	leftCalf->Translate(0.0f, -0.5f, 0.0f);
-	leftAnkle->Scale(0.3f, 0.3f, 0.3f);
-	leftAnkle->Translate(0.0f, -0.6f, 0.0f);
-	leftFoot->Scale(0.35f, 0.2f, 0.75f);
-	leftFoot->Translate(0.0f, -0.15f, -0.15f);
-	rightHip->Scale(0.6f, 0.6f, 0.6f);
-	rightHip->Translate(0.325f, -0.5f, 0.0f);
-	rightThigh->Scale(0.6f, 1.6f, 0.6f);
-	rightThigh->Translate(0.0f, -0.75f, 0.0f);
-	rightKnee->Scale(0.4f, 0.4f, 0.4f);
-	rightKnee->Translate(0.0f, -0.8f, 0.0f);
-	rightCalf->Scale(0.4f, 1.2f, 0.4f);
-	rightCalf->Translate(0.0f, -0.5f, 0.0f);
-	rightAnkle->Scale(0.3f, 0.3f, 0.3f);
-	rightAnkle->Translate(0.0f, -0.6f, 0.0f);
-	rightFoot->Scale(0.35f, 0.2f, 0.75f);
-	rightFoot->Translate(0.0f, -0.15f, -0.15f);
+	InitializePose();
 
 	MyAnimationTrack *bodyAnim = new MyAnimationTrack(body);
 	runAnimation->AddTrack("body", bodyAnim);
+	MyAnimationTrack *torsoAnim = new MyAnimationTrack(midTorso);
+	runAnimation->AddTrack("torso", torsoAnim);
 	MyAnimationTrack *headAnim = new MyAnimationTrack(neck);
 	runAnimation->AddTrack("head", headAnim);
 	MyAnimationTrack *leftArmAnim = new MyAnimationTrack(leftShoulder);
@@ -189,7 +138,9 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	bodyAnim->AddKeyFrame(12, new MyKeyframe(MyVector3D(0.0f, 0.25f, -0.5f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
 	bodyAnim->AddKeyFrame(15, new MyKeyframe(MyVector3D(0.0f, 0.1f, -0.4f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
 
-	headAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(20.0f)));
+	torsoAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
+
+	headAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
 
 	leftArmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(0.0f)));
 	leftArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(110.0f)));
@@ -240,8 +191,6 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	rightFootAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(-60.0f)));
 	rightFootAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(30.0f)));
 	rightFootAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(-90.0f)));
-
-	runAnimation->Play();
 }
 
 void MyManikin::Update(float const & deltaTime)
@@ -249,4 +198,139 @@ void MyManikin::Update(float const & deltaTime)
 	MyObject3D::Update(deltaTime);
 
 	runAnimation->Update(deltaTime);
+}
+
+void MyManikin::InitializePose()
+{
+	body->SetPosition(0.0f, 0.0f, 0.0f);
+	body->SetScale(1.0f, 1.0f, 1.0f);
+	body->SetRotation(0.0f, 0.0f, 0.0f);
+	abdomen->SetPosition(0.0f, 0.0f, 0.0f);
+	abdomen->SetScale(1.0f, 1.0f, 1.0f);
+	abdomen->SetRotation(0.0f, 0.0f, 0.0f);
+	midTorso->SetScale(0.75f, 0.75f, 0.75f);
+	midTorso->SetPosition(0.0f, 0.5f, 0.0f);
+	midTorso->SetRotation(0.0f, 0.0f, 0.0f);
+	torso->SetScale(1.25f, 1.25f, 1.25f);
+	torso->SetPosition(0.0f, 0.5f, 0.0f);
+	torso->SetRotation(0.0f, 0.0f, 0.0f);
+	neck->SetScale(0.5f, 0.5f, 0.5f);
+	neck->SetPosition(0.0f, 0.625f, 0.0);
+	neck->SetRotation(0.0f, 0.0f, 0.0f);
+	head->SetScale(0.825f, 0.825f, 0.825f);
+	head->SetPosition(0.0f, 0.375f, 0.0f);
+	head->SetRotation(0.0f, 0.0f, 0.0f);
+	leftShoulder->SetScale(0.75f, 0.75f, 0.75f);
+	leftShoulder->SetPosition(-0.825f, 0.25f, 0.0f);
+	leftShoulder->SetRotation(0.0f, 0.0f, 0.0f);
+	leftUpperArm->SetScale(0.5f, 1.5f, 0.5f);
+	leftUpperArm->SetPosition(0.0f, -0.75f, 0.0f);
+	leftUpperArm->SetRotation(0.0f, 0.0f, 0.0f);
+	leftElbow->SetScale(0.375f, 0.375f, 0.375f);
+	leftElbow->SetPosition(0.0f, -0.75f, 0.0f);
+	leftElbow->SetRotation(0.0f, 0.0f, 0.0f);
+	leftForearm->SetScale(0.35f, 1.125f, 0.35f);
+	leftForearm->SetPosition(0.0f, -0.5f, 0.0f);
+	leftForearm->SetRotation(0.0f, 0.0f, 0.0f);
+	leftWrist->SetScale(0.25f, 0.25f, 0.25f);
+	leftWrist->SetPosition(0.0f, -0.5f, 0.0f);
+	leftWrist->SetRotation(0.0f, 0.0f, 0.0f);
+	leftHand->SetScale(0.125f, 0.5f, 0.3f);
+	leftHand->SetPosition(0.0f, -0.25f, 0.0f);
+	leftHand->SetRotation(0.0f, 0.0f, 0.0f);
+	rightShoulder->SetScale(0.75f, 0.75f, 0.75f);
+	rightShoulder->SetPosition(0.825f, 0.25f, 0.0f);
+	rightShoulder->SetRotation(0.0f, 0.0f, 0.0f);
+	rightUpperArm->SetScale(0.5f, 1.5f, 0.5f);
+	rightUpperArm->SetPosition(0.0f, -0.75f, 0.0f);
+	rightUpperArm->SetRotation(0.0f, 0.0f, 0.0f);
+	rightElbow->SetScale(0.375f, 0.375f, 0.375f);
+	rightElbow->SetPosition(0.0f, -0.75f, 0.0f);
+	rightElbow->SetRotation(0.0f, 0.0f, 0.0f);
+	rightForearm->SetScale(0.35f, 1.125f, 0.35f);
+	rightForearm->SetPosition(0.0f, -0.5f, 0.0f);
+	rightForearm->SetRotation(0.0f, 0.0f, 0.0f);
+	rightWrist->SetScale(0.25f, 0.25f, 0.25f);
+	rightWrist->SetPosition(0.0f, -0.5f, 0.0f);
+	rightWrist->SetRotation(0.0f, 0.0f, 0.0f);
+	rightHand->SetScale(0.125f, 0.5f, 0.3f);
+	rightHand->SetPosition(0.0f, -0.25f, 0.0f);
+	rightHand->SetRotation(0.0f, 0.0f, 0.0f);
+	leftHip->SetScale(0.6f, 0.6f, 0.6f);
+	leftHip->SetPosition(-0.325f, -0.5f, 0.0f);
+	leftHip->SetRotation(0.0f, 0.0f, 0.0f);
+	leftThigh->SetScale(0.6f, 1.6f, 0.6f);
+	leftThigh->SetPosition(0.0f, -0.75f, 0.0f);
+	leftThigh->SetRotation(0.0f, 0.0f, 0.0f);
+	leftKnee->SetScale(0.4f, 0.4f, 0.4f);
+	leftKnee->SetPosition(0.0f, -0.8f, 0.0f);
+	leftKnee->SetRotation(0.0f, 0.0f, 0.0f);
+	leftCalf->SetScale(0.4f, 1.2f, 0.4f);
+	leftCalf->SetPosition(0.0f, -0.5f, 0.0f);
+	leftCalf->SetRotation(0.0f, 0.0f, 0.0f);
+	leftAnkle->SetScale(0.3f, 0.3f, 0.3f);
+	leftAnkle->SetPosition(0.0f, -0.6f, 0.0f);
+	leftAnkle->SetRotation(0.0f, 0.0f, 0.0f);
+	leftFoot->SetScale(0.35f, 0.2f, 0.75f);
+	leftFoot->SetPosition(0.0f, -0.15f, -0.15f);
+	leftFoot->SetRotation(0.0f, 0.0f, 0.0f);
+	rightHip->SetScale(0.6f, 0.6f, 0.6f);
+	rightHip->SetPosition(0.325f, -0.5f, 0.0f);
+	rightHip->SetRotation(0.0f, 0.0f, 0.0f);
+	rightThigh->SetScale(0.6f, 1.6f, 0.6f);
+	rightThigh->SetPosition(0.0f, -0.75f, 0.0f);
+	rightThigh->SetRotation(0.0f, 0.0f, 0.0f);
+	rightKnee->SetScale(0.4f, 0.4f, 0.4f);
+	rightKnee->SetPosition(0.0f, -0.8f, 0.0f);
+	rightKnee->SetRotation(0.0f, 0.0f, 0.0f);
+	rightCalf->SetScale(0.4f, 1.2f, 0.4f);
+	rightCalf->SetPosition(0.0f, -0.5f, 0.0f);
+	rightCalf->SetRotation(0.0f, 0.0f, 0.0f);
+	rightAnkle->SetScale(0.3f, 0.3f, 0.3f);
+	rightAnkle->SetPosition(0.0f, -0.6f, 0.0f);
+	rightAnkle->SetRotation(0.0f, 0.0f, 0.0f);
+	rightFoot->SetScale(0.35f, 0.2f, 0.75f);
+	rightFoot->SetPosition(0.0f, -0.15f, -0.15f);
+	rightFoot->SetRotation(0.0f, 0.0f, 0.0f);
+}
+
+void MyManikin::TogglePlay()
+{
+	if (runAnimation->IsPlaying())
+	{
+		runAnimation->Pause();
+	}
+	else
+	{
+		runAnimation->Play();
+	}
+}
+
+void MyManikin::ToggleLooping()
+{
+	runAnimation->SetLooping(!runAnimation->IsLooping());
+}
+
+void MyManikin::Stop()
+{
+	runAnimation->Stop();
+	InitializePose();
+}
+
+void MyManikin::ChangeSpeed(float const & factor)
+{
+	runAnimation->SetFrameRate(max(runAnimation->GetFrameRate() * factor, 0.1f));
+}
+
+const MyVector3D & MyManikin::GetDirection() const
+{
+	return direction;
+}
+
+void MyManikin::Yaw(float const & angle, bool isDegree)
+{
+	MyObject3D::Yaw(angle, isDegree);
+	direction = (MyMatrix4::RotationAboutVectorAxisMatrix(MyVector3D(0.0f, 1.0f, 0.0f), angle, isDegree) * direction);
+	direction.SetY(0.0f);
+	direction.Normalize();
 }

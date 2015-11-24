@@ -25,11 +25,8 @@ public:
 	virtual void Translate(MyVector4D const & vector);
 
 	// Special Rotations
-	/* TODO */
 	virtual void Roll(float const & angle, bool isDegree = true);
-	/* TODO */
 	virtual void Pitch(float const & angle, bool isDegree = true);
-	/* TODO */
 	virtual void Yaw(float const & angle, bool isDegree = true);
 
 	// Getters
@@ -57,6 +54,7 @@ protected:
 	MyVector3D position;
 	MyVector3D rotation;
 	MyVector3D scale;
+
 	std::vector<MyObject3D *> *children;
 
 };

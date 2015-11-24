@@ -20,13 +20,14 @@ public:
 	// Setters
 	virtual void SetObject(MyObject3D *obj);
 	virtual void SetFrameCount(unsigned int const & frameCount);
+	virtual void RewindTrack();
 
 	virtual void AddKeyFrame(unsigned int index, MyKeyframe *keyFrame);
 	virtual void RemoveKeyFrame(unsigned int index);
 
 private:
 	std::list<unsigned int> *keyframeIndices;
-	unsigned lastKeyframeIndex;
+	unsigned int lastKeyframeIndex;
 	std::vector<MyKeyframe *> *frames;
 	MyObject3D *object;
 

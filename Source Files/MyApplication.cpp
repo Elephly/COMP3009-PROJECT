@@ -22,8 +22,8 @@ using namespace std;
 
 MyApplication::MyApplication(char * name)
 {
-	cameraMoveSpeed = 2.5f;
-	cameraRotateSpeed = 45.0f;
+	cameraMoveSpeed = 4.0f;
+	cameraRotateSpeed = 60.0f;
 
 	applicationName = MyStringUtil::CopyString(name);
 	windowWidth = 0;
@@ -47,11 +47,15 @@ MyApplication::MyApplication(char * name)
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
 
+	testSphere = new MySphere(MyVector3D(0.0f, 0.0f, -5.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), 32, 64,
+		MyColorRGBA(1.0f, 0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
+
 	testManikin = new MyManikin();
 }
 
 MyApplication::~MyApplication()
 {
+	MyDelete(testSphere);
 	MyDelete(testManikin);
 
 	MyDelete(camera);
@@ -96,8 +100,10 @@ void MyApplication::Initialize(int *argc, char **argv)
 
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
+	testSphere->Initialize(phongShader, shinyMaterial);
+
 	testManikin->Initialize(phongShader, shinyMaterial);
-	testManikin->Yaw(180.0f);
+	testManikin->Yaw(-90.0f);
 
 	ShadersUpdateLightSource();
 	ShadersUpdateCameraMatrix();
@@ -166,12 +172,31 @@ void MyApplication::Update(float const & deltaTime)
 			camera->Yaw(-cameraRotateSpeed * deltaTime);
 			cameraTransformed = true;
 		}
+		if (inputManager->Keys['i'] == GLUT_DOWN)
+		{
+			testManikin->Translate(testManikin->GetDirection() * cameraMoveSpeed * deltaTime);
+		}
+		if (inputManager->Keys['j'] == GLUT_DOWN)
+		{
+			testManikin->Yaw(cameraRotateSpeed * deltaTime);
+		}
+		if (inputManager->Keys['k'] == GLUT_DOWN)
+		{
+			testManikin->Translate(-(MyVector3D)testManikin->GetDirection() * cameraMoveSpeed * deltaTime);
+		}
+		if (inputManager->Keys['l'] == GLUT_DOWN)
+		{
+			testManikin->Yaw(-cameraRotateSpeed * deltaTime);
+		}
 	}
 	camera->Update(deltaTime);
 	if (cameraTransformed)
 	{
 		ShadersUpdateCameraMatrix();
 	}
+
+	testSphere->Yaw(cameraRotateSpeed * deltaTime);
+	testSphere->Update(deltaTime);
 
 	testManikin->Update(deltaTime);
 }
@@ -183,6 +208,7 @@ void MyApplication::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	testSphere->Draw();
 	testManikin->Draw();
 
 	glutSwapBuffers();
@@ -321,7 +347,26 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 	{
 		if (inputManager->Keys[key] == GLUT_DOWN)
 		{
-
+			if (key == ' ')
+			{
+				testManikin->TogglePlay();
+			}
+			if (key == 'L')
+			{
+				testManikin->ToggleLooping();
+			}
+			if (key == 13)
+			{
+				testManikin->Stop();
+			}
+			if (key == '+')
+			{
+				testManikin->ChangeSpeed(1.0f / 0.9f);
+			}
+			if (key == '-')
+			{
+				testManikin->ChangeSpeed(0.9f);
+			}
 		}
 		else
 		{
