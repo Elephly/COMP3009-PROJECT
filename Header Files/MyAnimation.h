@@ -9,7 +9,7 @@ class MyObject3D;
 class MyAnimation
 {
 public:
-	MyAnimation(unsigned int const & numFrames = 0, unsigned int const & framesPerSecond = 30, bool const & loop = false);
+	MyAnimation(unsigned int const & numFrames = 0, float const & framesPerSecond = 30, bool const & loop = false);
 	~MyAnimation();
 
 	virtual void Update(float const & deltaTime);
@@ -18,7 +18,7 @@ public:
 	virtual const bool IsPlaying() const;
 	virtual const bool IsLooping() const;
 	virtual const int GetFrameCount() const;
-	virtual const int GetFrameRate() const;
+	virtual const float GetFrameRate() const;
 
 	// Setters
 	virtual void Play();
@@ -26,7 +26,7 @@ public:
 	virtual void Stop();
 	virtual void SetLooping(bool const & loop);
 	virtual void SetFrameCount(unsigned int const & frames);
-	virtual void SetFrameRate(unsigned int const & framesPerSecond);
+	virtual void SetFrameRate(float const & framesPerSecond);
 
 	virtual void AddTrack(char *trackName, MyAnimationTrack *track);
 	virtual void RemoveTrack(char *trackName);
@@ -36,7 +36,7 @@ private:
 	bool looping;
 	float elapsedTime;
 	unsigned int frameCount;
-	unsigned int frameRate;
+	float frameRate;
 	std::map<char *, MyAnimationTrack *> *tracks;
 
 };

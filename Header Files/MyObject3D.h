@@ -8,7 +8,7 @@ class MyObject3D
 {
 public:
 	MyObject3D(MyVector3D &initialPosition = MyVector3D(), MyVector3D &initialScale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &initialRotation = MyVector3D());
-	virtual ~MyObject3D() = 0;
+	virtual ~MyObject3D();
 
 	virtual void Update(float const & deltaTime);
 	virtual void Draw(MyMatrix4 const & parentTransformation = MyMatrix4::IdentityMatrix());

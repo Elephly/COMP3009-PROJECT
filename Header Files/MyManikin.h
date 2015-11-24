@@ -14,6 +14,9 @@ public:
 	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material);
 	virtual void Update(float const & deltaTime);
 
+private:
+	MyObject3D *body;
+
 	MySphere *abdomen; // pivot point for upper body
 	MySphere *leftHip; // pivot point for left leg
 	MySphere *rightHip; // pivot point for right leg
@@ -53,7 +56,7 @@ public:
 	MySphere *rightFoot;
 
 	// Body Animation
-	MyAnimation *animation;
+	MyAnimation *runAnimation;
 
 };
 

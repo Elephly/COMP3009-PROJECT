@@ -5,6 +5,8 @@
 MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
 	MyObject3D(position, scale, rotation)
 {
+	body = new MyObject3D();
+
 	abdomen = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
 
 	// Torso - children of abdomen
@@ -43,9 +45,11 @@ MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotati
 	rightAnkle = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
 	rightFoot = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
 
-	children->push_back(abdomen);
-	children->push_back(leftHip);
-	children->push_back(rightHip);
+	children->push_back(body);
+
+	body->AddChild(abdomen);
+	body->AddChild(leftHip);
+	body->AddChild(rightHip);
 
 	abdomen->AddChild(midTorso);
 	leftHip->AddChild(leftThigh);
@@ -81,17 +85,17 @@ MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotati
 	leftWrist->AddChild(leftHand);
 	rightWrist->AddChild(rightHand);
 
-	animation = new MyAnimation(10, 5, true);
+	runAnimation = new MyAnimation(20, 0.1f, true);
 }
 
 MyManikin::~MyManikin()
 {
-	MyDelete(animation);
+	MyDelete(runAnimation);
 }
 
 void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 {
-	for (std::vector<MyObject3D *>::iterator it = children->begin(); it != children->end(); ++it)
+	for (std::vector<MyObject3D *>::iterator it = body->GetChildren()->begin(); it != body->GetChildren()->end(); ++it)
 	{
 		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true);
 	}
@@ -153,16 +157,96 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	rightFoot->Scale(0.35f, 0.2f, 0.75f);
 	rightFoot->Translate(0.0f, -0.15f, -0.15f);
 
-	MyAnimationTrack *moveTrack = new MyAnimationTrack(this);
-	animation->AddTrack("moveTrack", moveTrack);
-	moveTrack->AddKeyFrame(0, new MyKeyframe(MyVector3D(-1.0f, 0.0f, 0.0f)));
-	moveTrack->AddKeyFrame(5, new MyKeyframe(MyVector3D(1.0f, 0.0f, 0.0f)));
-	animation->Play();
+	MyAnimationTrack *bodyAnim = new MyAnimationTrack(body);
+	runAnimation->AddTrack("body", bodyAnim);
+	MyAnimationTrack *headAnim = new MyAnimationTrack(neck);
+	runAnimation->AddTrack("head", headAnim);
+	MyAnimationTrack *leftArmAnim = new MyAnimationTrack(leftShoulder);
+	runAnimation->AddTrack("leftArm", leftArmAnim);
+	MyAnimationTrack *leftForearmAnim = new MyAnimationTrack(leftElbow);
+	runAnimation->AddTrack("leftForearm", leftForearmAnim);
+	MyAnimationTrack *rightArmAnim = new MyAnimationTrack(rightShoulder);
+	runAnimation->AddTrack("righttArm", rightArmAnim);
+	MyAnimationTrack *rightForearmAnim = new MyAnimationTrack(rightElbow);
+	runAnimation->AddTrack("rightForearm", rightForearmAnim);
+	MyAnimationTrack *leftLegAnim = new MyAnimationTrack(leftHip);
+	runAnimation->AddTrack("leftLeg", leftLegAnim);
+	MyAnimationTrack *leftCalfAnim = new MyAnimationTrack(leftKnee);
+	runAnimation->AddTrack("leftCalf", leftCalfAnim);
+	MyAnimationTrack *rightLegAnim = new MyAnimationTrack(rightHip);
+	runAnimation->AddTrack("rightLeg", rightLegAnim);
+	MyAnimationTrack *rightCalfAnim = new MyAnimationTrack(rightKnee);
+	runAnimation->AddTrack("rightCalf", rightCalfAnim);
+	MyAnimationTrack *leftFootAnim = new MyAnimationTrack(leftAnkle);
+	runAnimation->AddTrack("leftFoot", leftFootAnim);
+	MyAnimationTrack *rightFootAnim = new MyAnimationTrack(rightAnkle);
+	runAnimation->AddTrack("rightFoot", rightFootAnim);
+
+	bodyAnim->AddKeyFrame(0, new MyKeyframe(MyVector3D(0.0f, 0.0f, 0.0f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
+	bodyAnim->AddKeyFrame(2, new MyKeyframe(MyVector3D(0.0f, 0.25f, -0.5f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
+	bodyAnim->AddKeyFrame(5, new MyKeyframe(MyVector3D(0.0f, 0.1f, -0.4f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
+	bodyAnim->AddKeyFrame(10, new MyKeyframe(MyVector3D(0.0f, 0.0f, 0.0f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
+	bodyAnim->AddKeyFrame(12, new MyKeyframe(MyVector3D(0.0f, 0.25f, -0.5f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
+	bodyAnim->AddKeyFrame(15, new MyKeyframe(MyVector3D(0.0f, 0.1f, -0.4f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
+
+	headAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(20.0f)));
+
+	leftArmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(0.0f)));
+	leftArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(110.0f)));
+	leftArmAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(0.0f)));
+	leftArmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(-50.0f)));
+
+	rightArmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(0.0f)));
+	rightArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(-50.0f)));
+	rightArmAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(0.0f)));
+	rightArmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(110.0f)));
+
+	leftForearmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftElbow->GetPosition(), (MyVector3D)leftElbow->GetScale(), MyVector3D(100.0f)));
+	leftForearmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftElbow->GetPosition(), (MyVector3D)leftElbow->GetScale(), MyVector3D(60.0f)));
+	leftForearmAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)leftElbow->GetPosition(), (MyVector3D)leftElbow->GetScale(), MyVector3D(100.0f)));
+	leftForearmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftElbow->GetPosition(), (MyVector3D)leftElbow->GetScale(), MyVector3D(130.0f)));
+
+	rightForearmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)rightElbow->GetPosition(), (MyVector3D)rightElbow->GetScale(), MyVector3D(100.0f)));
+	rightForearmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightElbow->GetPosition(), (MyVector3D)rightElbow->GetScale(), MyVector3D(130.0f)));
+	rightForearmAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightElbow->GetPosition(), (MyVector3D)rightElbow->GetScale(), MyVector3D(100.0f)));
+	rightForearmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightElbow->GetPosition(), (MyVector3D)rightElbow->GetScale(), MyVector3D(60.0f)));
+
+	leftLegAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftHip->GetPosition(), (MyVector3D)leftHip->GetScale(), MyVector3D(30.0f)));
+	leftLegAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftHip->GetPosition(), (MyVector3D)leftHip->GetScale(), MyVector3D(-30.0f)));
+	leftLegAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)leftHip->GetPosition(), (MyVector3D)leftHip->GetScale(), MyVector3D(30.0f)));
+	leftLegAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftHip->GetPosition(), (MyVector3D)leftHip->GetScale(), MyVector3D(100.0f)));
+
+	rightLegAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)rightHip->GetPosition(), (MyVector3D)rightHip->GetScale(), MyVector3D(30.0f)));
+	rightLegAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightHip->GetPosition(), (MyVector3D)rightHip->GetScale(), MyVector3D(100.0f)));
+	rightLegAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightHip->GetPosition(), (MyVector3D)rightHip->GetScale(), MyVector3D(30.0f)));
+	rightLegAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightHip->GetPosition(), (MyVector3D)rightHip->GetScale(), MyVector3D(-30.0f)));
+
+	leftCalfAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftKnee->GetPosition(), (MyVector3D)leftKnee->GetScale(), MyVector3D(-30.0f)));
+	leftCalfAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftKnee->GetPosition(), (MyVector3D)leftKnee->GetScale(), MyVector3D(-40.0f)));
+	leftCalfAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)leftKnee->GetPosition(), (MyVector3D)leftKnee->GetScale(), MyVector3D(-100.0f)));
+	leftCalfAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftKnee->GetPosition(), (MyVector3D)leftKnee->GetScale(), MyVector3D(-130.0f)));
+
+	rightCalfAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)rightKnee->GetPosition(), (MyVector3D)rightKnee->GetScale(), MyVector3D(-100.0f)));
+	rightCalfAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightKnee->GetPosition(), (MyVector3D)rightKnee->GetScale(), MyVector3D(-130.0f)));
+	rightCalfAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightKnee->GetPosition(), (MyVector3D)rightKnee->GetScale(), MyVector3D(-30.0f)));
+	rightCalfAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightKnee->GetPosition(), (MyVector3D)rightKnee->GetScale(), MyVector3D(-40.0f)));
+
+	leftFootAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftAnkle->GetPosition(), (MyVector3D)leftAnkle->GetScale(), MyVector3D(30.0f)));
+	leftFootAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftAnkle->GetPosition(), (MyVector3D)leftAnkle->GetScale(), MyVector3D(-90.0f)));
+	leftFootAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)leftAnkle->GetPosition(), (MyVector3D)leftAnkle->GetScale(), MyVector3D(-70.0f)));
+	leftFootAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftAnkle->GetPosition(), (MyVector3D)leftAnkle->GetScale(), MyVector3D(-60.0f)));
+
+	rightFootAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(-70.0f)));
+	rightFootAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(-60.0f)));
+	rightFootAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(30.0f)));
+	rightFootAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightAnkle->GetPosition(), (MyVector3D)rightAnkle->GetScale(), MyVector3D(-90.0f)));
+
+	runAnimation->Play();
 }
 
 void MyManikin::Update(float const & deltaTime)
 {
 	MyObject3D::Update(deltaTime);
 
-	animation->Update(deltaTime);
+	runAnimation->Update(deltaTime);
 }

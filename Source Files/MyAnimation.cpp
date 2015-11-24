@@ -3,9 +3,10 @@
 #include "MyDefines.h"
 #include "MyStringUtil.h"
 
-MyAnimation::MyAnimation(unsigned int const & numFrames, unsigned int const & framesPerSecond, bool const & loop) :
+MyAnimation::MyAnimation(unsigned int const & numFrames, float const & framesPerSecond, bool const & loop) :
 	playing(false), elapsedTime(0), frameCount(numFrames), frameRate(framesPerSecond), looping(loop)
 {
+	frameRate = max(frameRate, 0.0f);
 	tracks = new std::map<char *, MyAnimationTrack *>();
 }
 
@@ -31,7 +32,7 @@ void MyAnimation::Update(float const & deltaTime)
 		{
 			if (looping)
 			{
-				elapsedTime = deltaTime - ((frameTime - (float)frameCount) / (float)frameRate);
+				elapsedTime = deltaTime - ((frameTime - (float)frameCount) / frameRate);
 				frameTime = elapsedTime * frameRate;
 			}
 			else
@@ -64,9 +65,9 @@ const int MyAnimation::GetFrameCount() const
 	return (int)frameCount;
 }
 
-const int MyAnimation::GetFrameRate() const
+const float MyAnimation::GetFrameRate() const
 {
-	return (int)frameRate;
+	return frameRate;
 }
 
 void MyAnimation::Play()
@@ -99,9 +100,9 @@ void MyAnimation::SetFrameCount(unsigned int const & frames)
 	}
 }
 
-void MyAnimation::SetFrameRate(unsigned int const & framesPerSecond)
+void MyAnimation::SetFrameRate(float const & framesPerSecond)
 {
-	frameRate = framesPerSecond;
+	frameRate = max(framesPerSecond, 0.0f);
 }
 
 void MyAnimation::AddTrack(char *trackName, MyAnimationTrack * track)
