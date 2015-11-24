@@ -143,14 +143,14 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	headAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
 
 	leftArmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(0.0f)));
-	leftArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(110.0f)));
+	leftArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(90.0f)));
 	leftArmAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(0.0f)));
-	leftArmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(-50.0f)));
+	leftArmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)leftShoulder->GetPosition(), (MyVector3D)leftShoulder->GetScale(), MyVector3D(-70.0f)));
 
 	rightArmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(0.0f)));
-	rightArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(-50.0f)));
+	rightArmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(-70.0f)));
 	rightArmAnim->AddKeyFrame(10, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(0.0f)));
-	rightArmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(110.0f)));
+	rightArmAnim->AddKeyFrame(15, new MyKeyframe((MyVector3D)rightShoulder->GetPosition(), (MyVector3D)rightShoulder->GetScale(), MyVector3D(90.0f)));
 
 	leftForearmAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)leftElbow->GetPosition(), (MyVector3D)leftElbow->GetScale(), MyVector3D(100.0f)));
 	leftForearmAnim->AddKeyFrame(5, new MyKeyframe((MyVector3D)leftElbow->GetPosition(), (MyVector3D)leftElbow->GetScale(), MyVector3D(60.0f)));

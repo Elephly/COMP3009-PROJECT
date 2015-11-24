@@ -107,13 +107,10 @@ void MyAnimation::SetFrameCount(unsigned int const & frames)
 
 void MyAnimation::SetFrameRate(float const & framesPerSecond)
 {
-	frameRate = max(framesPerSecond, 0.0f);
-	elapsedTime = 0.0f;
+	float frameTime = elapsedTime * frameRate;
 
-	for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
-	{
-		it->second->RewindTrack();
-	}
+	frameRate = max(framesPerSecond, 0.0f);
+	elapsedTime = frameTime / frameRate;
 }
 
 void MyAnimation::AddTrack(char *trackName, MyAnimationTrack * track)
