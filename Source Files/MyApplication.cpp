@@ -24,6 +24,7 @@ MyApplication::MyApplication(char * name)
 {
 	cameraMoveSpeed = 4.0f;
 	cameraRotateSpeed = 60.0f;
+	renderWireFrame = false;
 
 	applicationName = MyStringUtil::CopyString(name);
 	windowWidth = 0;
@@ -47,15 +48,11 @@ MyApplication::MyApplication(char * name)
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
 
-	testSphere = new MySphere(MyVector3D(0.0f, 0.0f, -5.0f), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(), 32, 64,
-		MyColorRGBA(1.0f, 0.0f, 1.0f), MyColorRGBA(0.0f, 1.0f, 1.0f));
-
 	testManikin = new MyManikin();
 }
 
 MyApplication::~MyApplication()
 {
-	MyDelete(testSphere);
 	MyDelete(testManikin);
 
 	MyDelete(camera);
@@ -99,8 +96,6 @@ void MyApplication::Initialize(int *argc, char **argv)
 	phongShader->InitializeShaderProgram("Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
 	camera->Translate(0.0f, 0.0f, 10.0f);
-
-	testSphere->Initialize(phongShader, shinyMaterial);
 
 	testManikin->Initialize(phongShader, shinyMaterial);
 	testManikin->Yaw(-90.0f);
@@ -195,9 +190,6 @@ void MyApplication::Update(float const & deltaTime)
 		ShadersUpdateCameraMatrix();
 	}
 
-	testSphere->Yaw(cameraRotateSpeed * deltaTime);
-	testSphere->Update(deltaTime);
-
 	testManikin->Update(deltaTime);
 }
 
@@ -206,9 +198,15 @@ void MyApplication::Draw()
 	MyColorRGBA c = MyColors::CornflowerBlue;
 	glClearColor(c.GetRed(), c.GetGreen(), c.GetBlue(), c.GetAlpha());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if (renderWireFrame)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 
-	testSphere->Draw();
 	testManikin->Draw();
 
 	glutSwapBuffers();
@@ -366,6 +364,10 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 			if (key == '-')
 			{
 				testManikin->ChangeSpeed(0.9f);
+			}
+			if (key == 'f')
+			{
+				renderWireFrame = !renderWireFrame;
 			}
 		}
 		else

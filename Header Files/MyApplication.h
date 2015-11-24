@@ -84,7 +84,6 @@ private:
 	MyCamera *camera;
 
 	// Objects
-	MySphere *testSphere;
 	MyManikin *testManikin;
 
 	// Private Functions
@@ -95,6 +94,7 @@ private:
 	// Arbitrary Values
 	float cameraMoveSpeed;
 	float cameraRotateSpeed;
+	bool renderWireFrame;
 };
 
 #endif // MYAPPLICATION_H
