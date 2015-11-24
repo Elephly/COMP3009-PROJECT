@@ -2,48 +2,48 @@
 
 #include "MyDefines.h"
 
-MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
+MyManikin::MyManikin(MyIndexedVertexArray *vertexArray, MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
 	MyObject3D(position, scale, rotation)
 {
 	body = new MyObject3D();
 
-	abdomen = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	abdomen = new MyGraphicsObject3D(vertexArray);
 
 	// Torso - children of abdomen
-	midTorso = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	torso = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	midTorso = new MyGraphicsObject3D(vertexArray);
+	torso = new MyGraphicsObject3D(vertexArray);
 
 	// Head and neck - children of torso
-	neck = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	head = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	neck = new MyGraphicsObject3D(vertexArray);
+	head = new MyGraphicsObject3D(vertexArray);
 
 	// Arms - children of torso
-	leftShoulder = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftUpperArm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftElbow = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftForearm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftWrist = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftHand = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightShoulder = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightUpperArm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightElbow = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightForearm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightWrist = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightHand = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	leftShoulder = new MyGraphicsObject3D(vertexArray);
+	leftUpperArm = new MyGraphicsObject3D(vertexArray);
+	leftElbow = new MyGraphicsObject3D(vertexArray);
+	leftForearm = new MyGraphicsObject3D(vertexArray);
+	leftWrist = new MyGraphicsObject3D(vertexArray);
+	leftHand = new MyGraphicsObject3D(vertexArray);
+	rightShoulder = new MyGraphicsObject3D(vertexArray);
+	rightUpperArm = new MyGraphicsObject3D(vertexArray);
+	rightElbow = new MyGraphicsObject3D(vertexArray);
+	rightForearm = new MyGraphicsObject3D(vertexArray);
+	rightWrist = new MyGraphicsObject3D(vertexArray);
+	rightHand = new MyGraphicsObject3D(vertexArray);
 
 	// Legs - children of abdomen
-	leftHip = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftThigh = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftKnee = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftCalf = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftAnkle = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftFoot = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightHip = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightThigh = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightKnee = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightCalf = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightAnkle = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightFoot = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	leftHip = new MyGraphicsObject3D(vertexArray);
+	leftThigh = new MyGraphicsObject3D(vertexArray);
+	leftKnee = new MyGraphicsObject3D(vertexArray);
+	leftCalf = new MyGraphicsObject3D(vertexArray);
+	leftAnkle = new MyGraphicsObject3D(vertexArray);
+	leftFoot = new MyGraphicsObject3D(vertexArray);
+	rightHip = new MyGraphicsObject3D(vertexArray);
+	rightThigh = new MyGraphicsObject3D(vertexArray);
+	rightKnee = new MyGraphicsObject3D(vertexArray);
+	rightCalf = new MyGraphicsObject3D(vertexArray);
+	rightAnkle = new MyGraphicsObject3D(vertexArray);
+	rightFoot = new MyGraphicsObject3D(vertexArray);
 
 	children->push_back(body);
 

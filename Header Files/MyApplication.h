@@ -7,11 +7,8 @@
 #include "MyMaterial.h"
 #include "MyLightSource.h"
 #include "MyCamera.h"
-#include "MyTriangle.h"
-#include "MyQuad.h"
-#include "MyCube.h"
-#include "MySphere.h"
 #include "MyManikin.h"
+#include "MyMeshFactory.h"
 
 class MyApplication
 {
@@ -85,6 +82,7 @@ private:
 
 	// Objects
 	MyManikin *testManikin;
+	std::vector<MyManikin *> manikinArmy;
 
 	// Private Functions
 	void ShadersUpdateLightSource();
@@ -95,6 +93,7 @@ private:
 	float cameraMoveSpeed;
 	float cameraRotateSpeed;
 	bool renderWireFrame;
+	int numManikins;
 };
 
 #endif // MYAPPLICATION_H

@@ -54,12 +54,6 @@
     <ClInclude Include="Header Files\MyShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\MyTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\MyQuad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\MyVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,12 +72,6 @@
     <ClInclude Include="Header Files\MyGraphicsObject3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\MyCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\MySphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\MyLightSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -100,6 +88,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\MyAnimationTrack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyMeshFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyIndexedVertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -142,12 +136,6 @@
     <ClCompile Include="Source Files\MyShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\MyTriangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\MyQuad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\MyVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -166,12 +154,6 @@
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\MyCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\MySphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\MyLightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -188,6 +170,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MyAnimationTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyMeshFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyIndexedVertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

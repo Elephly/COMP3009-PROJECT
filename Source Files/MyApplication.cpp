@@ -47,13 +47,28 @@ MyApplication::MyApplication(char * name)
 	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
+	
+	// Creating geometry
+	MyMeshFactory::CreateQuad("Quad");
+	MyMeshFactory::CreateSphere("Sphere", MyColorRGBA(1.0f, 1.0f, 1.0f));
 
-	testManikin = new MyManikin();
+	testManikin = new MyManikin(MyMeshFactory::GetMesh("Sphere"));
+
+	numManikins = 20;
+	for (int i = 0; i < numManikins; i++)
+	{
+		manikinArmy.push_back(new MyManikin(MyMeshFactory::GetMesh("Sphere")));
+	}
 }
 
 MyApplication::~MyApplication()
 {
 	MyDelete(testManikin);
+	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
+	{
+		delete(*it);
+	}
+	manikinArmy.clear();
 
 	MyDelete(camera);
 
@@ -98,7 +113,14 @@ void MyApplication::Initialize(int *argc, char **argv)
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
 	testManikin->Initialize(phongShader, shinyMaterial);
+	testManikin->Translate(0.0f, 0.0f, 15.0f);
 	testManikin->Yaw(-90.0f);
+
+	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
+	{
+		(*it)->Initialize(phongShader, shinyMaterial);
+		(*it)->TogglePlay();
+	}
 
 	ShadersUpdateLightSource();
 	ShadersUpdateCameraMatrix();
@@ -191,6 +213,11 @@ void MyApplication::Update(float const & deltaTime)
 	}
 
 	testManikin->Update(deltaTime);
+
+	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
+	{
+		(*it)->Update(deltaTime);
+	}
 }
 
 void MyApplication::Draw()
@@ -208,6 +235,11 @@ void MyApplication::Draw()
 	}
 
 	testManikin->Draw();
+
+	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
+	{
+		(*it)->Draw();
+	}
 
 	glutSwapBuffers();
 

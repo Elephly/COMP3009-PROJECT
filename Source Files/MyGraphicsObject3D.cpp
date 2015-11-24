@@ -2,15 +2,12 @@
 
 #include <glew.h>
 
-MyGraphicsObject3D::MyGraphicsObject3D(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation) :
-	MyObject3D(position, scale, rotation)
+MyGraphicsObject3D::MyGraphicsObject3D(MyIndexedVertexArray *vertexArray, MyVector3D & position, MyVector3D & scale, MyVector3D & rotation) :
+	MyObject3D(position, scale, rotation), vertices(vertexArray)
 {
 	shaderProgram = 0;
 	objectMaterial = 0;
 	vertexArrayObject = 0;
-	vertices = 0;
-	numVertices = 0;
-	isDynamicArray = false;
 }
 
 MyGraphicsObject3D::~MyGraphicsObject3D()
@@ -30,7 +27,9 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader, MyMaterial * mater
 	shaderProgram = shader;
 	objectMaterial = material;
 
-	if (numVertices > 0)
+	int numVertices;
+
+	if (vertices != 0 && (numVertices = vertices->GetVertexCount()) > 0)
 	{
 		GLuint vbo;
 		MyVertex4D v;
@@ -46,14 +45,7 @@ void MyGraphicsObject3D::Initialize(MyShaderProgram * shader, MyMaterial * mater
 
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		if (isDynamicArray)
-		{
-			glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, *vertices, GL_STATIC_DRAW);
-		}
-		else
-		{
-			glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, vertices, GL_STATIC_DRAW);
-		}
+		glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * numVertices, *(vertices->GetVertices()), GL_STATIC_DRAW);
 
 		GLuint positionLoc = glGetAttribLocation(shaderProgram->GetShaderProgram(), "vtxPosition");
 		glEnableVertexAttribArray(positionLoc);
@@ -100,7 +92,7 @@ void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 	if (vertexArrayObject != 0)
 	{
 		glBindVertexArray(vertexArrayObject);
-		glDrawArrays(GL_TRIANGLES, 0, numVertices);
+		glDrawArrays(GL_TRIANGLES, 0, vertices->GetVertexCount());
 		glBindVertexArray(0);
 	}
 }
@@ -113,6 +105,11 @@ MyShaderProgram * MyGraphicsObject3D::GetShader()
 MyMaterial * MyGraphicsObject3D::GetMaterial()
 {
 	return objectMaterial;
+}
+
+MyIndexedVertexArray * MyGraphicsObject3D::GetIndexedVertexArray()
+{
+	return vertices;
 }
 
 void MyGraphicsObject3D::SetShader(MyShaderProgram * shader, bool recursive)
@@ -137,4 +134,9 @@ void MyGraphicsObject3D::SetMaterial(MyMaterial * material, bool recursive)
 		}
 	}
 	objectMaterial = material;
+}
+
+void MyGraphicsObject3D::SetIndexedVertexArray(MyIndexedVertexArray * vertexArray)
+{
+	vertices = vertexArray;
 }

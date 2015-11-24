@@ -121,11 +121,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Header Files\MyIndexedVertexArray.h" />
+    <ClInclude Include="Header Files\MyMeshFactory.h" />
     <ClInclude Include="Header Files\MyAnimation.h" />
     <ClInclude Include="Header Files\MyAnimationTrack.h" />
     <ClInclude Include="Header Files\MyApplication.h" />
     <ClInclude Include="Header Files\MyCamera.h" />
-    <ClInclude Include="Header Files\MyCube.h" />
     <ClInclude Include="Header Files\MyDefines.h" />
     <ClInclude Include="Header Files\MyFileIO.h" />
     <ClInclude Include="Header Files\MyGeometry.h" />
@@ -142,11 +143,8 @@
     <ClInclude Include="Header Files\MyMath.h" />
     <ClInclude Include="Header Files\MyMatrix.h" />
     <ClInclude Include="Header Files\MyObject3D.h" />
-    <ClInclude Include="Header Files\MyQuad.h" />
     <ClInclude Include="Header Files\MyShaderProgram.h" />
-    <ClInclude Include="Header Files\MySphere.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
-    <ClInclude Include="Header Files\MyTriangle.h" />
     <ClInclude Include="Header Files\MyVector.h" />
     <ClInclude Include="Header Files\SOIL.h" />
     <ClInclude Include="Header Files\MyVertex.h" />
@@ -157,18 +155,16 @@
   <ItemGroup>
     <ClCompile Include="Source Files\MyAnimation.cpp" />
     <ClCompile Include="Source Files\MyAnimationTrack.cpp" />
+    <ClCompile Include="Source Files\MyIndexedVertexArray.cpp" />
     <ClCompile Include="Source Files\MyKeyframe.cpp" />
     <ClCompile Include="Source Files\MyManikin.cpp" />
     <ClCompile Include="Source Files\MyCamera.cpp" />
-    <ClCompile Include="Source Files\MyCube.cpp" />
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp" />
     <ClCompile Include="Source Files\MyLightSource.cpp" />
     <ClCompile Include="Source Files\MyMaterial.cpp" />
+    <ClCompile Include="Source Files\MyMeshFactory.cpp" />
     <ClCompile Include="Source Files\MyObject3D.cpp" />
     <ClCompile Include="Source Files\MyMatrix.cpp" />
-    <ClCompile Include="Source Files\MyQuad.cpp" />
-    <ClCompile Include="Source Files\MySphere.cpp" />
-    <ClCompile Include="Source Files\MyTriangle.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\MyApplication.cpp" />
     <ClCompile Include="Source Files\MyFileIO.cpp" />
