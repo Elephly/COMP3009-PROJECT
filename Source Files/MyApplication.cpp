@@ -34,10 +34,6 @@ MyApplication::MyApplication(char * name)
 	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
-	colorShader = new MyShaderProgram();
-	gouraudShader = new MyShaderProgram();
-	phongShader = new MyShaderProgram();
-
 	shinyMaterial = new MyMaterial(MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 
 	primaryLightSource = MyLightSource(100.0f, 100.0f, 100.0f);
@@ -47,17 +43,20 @@ MyApplication::MyApplication(char * name)
 	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
 	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
-	
-	// Creating geometry
-	MyMeshFactory::CreateQuad("Quad");
-	MyMeshFactory::CreateSphere("Sphere", MyColorRGBA(1.0f, 1.0f, 1.0f));
 
-	testManikin = new MyManikin(MyMeshFactory::GetMesh("Sphere"));
+	testManikin = new MyManikin();
 
-	numManikins = 20;
-	for (int i = 0; i < numManikins; i++)
+	numManikins = 16;
+	int iMax = numManikins / 4;
+	int jMax = numManikins / (numManikins / 4);
+	for (int i = 0; i < iMax; i++)
 	{
-		manikinArmy.push_back(new MyManikin(MyMeshFactory::GetMesh("Sphere")));
+		for (int j = 0; j < jMax; j++)
+		{
+			MyManikin *m = new MyManikin(0, MyVector3D(-(2.0f * jMax) + (4.0f * j) + (((i % 2) * 2) - 1), 0.0f, -4.0f * i), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(0.0f, 180.0f, 0.0f));
+			m->ChangeSpeed(((float)(rand() % 100) / 100.0f) + 0.5f);
+			manikinArmy.push_back(m);
+		}
 	}
 }
 
@@ -70,13 +69,13 @@ MyApplication::~MyApplication()
 	}
 	manikinArmy.clear();
 
+	MyMeshFactory::Cleanup();
+
 	MyDelete(camera);
 
 	MyDelete(shinyMaterial);
 
-	MyDelete(colorShader);
-	MyDelete(gouraudShader);
-	MyDelete(phongShader);
+	MyShaderManager::Cleanup();
 
 	if (windowID != 0)
 	{
@@ -106,19 +105,23 @@ void MyApplication::Initialize(int *argc, char **argv)
 		throw glewGetErrorString(err);
 	}
 
-	colorShader->InitializeShaderProgram("Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
-	gouraudShader->InitializeShaderProgram("Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
-	phongShader->InitializeShaderProgram("Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
+	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", "Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
+	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", "Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
+	MyShaderProgram *phongShader = MyShaderManager::CreateShader("Phong", "Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
-	testManikin->Initialize(phongShader, shinyMaterial);
+	// Creating geometry
+	MyMeshFactory::CreateQuad("Quad");
+	MyMeshFactory::CreateSphere("Sphere", MyColorRGBA(1.0f, 1.0f, 1.0f));
+
+	testManikin->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
 	testManikin->Translate(0.0f, 0.0f, 15.0f);
 	testManikin->Yaw(-90.0f);
 
 	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
 	{
-		(*it)->Initialize(phongShader, shinyMaterial);
+		(*it)->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
 		(*it)->TogglePlay();
 	}
 
@@ -528,24 +531,31 @@ void MyApplication::SpecialUpFunc(int key, int x, int)
 
 void MyApplication::ShadersUpdateLightSource()
 {
-	colorShader->BindUniformVector(primaryLightSource, "lightPosition");
-	colorShader->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
-	gouraudShader->BindUniformVector(primaryLightSource, "lightPosition");
-	gouraudShader->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
-	phongShader->BindUniformVector(primaryLightSource, "lightPosition");
-	phongShader->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
+	std::vector<MyShaderProgram *> *shaders = MyShaderManager::GetShaderList();
+	for (std::vector<MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
+	{
+		(*it)->BindUniformVector(primaryLightSource, "lightPosition");
+		(*it)->BindUniformVector(MyVector4D(primaryLightSource.GetColor()), "lightColor");
+	}
+	MyDelete(shaders);
 }
 
 void MyApplication::ShadersUpdateCameraMatrix()
 {
-	colorShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
-	gouraudShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
-	phongShader->BindUniformMatrix(camera->GetViewMatrix(), "view");
+	std::vector<MyShaderProgram *> *shaders = MyShaderManager::GetShaderList();
+	for (std::vector<MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
+	{
+		(*it)->BindUniformMatrix(camera->GetViewMatrix(), "view");
+	}
+	MyDelete(shaders);
 }
 
 void MyApplication::ShadersUpdateProjectionMatrix()
 {
-	colorShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
-	gouraudShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
-	phongShader->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
+	std::vector<MyShaderProgram *> *shaders = MyShaderManager::GetShaderList();
+	for (std::vector<MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
+	{
+		(*it)->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
+	}
+	MyDelete(shaders);
 }

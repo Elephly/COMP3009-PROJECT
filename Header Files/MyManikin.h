@@ -11,7 +11,7 @@ public:
 	MyManikin(MyIndexedVertexArray *vertexArray = 0, MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D());
 	~MyManikin();
 
-	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material);
+	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material, MyIndexedVertexArray *vertexArray = 0);
 	virtual void Update(float const & deltaTime);
 
 	virtual void InitializePose();

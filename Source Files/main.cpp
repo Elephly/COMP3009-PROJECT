@@ -1,4 +1,5 @@
 #include "MyApplication.h"
+#include <time.h>
 
 using namespace std;
 
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
 {
 	try
 	{
+		srand(time(0));
 		myApplication = new MyApplication(PROJECT_NAME);
 		myApplication->Initialize(&argc, argv);
 		myApplication->RegisterReshapeFunc(MainReshapeFunc);

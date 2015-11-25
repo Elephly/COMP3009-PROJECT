@@ -1,11 +1,18 @@
 #include "MyMeshFactory.h"
 
 #include "MyIncludes.h"
+#include "MyShaderManager.h"
+#include <glew.h>
+#include <vector>
 
 std::map<char *, MyIndexedVertexArray *> *MyMeshFactory::meshes = new std::map<char *, MyIndexedVertexArray *>();
 
 MyIndexedVertexArray * MyMeshFactory::CreateQuad(char * meshName, MyColorRGBA & color1, MyColorRGBA & color2, MyColorRGBA & color3, MyColorRGBA & color4)
 {
+	if (meshes->find(meshName) != meshes->end())
+	{
+		return 0;
+	}
 	MyVertex4D *vertices = new MyVertex4D[6]();
 
 	MyVector3D normal = MyVector3D(0.0f, 0.0f, 1.0f);
@@ -25,12 +32,17 @@ MyIndexedVertexArray * MyMeshFactory::CreateQuad(char * meshName, MyColorRGBA & 
 	vertices[5] = v4;
 
 	(*meshes)[meshName] = new MyIndexedVertexArray(vertices, 6);
+	(*meshes)[meshName]->Initialize();
 
 	return (*meshes)[meshName];
 }
 
 MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeSamples, int longitudeSamples, MyColorRGBA & color1, MyColorRGBA & color2)
 {
+	if (meshes->find(meshName) != meshes->end())
+	{
+		return 0;
+	}
 	MyVertex4D *v = new MyVertex4D[latitudeSamples * longitudeSamples]();
 	MyVertex4D *vertices = new MyVertex4D[6 * (latitudeSamples * longitudeSamples)]();
 
@@ -73,6 +85,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeS
 	}
 
 	(*meshes)[meshName] = new MyIndexedVertexArray(vertices, 6 * (latitudeSamples * longitudeSamples));
+	(*meshes)[meshName]->Initialize();
 
 	MyDeleteArray(v);
 
@@ -81,6 +94,10 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeS
 
 MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, MyColorRGBA & solidColor, int latitudeSamples, int longitudeSamples)
 {
+	if (meshes->find(meshName) != meshes->end())
+	{
+		return 0;
+	}
 	MyVertex4D *v = new MyVertex4D[latitudeSamples * longitudeSamples]();
 	MyVertex4D *vertices = new MyVertex4D[6 * (latitudeSamples * longitudeSamples)]();
 
@@ -119,6 +136,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, MyColorRGBA &
 	}
 
 	(*meshes)[meshName] = new MyIndexedVertexArray(vertices, 6 * (latitudeSamples * longitudeSamples));
+	(*meshes)[meshName]->Initialize();
 
 	MyDeleteArray(v);
 
@@ -134,7 +152,7 @@ MyIndexedVertexArray * MyMeshFactory::GetMesh(char * meshName)
 	return nullptr;
 }
 
-void MyMeshFactory::CleanupMeshes()
+void MyMeshFactory::Cleanup()
 {
 	for (std::map<char *, MyIndexedVertexArray *>::iterator it = meshes->begin(); it != meshes->end(); ++it)
 	{

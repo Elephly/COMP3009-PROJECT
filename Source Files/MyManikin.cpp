@@ -95,11 +95,11 @@ MyManikin::~MyManikin()
 	MyDelete(runAnimation);
 }
 
-void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
+void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material, MyIndexedVertexArray *vertexArray)
 {
 	for (std::vector<MyObject3D *>::iterator it = body->GetChildren()->begin(); it != body->GetChildren()->end(); ++it)
 	{
-		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true);
+		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true, vertexArray, true);
 	}
 
 	InitializePose();

@@ -14,7 +14,8 @@ public:
 	static MyIndexedVertexArray *CreateSphere(char *meshName, MyColorRGBA &solidColor, int latitudeSamples = 32, int longitudeSamples = 64);
 
 	static MyIndexedVertexArray *GetMesh(char *meshName);
-	static void CleanupMeshes();
+
+	static void Cleanup();
 
 private:
 	static std::map<char *, MyIndexedVertexArray *> *meshes;

@@ -143,6 +143,7 @@
     <ClInclude Include="Header Files\MyMath.h" />
     <ClInclude Include="Header Files\MyMatrix.h" />
     <ClInclude Include="Header Files\MyObject3D.h" />
+    <ClInclude Include="Header Files\MyShaderManager.h" />
     <ClInclude Include="Header Files\MyShaderProgram.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
     <ClInclude Include="Header Files\MyVector.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Source Files\MyImageUtil.cpp" />
     <ClCompile Include="Source Files\MyInputManager.cpp" />
     <ClCompile Include="Source Files\MyMath.cpp" />
+    <ClCompile Include="Source Files\MyShaderManager.cpp" />
     <ClCompile Include="Source Files\MyShaderProgram.cpp" />
     <ClCompile Include="Source Files\MyStringUtil.cpp" />
     <ClCompile Include="Source Files\MyVector.cpp" />

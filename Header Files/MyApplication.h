@@ -3,7 +3,7 @@
 
 #include "MyIncludes.h"
 #include "MyInputManager.h"
-#include "MyShaderProgram.h"
+#include "MyShaderManager.h"
 #include "MyMaterial.h"
 #include "MyLightSource.h"
 #include "MyCamera.h"
@@ -65,11 +65,6 @@ private:
 
 	// Input Manager
 	MyInputManager *inputManager;
-
-	// Shaders
-	MyShaderProgram *colorShader;
-	MyShaderProgram *gouraudShader;
-	MyShaderProgram *phongShader;
 
 	// Materials
 	MyMaterial *shinyMaterial;
