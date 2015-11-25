@@ -22,6 +22,7 @@ public:
 private:
 	MyVertex4D *vertices;
 	int vertexCount;
+	unsigned int vbo;
 	unsigned int vao;
 
 };

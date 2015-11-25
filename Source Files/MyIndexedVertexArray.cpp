@@ -5,13 +5,14 @@
 #include "MyShaderManager.h"
 
 MyIndexedVertexArray::MyIndexedVertexArray(MyVertex4D * vertexArray, int const & numVertices) :
-	vertices(vertexArray), vertexCount(numVertices), vao(0)
+	vertices(vertexArray), vertexCount(numVertices), vao(0), vbo(0)
 {
 }
 
 MyIndexedVertexArray::~MyIndexedVertexArray()
 {
 	MyDeleteArray(vertices);
+	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
 }
 
@@ -22,7 +23,6 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 
 	if (vertices != 0 && vertexCount > 0)
 	{
-		GLuint vbo;
 		MyVertex4D v;
 
 		unsigned int *addr_ver = (unsigned int *)&v;
@@ -31,12 +31,12 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 		unsigned int *addr_col = (unsigned int *)&v.GetColor().GetRedAddr();
 		unsigned int *addr_tex = (unsigned int *)&v.GetTextureCoord().GetXAddr();
 
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
-
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex4D) * vertexCount, vertices, GL_STATIC_DRAW);
+
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
 
 		std::vector<MyShaderProgram *> *shaders = MyShaderManager::GetShaderList();
 		for (std::vector<MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
@@ -65,8 +65,6 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);
-
-		glDeleteBuffers(1, &vbo);
 	}
 }
 

@@ -46,11 +46,11 @@ MyApplication::MyApplication(char * name)
 
 	testManikin = new MyManikin();
 
-	numManikins = 8;
+	numManikins = 25;
 	if (numManikins > 0)
 	{
-		int iMax = numManikins / 4;
-		int jMax = numManikins / (numManikins / 4);
+		int iMax = (int)sqrt(numManikins);
+		int jMax = numManikins / (int)sqrt(numManikins);
 		for (int i = 0; i < iMax; i++)
 		{
 			for (int j = 0; j < jMax; j++)
