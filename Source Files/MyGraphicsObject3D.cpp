@@ -48,6 +48,7 @@ void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 	if (vertices != 0 && vertices->GetVertexArrayObject() != 0)
 	{
 		glBindVertexArray(vertices->GetVertexArrayObject());
+		//glDrawArraysInstancedARB(GL_TRIANGLES, 0, vertices->GetVertexCount(), 1);
 		glDrawArrays(GL_TRIANGLES, 0, vertices->GetVertexCount());
 		glBindVertexArray(0);
 	}

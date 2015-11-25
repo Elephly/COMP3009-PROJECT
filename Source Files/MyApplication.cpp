@@ -116,7 +116,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 
 	// Creating geometry
 	MyMeshFactory::CreateQuad("Quad");
-	MyMeshFactory::CreateSphere("Sphere", MyColorRGBA(1.0f, 1.0f, 1.0f));
+	MyMeshFactory::CreateSphere("Sphere", MyColorRGBA(1.0f, 1.0f, 1.0f), 8, 32);
 
 	testManikin->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
 	testManikin->Translate(0.0f, 0.0f, 15.0f);
