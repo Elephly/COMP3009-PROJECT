@@ -61,6 +61,7 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 			attAddress = (unsigned int)addr_tex - (unsigned int)addr_ver;
 			glVertexAttribPointer(textureCoordLoc, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
 		}
+		MyDelete(shaders);
 
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);

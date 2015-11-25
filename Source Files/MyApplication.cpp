@@ -46,16 +46,19 @@ MyApplication::MyApplication(char * name)
 
 	testManikin = new MyManikin();
 
-	numManikins = 16;
-	int iMax = numManikins / 4;
-	int jMax = numManikins / (numManikins / 4);
-	for (int i = 0; i < iMax; i++)
+	numManikins = 8;
+	if (numManikins > 0)
 	{
-		for (int j = 0; j < jMax; j++)
+		int iMax = numManikins / 4;
+		int jMax = numManikins / (numManikins / 4);
+		for (int i = 0; i < iMax; i++)
 		{
-			MyManikin *m = new MyManikin(0, MyVector3D(-(2.0f * jMax) + (4.0f * j) + (((i % 2) * 2) - 1), 0.0f, -4.0f * i), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(0.0f, 180.0f, 0.0f));
-			m->ChangeSpeed(((float)(rand() % 100) / 100.0f) + 0.5f);
-			manikinArmy.push_back(m);
+			for (int j = 0; j < jMax; j++)
+			{
+				MyManikin *m = new MyManikin(0, MyVector3D(-(2.0f * jMax) + (4.0f * j) + (((i % 2) * 2) - 1), 0.0f, -4.0f * i), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(0.0f, 180.0f, 0.0f));
+				m->ChangeSpeed(((float)(rand() % 100) / 100.0f) + 0.5f);
+				manikinArmy.push_back(m);
+			}
 		}
 	}
 }

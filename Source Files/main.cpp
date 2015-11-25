@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
 	try
 	{
-		srand(time(0));
+		srand((unsigned int)time(0));
 		myApplication = new MyApplication(PROJECT_NAME);
 		myApplication->Initialize(&argc, argv);
 		myApplication->RegisterReshapeFunc(MainReshapeFunc);
