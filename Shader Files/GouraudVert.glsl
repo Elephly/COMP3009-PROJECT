@@ -1,4 +1,4 @@
-#version 430
+#version 400
 
 uniform mat4 transform;
 uniform mat4 view;
