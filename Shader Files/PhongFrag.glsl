@@ -1,4 +1,4 @@
-#version 430
+#version 400
 
 uniform vec4 lightColor;
 uniform vec4 ambient;
