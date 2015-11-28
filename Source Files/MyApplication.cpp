@@ -46,7 +46,7 @@ MyApplication::MyApplication(char * name)
 
 	testManikin = new MyManikin();
 
-	numManikins = 25;
+	numManikins = 16;
 	if (numManikins > 0)
 	{
 		int iMax = (int)sqrt(numManikins);
