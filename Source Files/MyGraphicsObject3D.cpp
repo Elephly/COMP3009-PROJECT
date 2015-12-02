@@ -43,6 +43,7 @@ void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 		shaderProgram->BindUniformVector(MyVector4D(objectMaterial->GetDiffuse()), "diffuse");
 		shaderProgram->BindUniformVector(MyVector4D(objectMaterial->GetSpecular()), "specular");
 		shaderProgram->BindUniformFloat(objectMaterial->GetShine(), "shine");
+		shaderProgram->BindUniformFloat((float)(objectMaterial->GetToon()), "toon");
 	}
 
 	if (vertices != 0 && vertices->GetVertexArrayObject() != 0)

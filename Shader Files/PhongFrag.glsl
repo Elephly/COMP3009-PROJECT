@@ -5,6 +5,7 @@ uniform vec4 ambient;
 uniform vec4 diffuse;
 uniform vec4 specular;
 uniform float shine;
+uniform float toon;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -51,11 +52,39 @@ vec4 threeTermHalfwayLighting(vec3 normal, vec3 position, vec3 lightPos, float s
 	return (objectColor * (ambi + diff)) + spec;
 }
 
+vec4 toonify(vec3 normal, vec3 position, vec4 color)
+{
+	vec3 N = normalize(normal);
+	vec3 V = normalize(-vPosition);
+	vec4 C = color;
+
+	float angleBetweenViewerAndNormal = dot(V, N);
+	if (angleBetweenViewerAndNormal < cos(radians(70)))
+	{
+		C = vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	else
+	{
+		float toonShades = 3.0;
+		C.r = max(ambient.r, C.r - (mod(C.r, 1.0 / toonShades)));
+		C.g = max(ambient.g, C.g - (mod(C.g, 1.0 / toonShades)));
+		C.b = max(ambient.b, C.b - (mod(C.b, 1.0 / toonShades)));
+		C.a = max(ambient.a, C.a - (mod(C.a, 1.0 / toonShades)));
+	}
+
+	return C;
+}
+
 void main(void)
 {
 	vec4 fragColor;
 	
 	fragColor = threeTermHalfwayLighting(vNormal, vPosition, light, shine, ambient, diffuse, specular, vColor, lightColor);
+	
+	if (toon > 0.0)
+	{
+		fragColor = toonify(vNormal, vPosition, fragColor);
+	}
 
     gl_FragColor = fragColor;
 }

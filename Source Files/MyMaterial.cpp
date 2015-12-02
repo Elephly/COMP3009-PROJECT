@@ -2,8 +2,8 @@
 
 #include "MyDefines.h"
 
-MyMaterial::MyMaterial(MyColorRGBA const & ambient, MyColorRGBA const & diffuse, MyColorRGBA const & specular, float shine) :
-	a(ambient), d(diffuse), s(specular), sh(shine)
+MyMaterial::MyMaterial(MyColorRGBA const & ambient, MyColorRGBA const & diffuse, MyColorRGBA const & specular, float const & shine, bool const & toon) :
+	a(ambient), d(diffuse), s(specular), sh(shine), t(toon)
 {
 }
 
@@ -29,6 +29,11 @@ const MyColorRGBA & MyMaterial::GetSpecular() const
 const float & MyMaterial::GetShine() const
 {
 	return sh;
+}
+
+const bool & MyMaterial::GetToon() const
+{
+	return t;
 }
 
 void MyMaterial::SetAmbient(float const & red, float const & green, float const & blue, float const & alpha)
@@ -64,4 +69,9 @@ void MyMaterial::SetSpecular(MyColorRGBA const & specular)
 void MyMaterial::SetShine(float const & shine)
 {
 	sh = max(shine, 0.0f);
+}
+
+void MyMaterial::SetToon(bool const & toon)
+{
+	t = toon;
 }
