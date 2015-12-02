@@ -47,30 +47,13 @@ MyApplication::MyApplication(char * name)
 	testManikin = new MyManikin();
 
 	numManikins = 16;
-	if (numManikins > 0)
-	{
-		int iMax = (int)sqrt(numManikins);
-		int jMax = numManikins / (int)sqrt(numManikins);
-		for (int i = 0; i < iMax; i++)
-		{
-			for (int j = 0; j < jMax; j++)
-			{
-				MyManikin *m = new MyManikin(0, MyVector3D(-(2.0f * jMax) + (4.0f * j) + (((i % 2) * 2) - 1), 0.0f, -4.0f * i), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(0.0f, 180.0f, 0.0f));
-				m->ChangeSpeed(((float)(rand() % 100) / 100.0f) + 0.5f);
-				manikinArmy.push_back(m);
-			}
-		}
-	}
+	manikinsExist = false;
 }
 
 MyApplication::~MyApplication()
 {
 	MyDelete(testManikin);
-	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
-	{
-		delete(*it);
-	}
-	manikinArmy.clear();
+	killSomeManikins();
 
 	MyMeshFactory::Cleanup();
 
@@ -110,7 +93,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 
 	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", "Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
 	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", "Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
-	MyShaderProgram *phongShader = MyShaderManager::CreateShader("Phong", "Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
+	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", "Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
@@ -122,11 +105,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	testManikin->Translate(0.0f, 0.0f, 15.0f);
 	testManikin->Yaw(-90.0f);
 
-	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
-	{
-		(*it)->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
-		(*it)->TogglePlay();
-	}
+	toggleSomeManikins();
 
 	ShadersUpdateLightSource();
 	ShadersUpdateCameraMatrix();
@@ -139,6 +118,7 @@ void MyApplication::LoadContent()
 
 void MyApplication::Update(float const & deltaTime)
 {
+	printf("FPS: %d\n", (int)(1.0f / deltaTime));
 	bool cameraTransformed = false;
 	if (inputManager != 0)
 	{
@@ -407,6 +387,10 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 			{
 				renderWireFrame = !renderWireFrame;
 			}
+			if (key == 'K')
+			{
+				toggleSomeManikins();
+			}
 		}
 		else
 		{
@@ -561,4 +545,49 @@ void MyApplication::ShadersUpdateProjectionMatrix()
 		(*it)->BindUniformMatrix(camera->GetProjectionMatrix(), "projection");
 	}
 	MyDelete(shaders);
+}
+
+void MyApplication::toggleSomeManikins()
+{
+	if (!manikinsExist)
+	{
+		if (numManikins > 0)
+		{
+			int iMax = (int)sqrt(numManikins);
+			int jMax = numManikins / (int)sqrt(numManikins);
+			for (int i = 0; i < iMax; i++)
+			{
+				for (int j = 0; j < jMax; j++)
+				{
+					MyManikin *m = new MyManikin(0, MyVector3D(-(2.0f * jMax) + (4.0f * j) + (((i % 2) * 2) - 1), 0.0f, -4.0f * i), MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D(0.0f, 180.0f, 0.0f));
+					m->ChangeSpeed(((float)(rand() % 100) / 100.0f) + 0.5f);
+					manikinArmy.push_back(m);
+				}
+			}
+		}
+
+		MyShaderProgram *phongShader = MyShaderManager::GetShader("PhongShader");
+
+		for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
+		{
+			(*it)->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
+			(*it)->TogglePlay();
+		}
+
+		manikinsExist = true;
+	}
+	else
+	{
+		killSomeManikins();
+	}
+}
+
+void MyApplication::killSomeManikins()
+{
+	for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
+	{
+		delete(*it);
+	}
+	manikinArmy.clear();
+	manikinsExist = false;
 }

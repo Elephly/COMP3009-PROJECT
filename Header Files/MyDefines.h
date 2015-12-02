@@ -13,8 +13,12 @@
 #define TIMER_UPDATE_OPERATION 0
 #endif // TIMER_UPDATE_OPERATION
 
+#ifndef MAXIMUM_FRAME_RATE // frames per second (value as double)
+#define MAXIMUM_FRAME_RATE 128.0
+#endif // FRAME_RATE
+
 #ifndef FRAME_TIME
-#define FRAME_TIME 30
+#define FRAME_TIME (unsigned int)(1000.0 * (1.0 / MAXIMUM_FRAME_RATE))
 #endif // FRAME_TIME
 
 #ifndef _CRTDBG_MAP_ALLOC

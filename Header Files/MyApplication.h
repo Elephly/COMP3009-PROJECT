@@ -89,6 +89,12 @@ private:
 	float cameraRotateSpeed;
 	bool renderWireFrame;
 	int numManikins;
+	bool manikinsExist;
+
+	// Temp Functions
+	void toggleSomeManikins();
+	void killSomeManikins();
+
 };
 
 #endif // MYAPPLICATION_H
