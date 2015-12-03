@@ -1,14 +1,18 @@
 #version 400
 
 uniform vec4 lightColor;
+uniform sampler2D textureSampler;
 uniform vec4 ambient;
 uniform vec4 diffuse;
 uniform vec4 specular;
 uniform float shine;
+uniform float toon;
+uniform float hasTexture;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec4 vColor;
+varying vec2 vTextureCoord;
 varying vec3 light;
 
 vec4 threeTermReflectionLighting(vec3 normal, vec3 position, vec3 lightPos, float shininess,
@@ -51,11 +55,44 @@ vec4 threeTermHalfwayLighting(vec3 normal, vec3 position, vec3 lightPos, float s
 	return (objectColor * (ambi + diff)) + spec;
 }
 
+vec4 toonify(vec3 normal, vec3 position, vec4 color)
+{
+	vec3 N = normalize(normal);
+	vec3 V = normalize(-vPosition);
+	vec4 C = color;
+
+	float angleBetweenViewerAndNormal = dot(V, N);
+	if (angleBetweenViewerAndNormal < cos(radians(70)))
+	{
+		C = vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	else
+	{
+		float toonShades = 3.0;
+		C.r = max(ambient.r * C.r, C.r - (mod(C.r, 1.0 / toonShades)));
+		C.g = max(ambient.g * C.r, C.g - (mod(C.g, 1.0 / toonShades)));
+		C.b = max(ambient.b * C.r, C.b - (mod(C.b, 1.0 / toonShades)));
+		C.a = max(ambient.a * C.r, C.a - (mod(C.a, 1.0 / toonShades)));
+	}
+
+	return C;
+}
+
 void main(void)
 {
-	vec4 fragColor;
+	vec4 fragColor = vec4(1.0, 1.0, 1.0, 1.0);
 	
-	fragColor = threeTermHalfwayLighting(vNormal, vPosition, light, shine, ambient, diffuse, specular, vColor, lightColor);
+	if (hasTexture > 0.5)
+	{
+		fragColor = texture2D(textureSampler, vTextureCoord);
+	}
+
+	fragColor = threeTermHalfwayLighting(vNormal, vPosition, light, shine, ambient, diffuse, specular, fragColor, lightColor);
+	
+	if (toon > 0.5)
+	{
+		fragColor = toonify(vNormal, vPosition, fragColor);
+	}
 
     gl_FragColor = fragColor;
 }

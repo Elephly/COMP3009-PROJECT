@@ -3,15 +3,12 @@
 
 #include "MyIncludes.h"
 #include "MyInputManager.h"
-#include "MyShaderProgram.h"
+#include "MyShaderManager.h"
 #include "MyMaterial.h"
 #include "MyLightSource.h"
 #include "MyCamera.h"
-#include "MyTriangle.h"
-#include "MyQuad.h"
-#include "MyCube.h"
-#include "MySphere.h"
 #include "MyManikin.h"
+#include "MyMeshFactory.h"
 
 class MyApplication
 {
@@ -69,13 +66,13 @@ private:
 	// Input Manager
 	MyInputManager *inputManager;
 
-	// Shaders
-	MyShaderProgram *colorShader;
-	MyShaderProgram *gouraudShader;
-	MyShaderProgram *phongShader;
+	// Textures
+	MyTexture2D *catTexture;
 
 	// Materials
 	MyMaterial *shinyMaterial;
+	MyMaterial *shellyMaterial;
+	MyMaterial *catMaterial;
 
 	// Lights
 	MyLightSource primaryLightSource;
@@ -85,6 +82,7 @@ private:
 
 	// Objects
 	MyManikin *testManikin;
+	std::vector<MyManikin *> manikinArmy;
 
 	// Private Functions
 	void ShadersUpdateLightSource();
@@ -95,6 +93,13 @@ private:
 	float cameraMoveSpeed;
 	float cameraRotateSpeed;
 	bool renderWireFrame;
+	int numManikins;
+	bool manikinsExist;
+
+	// Temp Functions
+	void toggleSomeManikins();
+	void killSomeManikins();
+
 };
 
 #endif // MYAPPLICATION_H

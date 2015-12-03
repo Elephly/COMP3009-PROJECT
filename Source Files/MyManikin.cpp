@@ -2,48 +2,48 @@
 
 #include "MyDefines.h"
 
-MyManikin::MyManikin(MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
+MyManikin::MyManikin(MyIndexedVertexArray *vertexArray, MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
 	MyObject3D(position, scale, rotation)
 {
 	body = new MyObject3D();
 
-	abdomen = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	abdomen = new MyGraphicsObject3D(vertexArray);
 
 	// Torso - children of abdomen
-	midTorso = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	torso = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	midTorso = new MyGraphicsObject3D(vertexArray);
+	torso = new MyGraphicsObject3D(vertexArray);
 
 	// Head and neck - children of torso
-	neck = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	head = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	neck = new MyGraphicsObject3D(vertexArray);
+	head = new MyGraphicsObject3D(vertexArray);
 
 	// Arms - children of torso
-	leftShoulder = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftUpperArm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftElbow = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftForearm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftWrist = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftHand = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightShoulder = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightUpperArm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightElbow = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightForearm = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightWrist = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightHand = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	leftShoulder = new MyGraphicsObject3D(vertexArray);
+	leftUpperArm = new MyGraphicsObject3D(vertexArray);
+	leftElbow = new MyGraphicsObject3D(vertexArray);
+	leftForearm = new MyGraphicsObject3D(vertexArray);
+	leftWrist = new MyGraphicsObject3D(vertexArray);
+	leftHand = new MyGraphicsObject3D(vertexArray);
+	rightShoulder = new MyGraphicsObject3D(vertexArray);
+	rightUpperArm = new MyGraphicsObject3D(vertexArray);
+	rightElbow = new MyGraphicsObject3D(vertexArray);
+	rightForearm = new MyGraphicsObject3D(vertexArray);
+	rightWrist = new MyGraphicsObject3D(vertexArray);
+	rightHand = new MyGraphicsObject3D(vertexArray);
 
 	// Legs - children of abdomen
-	leftHip = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftThigh = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftKnee = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftCalf = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftAnkle = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	leftFoot = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightHip = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightThigh = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightKnee = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightCalf = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightAnkle = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
-	rightFoot = new MySphere(MyColorRGBA(1.0f, 1.0f, 1.0f));
+	leftHip = new MyGraphicsObject3D(vertexArray);
+	leftThigh = new MyGraphicsObject3D(vertexArray);
+	leftKnee = new MyGraphicsObject3D(vertexArray);
+	leftCalf = new MyGraphicsObject3D(vertexArray);
+	leftAnkle = new MyGraphicsObject3D(vertexArray);
+	leftFoot = new MyGraphicsObject3D(vertexArray);
+	rightHip = new MyGraphicsObject3D(vertexArray);
+	rightThigh = new MyGraphicsObject3D(vertexArray);
+	rightKnee = new MyGraphicsObject3D(vertexArray);
+	rightCalf = new MyGraphicsObject3D(vertexArray);
+	rightAnkle = new MyGraphicsObject3D(vertexArray);
+	rightFoot = new MyGraphicsObject3D(vertexArray);
 
 	children->push_back(body);
 
@@ -95,11 +95,11 @@ MyManikin::~MyManikin()
 	MyDelete(runAnimation);
 }
 
-void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
+void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material, MyIndexedVertexArray *vertexArray)
 {
 	for (std::vector<MyObject3D *>::iterator it = body->GetChildren()->begin(); it != body->GetChildren()->end(); ++it)
 	{
-		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true);
+		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true, vertexArray, true);
 	}
 
 	InitializePose();
@@ -138,7 +138,7 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material)
 	bodyAnim->AddKeyFrame(12, new MyKeyframe(MyVector3D(0.0f, 0.25f, -0.5f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
 	bodyAnim->AddKeyFrame(15, new MyKeyframe(MyVector3D(0.0f, 0.1f, -0.4f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
 
-	torsoAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
+	torsoAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)midTorso->GetPosition(), (MyVector3D)midTorso->GetScale(), MyVector3D(10.0f)));
 
 	headAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
 
@@ -320,6 +320,11 @@ void MyManikin::Stop()
 void MyManikin::ChangeSpeed(float const & factor)
 {
 	runAnimation->SetFrameRate(max(runAnimation->GetFrameRate() * factor, 0.1f));
+}
+
+void MyManikin::SetHeadMaterial(MyMaterial * material)
+{
+	head->SetMaterial(material);
 }
 
 const MyVector3D & MyManikin::GetDirection() const

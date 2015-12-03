@@ -54,12 +54,6 @@
     <ClInclude Include="Header Files\MyShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\MyTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\MyQuad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\MyVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,12 +70,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\MyGraphicsObject3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\MyCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\MySphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\MyLightSource.h">
@@ -102,9 +90,27 @@
     <ClInclude Include="Header Files\MyAnimationTrack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\MyMeshFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyIndexedVertexArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\MyTexture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource Files\sample.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource Files\lenovo.PNG">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource Files\sample2.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -142,12 +148,6 @@
     <ClCompile Include="Source Files\MyShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\MyTriangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\MyQuad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\MyVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -166,12 +166,6 @@
     <ClCompile Include="Source Files\MyGraphicsObject3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\MyCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\MySphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\MyLightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -188,6 +182,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\MyAnimationTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyMeshFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyIndexedVertexArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyShaderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\MyTexture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
