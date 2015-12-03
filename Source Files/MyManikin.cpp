@@ -95,12 +95,45 @@ MyManikin::~MyManikin()
 	MyDelete(runAnimation);
 }
 
-void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material, MyIndexedVertexArray *vertexArray)
+void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * skinMaterial, MyMaterial * headMaterial, MyMaterial * clothesMaterial, MyMaterial * shirtStampMaterial,
+	MyMaterial * shoeMaterial, MyIndexedVertexArray * vertexArray)
 {
 	for (std::vector<MyObject3D *>::iterator it = body->GetChildren()->begin(); it != body->GetChildren()->end(); ++it)
 	{
-		((MyGraphicsObject3D *)(*it))->Initialize(shader, material, true, vertexArray, true);
+		((MyGraphicsObject3D *)(*it))->Initialize(shader, skinMaterial, true, vertexArray, true);
 	}
+
+	MyMaterial *headMat = (headMaterial != 0 ? headMaterial : skinMaterial);
+	MyMaterial *clothesMat = (clothesMaterial != 0 ? clothesMaterial : skinMaterial);
+	MyMaterial *shirtMat = (shirtStampMaterial != 0 ? shirtStampMaterial : clothesMat);
+	MyMaterial *shoeMat = (shoeMaterial != 0 ? shoeMaterial : skinMaterial);
+
+	head->SetMaterial(headMat);
+	torso->SetMaterial(shirtMat);
+	midTorso->SetMaterial(clothesMat);
+	abdomen->SetMaterial(clothesMat);
+	leftHip->SetMaterial(clothesMat);
+	rightHip->SetMaterial(clothesMat);
+	leftThigh->SetMaterial(clothesMat);
+	rightThigh->SetMaterial(clothesMat);
+	leftKnee->SetMaterial(clothesMat);
+	rightKnee->SetMaterial(clothesMat);
+	leftCalf->SetMaterial(clothesMat);
+	rightCalf->SetMaterial(clothesMat);
+	leftAnkle->SetMaterial(clothesMat);
+	rightAnkle->SetMaterial(clothesMat);
+	leftShoulder->SetMaterial(clothesMat);
+	rightShoulder->SetMaterial(clothesMat);
+	leftUpperArm->SetMaterial(clothesMat);
+	rightUpperArm->SetMaterial(clothesMat);
+	leftElbow->SetMaterial(clothesMat);
+	rightElbow->SetMaterial(clothesMat);
+	leftForearm->SetMaterial(clothesMat);
+	rightForearm->SetMaterial(clothesMat);
+	leftWrist->SetMaterial(clothesMat);
+	rightWrist->SetMaterial(clothesMat);
+	leftFoot->SetMaterial(shoeMat);
+	rightFoot->SetMaterial(shoeMat);
 
 	InitializePose();
 

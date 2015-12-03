@@ -35,12 +35,18 @@ MyApplication::MyApplication(char * name)
 	inputManager = new MyInputManager();
 
 	catTexture = new MyTexture2D("Resource Files\\sample2.png");
+	tuxTexture = new MyTexture2D("Resource Files\\TuxTorso.png");
 
 	shinyMaterial = new MyMaterial(0, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 	MyColorRGBA shellyDiffuse = MyColorRGBA(77.0f / 255.0f, 126.0f / 255.0f, 17.0f / 255.0f);
 	MyColorRGBA shellyAmbient = MyColorRGBA(shellyDiffuse.GetRed() * 0.25f, shellyDiffuse.GetGreen() * 0.25f, shellyDiffuse.GetBlue() * 0.25f);
 	shellyMaterial = new MyMaterial(0, shellyAmbient, shellyDiffuse, MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 	catMaterial = new MyMaterial(catTexture, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(1.0f, 1.0f, 1.0f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+	MyColorRGBA shellyTuxDiffuse = MyColorRGBA(60.0f / 255.0f, 60.0f / 255.0f, 60.0f / 255.0f);
+	MyColorRGBA shellyTuxAmbient = MyColorRGBA(shellyTuxDiffuse.GetRed() * 0.25f, shellyTuxDiffuse.GetGreen() * 0.25f, shellyTuxDiffuse.GetBlue() * 0.25f);
+	tuxMaterial = new MyMaterial(0, shellyTuxAmbient, shellyTuxDiffuse, MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+	tuxShoeMaterial = new MyMaterial(0, MyColorRGBA(0.0f, 0.0f, 0.0f), MyColorRGBA(0.1f, 0.1f, 0.1f), MyColorRGBA(0.5f, 0.5f, 0.5f), 256.0f);
+	tuxTorsoMaterial = new MyMaterial(tuxTexture, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(1.0f, 1.0f, 1.0f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 
 	primaryLightSource = MyLightSource(100.0f, 100.0f, 100.0f);
 
@@ -68,8 +74,12 @@ MyApplication::~MyApplication()
 	MyDelete(shinyMaterial);
 	MyDelete(shellyMaterial);
 	MyDelete(catMaterial);
+	MyDelete(tuxMaterial);
+	MyDelete(tuxShoeMaterial);
+	MyDelete(tuxTorsoMaterial);
 
 	MyDelete(catTexture);
+	MyDelete(tuxTexture);
 
 	MyShaderManager::Cleanup();
 
@@ -106,6 +116,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", "Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
 	catTexture->InitializeTexture();
+	tuxTexture->InitializeTexture();
 
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
@@ -113,7 +124,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 	MyMeshFactory::CreateQuad("Quad");
 	MyMeshFactory::CreateSphere("Sphere", 32, 64);
 
-	testManikin->Initialize(phongShader, shellyMaterial, MyMeshFactory::GetMesh("Sphere"));
+	testManikin->Initialize(phongShader, shellyMaterial, catMaterial, tuxMaterial, tuxTorsoMaterial, tuxShoeMaterial, MyMeshFactory::GetMesh("Sphere"));
 	testManikin->SetHeadMaterial(catMaterial);
 	testManikin->Translate(0.0f, 0.0f, 15.0f);
 	testManikin->Yaw(-90.0f);
@@ -589,7 +600,7 @@ void MyApplication::toggleSomeManikins()
 
 		for (std::vector<MyManikin *>::iterator it = manikinArmy.begin(); it != manikinArmy.end(); ++it)
 		{
-			(*it)->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
+			(*it)->Initialize(phongShader, shinyMaterial, 0, 0, 0, 0, MyMeshFactory::GetMesh("Sphere"));
 			(*it)->TogglePlay();
 		}
 

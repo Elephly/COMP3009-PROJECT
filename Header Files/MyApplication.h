@@ -68,11 +68,15 @@ private:
 
 	// Textures
 	MyTexture2D *catTexture;
+	MyTexture2D *tuxTexture;
 
 	// Materials
 	MyMaterial *shinyMaterial;
 	MyMaterial *shellyMaterial;
 	MyMaterial *catMaterial;
+	MyMaterial *tuxMaterial;
+	MyMaterial *tuxShoeMaterial;
+	MyMaterial *tuxTorsoMaterial;
 
 	// Lights
 	MyLightSource primaryLightSource;
