@@ -149,12 +149,15 @@
     <ClInclude Include="Header Files\MyShaderManager.h" />
     <ClInclude Include="Header Files\MyShaderProgram.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
+    <ClInclude Include="Header Files\MyTexture2D.h" />
     <ClInclude Include="Header Files\MyVector.h" />
     <ClInclude Include="Header Files\SOIL.h" />
     <ClInclude Include="Header Files\MyVertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource Files\lenovo.PNG" />
     <Image Include="Resource Files\sample.png" />
+    <Image Include="Resource Files\sample2.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\MyAnimation.cpp" />
@@ -181,6 +184,7 @@
     <ClCompile Include="Source Files\MyShaderManager.cpp" />
     <ClCompile Include="Source Files\MyShaderProgram.cpp" />
     <ClCompile Include="Source Files\MyStringUtil.cpp" />
+    <ClCompile Include="Source Files\MyTexture2D.cpp" />
     <ClCompile Include="Source Files\MyVector.cpp" />
     <ClCompile Include="Source Files\MyVertex.cpp" />
   </ItemGroup>

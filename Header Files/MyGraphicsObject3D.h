@@ -23,7 +23,7 @@ public:
 
 	// Setters
 	virtual void SetShader(MyShaderProgram *shader, bool recursive = false);
-	virtual void SetMaterial(MyMaterial *shader, bool recursive = false);
+	virtual void SetMaterial(MyMaterial *material, bool recursive = false);
 	virtual void SetIndexedVertexArray(MyIndexedVertexArray *vertexArray);
 
 protected:

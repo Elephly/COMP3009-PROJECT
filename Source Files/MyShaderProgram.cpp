@@ -107,7 +107,7 @@ void MyShaderProgram::InitializeShaderProgram(char * vertShaderFileName, char * 
 	glDeleteShader(frgShader);
 }
 
-int MyShaderProgram::GetShaderProgram()
+unsigned int MyShaderProgram::GetShaderProgram()
 {
 	return shaderProgram;
 }
@@ -168,5 +168,16 @@ int MyShaderProgram::BindUniformFloat(float const & f, const char * uniformName)
 	if (location == -1)
 		return location;
 	glUniform1f(location, f);
+	return 0;
+}
+
+int MyShaderProgram::BindUniformInt(int const & i, const char * uniformName)
+{
+	glUseProgram(shaderProgram);
+	int location = glGetUniformLocation(shaderProgram, uniformName);
+	//assert(location != -1);
+	if (location == -1)
+		return location;
+	glUniform1i(location, i);
 	return 0;
 }

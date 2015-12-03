@@ -2,13 +2,18 @@
 
 #include "MyDefines.h"
 
-MyMaterial::MyMaterial(MyColorRGBA const & ambient, MyColorRGBA const & diffuse, MyColorRGBA const & specular, float const & shine, bool const & toon) :
-	a(ambient), d(diffuse), s(specular), sh(shine), t(toon)
+MyMaterial::MyMaterial(MyTexture2D * texture, MyColorRGBA const & ambient, MyColorRGBA const & diffuse, MyColorRGBA const & specular, float const & shine, bool const & toon) :
+	tex(texture), a(ambient), d(diffuse), s(specular), sh(shine), t(toon)
 {
 }
 
 MyMaterial::~MyMaterial()
 {
+}
+
+MyTexture2D * MyMaterial::GetTexture() const
+{
+	return tex;
 }
 
 const MyColorRGBA & MyMaterial::GetAmbient() const
@@ -34,6 +39,16 @@ const float & MyMaterial::GetShine() const
 const bool & MyMaterial::GetToon() const
 {
 	return t;
+}
+
+bool MyMaterial::HasTexture() const
+{
+	return tex != 0;
+}
+
+void MyMaterial::SetTexture(MyTexture2D * texture)
+{
+	tex = texture;
 }
 
 void MyMaterial::SetAmbient(float const & red, float const & green, float const & blue, float const & alpha)

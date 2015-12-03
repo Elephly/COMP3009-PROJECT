@@ -12,18 +12,19 @@ public:
 	void InitializeShaderProgram(char *vertShaderFileName = 0, char *fragShaderFileName = 0);
 
 	// Getters
-	int GetShaderProgram();
+	unsigned int GetShaderProgram();
 
 	int BindUniformMatrix(MyMatrix4 const & matrix, const char *uniformName);
 	int BindUniformVector(MyVector2D const & vector, const char *uniformName);
 	int BindUniformVector(MyVector3D const & vector, const char *uniformName);
 	int BindUniformVector(MyVector4D const & vector, const char *uniformName);
 	int BindUniformFloat(float const & f, const char *uniformName);
+	int BindUniformInt(int const & i, const char *uniformName);
 
 private:
 	char *vertexShaderFileName;
 	char *fragmentShaderFileName;
-	int shaderProgram;
+	unsigned int shaderProgram;
 };
 
 #endif // MYSHADERPROGRAM_H

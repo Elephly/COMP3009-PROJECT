@@ -1,15 +1,18 @@
 #version 400
 
 uniform vec4 lightColor;
+uniform sampler2D textureSampler;
 uniform vec4 ambient;
 uniform vec4 diffuse;
 uniform vec4 specular;
 uniform float shine;
 uniform float toon;
+uniform float hasTexture;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec4 vColor;
+varying vec2 vTextureCoord;
 varying vec3 light;
 
 vec4 threeTermReflectionLighting(vec3 normal, vec3 position, vec3 lightPos, float shininess,
@@ -77,11 +80,16 @@ vec4 toonify(vec3 normal, vec3 position, vec4 color)
 
 void main(void)
 {
-	vec4 fragColor;
+	vec4 fragColor = vec4(1.0, 1.0, 1.0, 1.0);
 	
-	fragColor = threeTermHalfwayLighting(vNormal, vPosition, light, shine, ambient, diffuse, specular, vColor, lightColor);
+	if (hasTexture > 0.5)
+	{
+		fragColor = texture2D(textureSampler, vTextureCoord);
+	}
+
+	fragColor = threeTermHalfwayLighting(vNormal, vPosition, light, shine, ambient, diffuse, specular, fragColor, lightColor);
 	
-	if (toon > 0.0)
+	if (toon > 0.5)
 	{
 		fragColor = toonify(vNormal, vPosition, fragColor);
 	}

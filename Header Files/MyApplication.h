@@ -66,8 +66,13 @@ private:
 	// Input Manager
 	MyInputManager *inputManager;
 
+	// Textures
+	MyTexture2D *catTexture;
+
 	// Materials
 	MyMaterial *shinyMaterial;
+	MyMaterial *shellyMaterial;
+	MyMaterial *catMaterial;
 
 	// Lights
 	MyLightSource primaryLightSource;

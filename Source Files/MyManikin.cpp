@@ -322,6 +322,11 @@ void MyManikin::ChangeSpeed(float const & factor)
 	runAnimation->SetFrameRate(max(runAnimation->GetFrameRate() * factor, 0.1f));
 }
 
+void MyManikin::SetHeadMaterial(MyMaterial * material)
+{
+	head->SetMaterial(material);
+}
+
 const MyVector3D & MyManikin::GetDirection() const
 {
 	return direction;

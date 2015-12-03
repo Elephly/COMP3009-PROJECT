@@ -54,7 +54,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeS
 		for (int j = 0; j < latitudeSamples; j++)
 		{
 			phi = MyMath::MY_PI_F * j / (latitudeSamples - 1);
-			MyVector3D normal = MyVector3D(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi));
+			MyVector3D normal = MyVector3D(-sin(theta) * sin(phi), cos(phi), cos(theta) * sin(phi));
 
 			float t = (float)j / latitudeSamples;
 			MyColorRGBA color = MyColorRGBA(LerpF(color1.GetRed(), color2.GetRed(), t), LerpF(color1.GetGreen(), color2.GetGreen(), t),
@@ -64,6 +64,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeS
 
 			MyVertex4D vertex = MyVertex4D(position, color);
 			vertex.SetNormal(normal);
+			vertex.SetTextureCoord(1.0f - ((float)i / (float)longitudeSamples), (float)j / (float)latitudeSamples);
 
 			v[k++] = vertex;
 		}
@@ -109,12 +110,13 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, MyColorRGBA &
 		for (int j = 0; j < latitudeSamples; j++)
 		{
 			phi = MyMath::MY_PI_F * j / (latitudeSamples - 1);
-			MyVector3D normal = MyVector3D(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi));
+			MyVector3D normal = MyVector3D(-sin(theta) * sin(phi), cos(phi), cos(theta) * sin(phi));
 
 			MyVector4D position = normal * 0.5f;
 
 			MyVertex4D vertex = MyVertex4D(position, solidColor);
 			vertex.SetNormal(normal);
+			vertex.SetTextureCoord(1.0f - ((float)i / (float)longitudeSamples), (float)j / (float)latitudeSamples);
 
 			v[k++] = vertex;
 		}

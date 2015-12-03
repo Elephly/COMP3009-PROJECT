@@ -22,6 +22,7 @@ public:
 	virtual void ChangeSpeed(float const & factor);
 
 	// TEMP
+	virtual void SetHeadMaterial(MyMaterial *material);
 	virtual const MyVector3D &GetDirection() const;
 	virtual void Yaw(float const & angle, bool isDegree = true);
 

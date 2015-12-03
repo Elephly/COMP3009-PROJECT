@@ -14,7 +14,7 @@
 #endif // TIMER_UPDATE_OPERATION
 
 #ifndef MAXIMUM_FRAME_RATE // frames per second (value as double)
-#define MAXIMUM_FRAME_RATE 128.0
+#define MAXIMUM_FRAME_RATE 256.0
 #endif // FRAME_RATE
 
 #ifndef FRAME_TIME

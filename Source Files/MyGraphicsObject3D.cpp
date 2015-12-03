@@ -44,14 +44,25 @@ void MyGraphicsObject3D::Draw(MyMatrix4 const & parentTransformation)
 		shaderProgram->BindUniformVector(MyVector4D(objectMaterial->GetSpecular()), "specular");
 		shaderProgram->BindUniformFloat(objectMaterial->GetShine(), "shine");
 		shaderProgram->BindUniformFloat((float)(objectMaterial->GetToon()), "toon");
-	}
+		if (objectMaterial->HasTexture())
+		{
+			glActiveTexture(objectMaterial->GetTexture()->GetTextureUnit());
+			glBindTexture(GL_TEXTURE_2D, objectMaterial->GetTexture()->GetTextureID());
+			shaderProgram->BindUniformInt((int)objectMaterial->GetTexture()->GetTextureUnit(), "textureSampler");
+			shaderProgram->BindUniformFloat(1.0f, "hasTexture");
+		}
+		else
+		{
+			shaderProgram->BindUniformFloat(0.0f, "hasTexture");
+		}
 
-	if (vertices != 0 && vertices->GetVertexArrayObject() != 0)
-	{
-		glBindVertexArray(vertices->GetVertexArrayObject());
-		//glDrawArraysInstancedARB(GL_TRIANGLES, 0, vertices->GetVertexCount(), 1);
-		glDrawArrays(GL_TRIANGLES, 0, vertices->GetVertexCount());
-		glBindVertexArray(0);
+		if (vertices != 0 && vertices->GetVertexArrayObject() != 0)
+		{
+			glBindVertexArray(vertices->GetVertexArrayObject());
+			//glDrawArraysInstancedARB(GL_TRIANGLES, 0, vertices->GetVertexCount(), 1);
+			glDrawArrays(GL_TRIANGLES, 0, vertices->GetVertexCount());
+			glBindVertexArray(0);
+		}
 	}
 }
 

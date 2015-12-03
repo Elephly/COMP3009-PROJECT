@@ -34,7 +34,13 @@ MyApplication::MyApplication(char * name)
 	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
-	shinyMaterial = new MyMaterial(MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+	catTexture = new MyTexture2D("Resource Files\\sample2.png");
+
+	shinyMaterial = new MyMaterial(0, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+	MyColorRGBA shellyDiffuse = MyColorRGBA(77.0f / 255.0f, 126.0f / 255.0f, 17.0f / 255.0f);
+	MyColorRGBA shellyAmbient = MyColorRGBA(shellyDiffuse.GetRed() * 0.25f, shellyDiffuse.GetGreen() * 0.25f, shellyDiffuse.GetBlue() * 0.25f);
+	shellyMaterial = new MyMaterial(0, shellyAmbient, shellyDiffuse, MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
+	catMaterial = new MyMaterial(catTexture, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(1.0f, 1.0f, 1.0f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 
 	primaryLightSource = MyLightSource(100.0f, 100.0f, 100.0f);
 
@@ -60,6 +66,9 @@ MyApplication::~MyApplication()
 	MyDelete(camera);
 
 	MyDelete(shinyMaterial);
+	MyDelete(catMaterial);
+
+	MyDelete(catTexture);
 
 	MyShaderManager::Cleanup();
 
@@ -95,13 +104,16 @@ void MyApplication::Initialize(int *argc, char **argv)
 	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", "Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
 	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", "Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
 
+	catTexture->InitializeTexture();
+
 	camera->Translate(0.0f, 0.0f, 10.0f);
 
 	// Creating geometry
 	MyMeshFactory::CreateQuad("Quad");
-	MyMeshFactory::CreateSphere("Sphere", MyColorRGBA(1.0f, 1.0f, 1.0f), 32, 64);
+	MyMeshFactory::CreateSphere("Sphere", 32, 64);
 
-	testManikin->Initialize(phongShader, shinyMaterial, MyMeshFactory::GetMesh("Sphere"));
+	testManikin->Initialize(phongShader, shellyMaterial, MyMeshFactory::GetMesh("Sphere"));
+	testManikin->SetHeadMaterial(catMaterial);
 	testManikin->Translate(0.0f, 0.0f, 15.0f);
 	testManikin->Yaw(-90.0f);
 
@@ -394,6 +406,7 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 			if (key == 't')
 			{
 				shinyMaterial->SetToon(!shinyMaterial->GetToon());
+				catMaterial->SetToon(!catMaterial->GetToon());
 			}
 		}
 		else
