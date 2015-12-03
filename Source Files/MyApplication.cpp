@@ -66,6 +66,7 @@ MyApplication::~MyApplication()
 	MyDelete(camera);
 
 	MyDelete(shinyMaterial);
+	MyDelete(shellyMaterial);
 	MyDelete(catMaterial);
 
 	MyDelete(catTexture);
