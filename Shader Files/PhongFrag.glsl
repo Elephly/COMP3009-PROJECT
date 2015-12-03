@@ -69,10 +69,10 @@ vec4 toonify(vec3 normal, vec3 position, vec4 color)
 	else
 	{
 		float toonShades = 3.0;
-		C.r = max(ambient.r, C.r - (mod(C.r, 1.0 / toonShades)));
-		C.g = max(ambient.g, C.g - (mod(C.g, 1.0 / toonShades)));
-		C.b = max(ambient.b, C.b - (mod(C.b, 1.0 / toonShades)));
-		C.a = max(ambient.a, C.a - (mod(C.a, 1.0 / toonShades)));
+		C.r = max(ambient.r * C.r, C.r - (mod(C.r, 1.0 / toonShades)));
+		C.g = max(ambient.g * C.r, C.g - (mod(C.g, 1.0 / toonShades)));
+		C.b = max(ambient.b * C.r, C.b - (mod(C.b, 1.0 / toonShades)));
+		C.a = max(ambient.a * C.r, C.a - (mod(C.a, 1.0 / toonShades)));
 	}
 
 	return C;

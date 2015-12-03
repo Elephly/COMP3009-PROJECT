@@ -138,7 +138,7 @@ void MyManikin::Initialize(MyShaderProgram * shader, MyMaterial * material, MyIn
 	bodyAnim->AddKeyFrame(12, new MyKeyframe(MyVector3D(0.0f, 0.25f, -0.5f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
 	bodyAnim->AddKeyFrame(15, new MyKeyframe(MyVector3D(0.0f, 0.1f, -0.4f), (MyVector3D)body->GetScale(), MyVector3D(-30.0f)));
 
-	torsoAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
+	torsoAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)midTorso->GetPosition(), (MyVector3D)midTorso->GetScale(), MyVector3D(10.0f)));
 
 	headAnim->AddKeyFrame(0, new MyKeyframe((MyVector3D)neck->GetPosition(), (MyVector3D)neck->GetScale(), MyVector3D(10.0f)));
 

@@ -406,6 +406,7 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 			if (key == 't')
 			{
 				shinyMaterial->SetToon(!shinyMaterial->GetToon());
+				shellyMaterial->SetToon(!catMaterial->GetToon());
 				catMaterial->SetToon(!catMaterial->GetToon());
 			}
 		}
