@@ -420,6 +420,9 @@ void MyApplication::KeyboardUpFunc(unsigned char key, int x, int y)
 				shinyMaterial->SetToon(!shinyMaterial->GetToon());
 				shellyMaterial->SetToon(!catMaterial->GetToon());
 				catMaterial->SetToon(!catMaterial->GetToon());
+				tuxMaterial->SetToon(!tuxMaterial->GetToon());
+				tuxShoeMaterial->SetToon(!tuxShoeMaterial->GetToon());
+				tuxTorsoMaterial->SetToon(!tuxTorsoMaterial->GetToon());
 			}
 		}
 		else
