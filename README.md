@@ -1,5 +1,5 @@
-# COMP3009-PROJECT
-COMP3009 Term Project
+# N3DIL
+The "Nick 3D & Image Library"
 
 ### Setup
 1. Install Visual C++ (currently using Visual Studio 2015)
