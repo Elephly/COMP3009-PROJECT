@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COMP3009-PROJECT", "COMP3009-PROJECT.vcxproj", "{3DB7EE5E-0673-4C56-A19B-BD706BB98C53}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "N3DIL", "N3DIL.vcxproj", "{3DB7EE5E-0673-4C56-A19B-BD706BB98C53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

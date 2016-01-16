@@ -6,7 +6,7 @@
 #endif // MY_DEBUG
 
 #ifndef PROJECT_NAME
-#define PROJECT_NAME "COMP3009-PROJECT"
+#define PROJECT_NAME "N3DIL"
 #endif
 
 #ifndef TIMER_UPDATE_OPERATION
