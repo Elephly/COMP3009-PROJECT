@@ -146,6 +146,7 @@
     <ClInclude Include="Header Files\MyMath.h" />
     <ClInclude Include="Header Files\MyMatrix.h" />
     <ClInclude Include="Header Files\MyObject3D.h" />
+    <ClInclude Include="Header Files\MyObjectManager.h" />
     <ClInclude Include="Header Files\MyShaderManager.h" />
     <ClInclude Include="Header Files\MyShaderProgram.h" />
     <ClInclude Include="Header Files\MyStringUtil.h" />
