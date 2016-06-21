@@ -25,6 +25,11 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 	{
 		MyVertex4D v;
 
+		GLuint positionLoc = 0; // glGetAttribLocation((*it)->GetShaderProgram(), "vtxPosition");
+		GLuint normalLoc = 1; // glGetAttribLocation((*it)->GetShaderProgram(), "vtxNormal");
+		GLuint colorLoc = 2; // glGetAttribLocation((*it)->GetShaderProgram(), "vtxColor");
+		GLuint textureCoordLoc = 3; // glGetAttribLocation((*it)->GetShaderProgram(), "vtxTextureCoord");
+
 		unsigned int *addr_ver = (unsigned int *)&v;
 		unsigned int *addr_pos = (unsigned int *)&v.GetPosition().GetXAddr();
 		unsigned int *addr_nor = (unsigned int *)&v.GetNormal().GetXAddr();
@@ -38,34 +43,25 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 
-		std::vector<MyShaderProgram *> *shaders = MyShaderManager::GetShaderList();
-		for (std::vector<MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
-		{
-			GLuint positionLoc = glGetAttribLocation((*it)->GetShaderProgram(), "vtxPosition");
-			glEnableVertexAttribArray(positionLoc);
-			unsigned int attAddress = (unsigned int)addr_pos - (unsigned int)addr_ver;
-			glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
-			//glVertexAttribDivisor(positionLoc, 0);
+		glEnableVertexAttribArray(positionLoc);
+		unsigned int attAddress = (unsigned int)addr_pos - (unsigned int)addr_ver;
+		glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		//glVertexAttribDivisor(positionLoc, 0);
 
-			GLuint normalLoc = glGetAttribLocation((*it)->GetShaderProgram(), "vtxNormal");
-			glEnableVertexAttribArray(normalLoc);
-			attAddress = (unsigned int)addr_nor - (unsigned int)addr_ver;
-			glVertexAttribPointer(normalLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
-			//glVertexAttribDivisor(normalLoc, 0);
+		glEnableVertexAttribArray(normalLoc);
+		attAddress = (unsigned int)addr_nor - (unsigned int)addr_ver;
+		glVertexAttribPointer(normalLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		//glVertexAttribDivisor(normalLoc, 0);
 
-			GLuint colorLoc = glGetAttribLocation((*it)->GetShaderProgram(), "vtxColor");
-			glEnableVertexAttribArray(colorLoc);
-			attAddress = (unsigned int)addr_col - (unsigned int)addr_ver;
-			glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
-			//glVertexAttribDivisor(colorLoc, 0);
+		glEnableVertexAttribArray(colorLoc);
+		attAddress = (unsigned int)addr_col - (unsigned int)addr_ver;
+		glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		//glVertexAttribDivisor(colorLoc, 0);
 
-			GLuint textureCoordLoc = glGetAttribLocation((*it)->GetShaderProgram(), "vtxTextureCoord");
-			glEnableVertexAttribArray(textureCoordLoc);
-			attAddress = (unsigned int)addr_tex - (unsigned int)addr_ver;
-			glVertexAttribPointer(textureCoordLoc, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
-			//glVertexAttribDivisor(textureCoordLoc, 0);
-		}
-		MyDelete(shaders);
+		glEnableVertexAttribArray(textureCoordLoc);
+		attAddress = (unsigned int)addr_tex - (unsigned int)addr_ver;
+		glVertexAttribPointer(textureCoordLoc, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		//glVertexAttribDivisor(textureCoordLoc, 0);
 
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);

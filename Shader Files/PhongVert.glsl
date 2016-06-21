@@ -5,10 +5,10 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform vec4 lightPosition;
 
-attribute vec4 vtxPosition;
-attribute vec4 vtxNormal;
-attribute vec4 vtxColor;
-attribute vec2 vtxTextureCoord;
+layout(location = 0) attribute vec4 vtxPosition;
+layout(location = 1) attribute vec4 vtxNormal;
+layout(location = 2) attribute vec4 vtxColor;
+layout(location = 3) attribute vec2 vtxTextureCoord;
 
 varying vec3 vPosition;
 varying vec3 vNormal;

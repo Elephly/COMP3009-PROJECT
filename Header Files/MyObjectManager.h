@@ -11,14 +11,22 @@ class MyObjectManager
 {
 public:
 	static void Add(char * objectName, T * object);
-	static void Erase(char * objectName);
-	static T * Get(char * objectName);
-	static std::vector<T *> * GetAll();
-	static T *  Remove(char * objectName);
-	static T *  Remove(T * object);
-	static void Set(char * objectName);
 
 	static void Cleanup();
+
+	static void Erase(char * objectName);
+
+	static void Erase(T * object);
+
+	static T * Get(char * objectName);
+
+	static std::vector<T *> * GetAll();
+
+	static T * Remove(char * objectName);
+
+	static T * Remove(T * object);
+
+	static void Set(char * objectName, T * object);
 
 private:
 	static std::map<char *, T *> * objects;
@@ -59,6 +67,16 @@ std::vector<T *> * MyObjectManager<T>::GetAll()
 	}
 
 	return objectList;
+}
+
+template<typename T>
+void MyObjectManager<T>::Set(char * objectName, T * object)
+{
+	if (objects->find(objectName) != objects->end())
+	{
+		MyDelete((*objects)[objectName]);
+	}
+	(*objects)[objectName] = object;
 }
 
 template<typename T>
