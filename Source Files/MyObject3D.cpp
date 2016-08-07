@@ -44,11 +44,12 @@ void MyObject3D::Draw(MyMatrix4 const & parentTransformation)
 		(*it)->Draw(transformation);
 	}
 
-	transformation =
-		parentTransformation *
-		MyMatrix4::TranslationMatrix(position) *
-		MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
-		MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ());
+	//transformation =
+	//	parentTransformation *
+	//	MyMatrix4::TranslationMatrix(position) *
+	//	MyMatrix4::RollPitchYawRotationMatrix(rotation.GetZ(), rotation.GetX(), rotation.GetY()) *
+	//	MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ());
+    transformation *= MyMatrix4::ScaleMatrix(scale.GetX(), scale.GetY(), scale.GetZ());
 }
 
 void MyObject3D::Rotate(float const & x, float const & y, float const & z, bool isDegree)
