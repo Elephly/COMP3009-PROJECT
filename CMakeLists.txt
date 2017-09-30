@@ -109,23 +109,21 @@ configure_file(
 
 include_directories("${LOCAL_INCLUDE_DIR}")
 include_directories("${PUBLIC_INCLUDE_DIR}")
-#### include_directories("${LOCAL_SUBMODULE_DIR}/MemMon/include")
-#### include_directories("${LOCAL_SUBMODULE_DIR}/SFML/include")
+include_directories("${LOCAL_SUBMODULE_DIR}/FreeGLUT/freeglut/freeglut/include")
+include_directories("${LOCAL_SUBMODULE_DIR}/Simple-OpenGL-Image-Library/src")
 
-#### add_subdirectory(submodules/MemMon)
-#### add_subdirectory(submodules/SFML)
+add_subdirectory(submodules/FreeGLUT/freeglut/freeglut)
+add_subdirectory(submodules/glew/build/cmake)
+add_subdirectory(submodules/Simple-OpenGL-Image-Library)
 
 add_executable("${PROJECT_NAME}" "${LOCAL_INCLUDES}" "${LOCAL_RESOURCES}" "${LOCAL_SRCS}")
-#### target_link_libraries("${PROJECT_NAME}"
-####   MemMon
-####   sfml-audio
-####   sfml-graphics
-####   sfml-main
-####   sfml-network
-####   sfml-system
-####   sfml-window
-#### )
+target_link_libraries("${PROJECT_NAME}"
+  freeglut
+  glew
+  SOIL
+)
 
 # Add the install targets
 install (TARGETS "${PROJECT_NAME}" DESTINATION bin)
 install (FILES "${CONFIG_HEADER_OUT}" DESTINATION include)
+install (FILES "${LOCAL_RESOURCES}" DESTINATION res)
