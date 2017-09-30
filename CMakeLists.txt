@@ -8,7 +8,6 @@ set(CONFIG_HEADER_OUT "${PUBLIC_INCLUDE_DIR}/${PROJECT_NAME}Config.h")
 set(LOCAL_SUBMODULE_DIR "${PROJECT_SOURCE_DIR}/submodules")
 set(LOCAL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(LOCAL_RESOURCE_DIR "${PROJECT_SOURCE_DIR}/res")
-set(LOCAL_SHADER_DIR "${PROJECT_SOURCE_DIR}/shaders")
 set(LOCAL_SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set(LOCAL_INCLUDES
   "${CONFIG_HEADER_IN}"
@@ -48,19 +47,17 @@ set(LOCAL_INCLUDES
   "${LOCAL_INCLUDE_DIR}/SOIL.h"
 )
 set(LOCAL_RESOURCES
-  "${LOCAL_RESOURCE_DIR}/lenovo.PNG"
-  "${LOCAL_RESOURCE_DIR}/sample2.png"
-  "${LOCAL_RESOURCE_DIR}/sample.png"
-  "${LOCAL_RESOURCE_DIR}/TuxTorso.png"
-)
-set(LOCAL_SHADERS
-  "${LOCAL_SHADER_DIR}/ColorFrag.glsl"
-  "${LOCAL_SHADER_DIR}/ColorVert.glsl"
-  "${LOCAL_SHADER_DIR}/GouraudFrag.glsl"
-  "${LOCAL_SHADER_DIR}/GouraudVert.glsl"
-  "${LOCAL_SHADER_DIR}/PhongFrag.glsl"
-  "${LOCAL_SHADER_DIR}/PhongVert.glsl"
-  "${LOCAL_SHADER_DIR}/WhiteVert.glsl"
+  "${LOCAL_RESOURCE_DIR}/images/lenovo.PNG"
+  "${LOCAL_RESOURCE_DIR}/images/sample2.png"
+  "${LOCAL_RESOURCE_DIR}/images/sample.png"
+  "${LOCAL_RESOURCE_DIR}/images/TuxTorso.png"
+  "${LOCAL_RESOURCE_DIR}/shaders/ColorFrag.glsl"
+  "${LOCAL_RESOURCE_DIR}/shaders/ColorVert.glsl"
+  "${LOCAL_RESOURCE_DIR}/shaders/GouraudFrag.glsl"
+  "${LOCAL_RESOURCE_DIR}/shaders/GouraudVert.glsl"
+  "${LOCAL_RESOURCE_DIR}/shaders/PhongFrag.glsl"
+  "${LOCAL_RESOURCE_DIR}/shaders/PhongVert.glsl"
+  "${LOCAL_RESOURCE_DIR}/shaders/WhiteVert.glsl"
 )
 set(LOCAL_SRCS
   "${LOCAL_SRC_DIR}/main.cpp"
@@ -118,7 +115,7 @@ include_directories("${PUBLIC_INCLUDE_DIR}")
 #### add_subdirectory(submodules/MemMon)
 #### add_subdirectory(submodules/SFML)
 
-add_executable("${PROJECT_NAME}" "${LOCAL_INCLUDES}" "${LOCAL_RESOURCES}" "${LOCAL_SHADERS}" "${LOCAL_SRCS}")
+add_executable("${PROJECT_NAME}" "${LOCAL_INCLUDES}" "${LOCAL_RESOURCES}" "${LOCAL_SRCS}")
 #### target_link_libraries("${PROJECT_NAME}"
 ####   MemMon
 ####   sfml-audio
