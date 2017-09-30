@@ -110,6 +110,7 @@ configure_file(
 include_directories("${LOCAL_INCLUDE_DIR}")
 include_directories("${PUBLIC_INCLUDE_DIR}")
 include_directories("${LOCAL_SUBMODULE_DIR}/FreeGLUT/freeglut/freeglut/include")
+include_directories("${LOCAL_SUBMODULE_DIR}/glew/include")
 include_directories("${LOCAL_SUBMODULE_DIR}/Simple-OpenGL-Image-Library/src")
 
 add_subdirectory(submodules/FreeGLUT/freeglut/freeglut)
