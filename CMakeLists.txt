@@ -117,6 +117,9 @@ add_subdirectory(submodules/FreeGLUT/freeglut/freeglut)
 add_subdirectory(submodules/glew/build/cmake)
 add_subdirectory(submodules/Simple-OpenGL-Image-Library)
 
+# Build glew registry and extensions
+execute_process(COMMAND bash -c make WORKING_DIRECTORY "${LOCAL_SUBMODULE_DIR}/glew/auto")
+
 add_executable("${PROJECT_NAME}" "${LOCAL_INCLUDES}" "${LOCAL_RESOURCES}" "${LOCAL_SRCS}")
 target_link_libraries("${PROJECT_NAME}"
   freeglut
