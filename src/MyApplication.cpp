@@ -114,7 +114,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 
 	// Creating geometry
 	MyMeshFactory::CreateQuad("Quad");
-	MyMeshFactory::CreateSphere("Sphere", 32, 64);
+	MyMeshFactory::CreateSphere("Sphere", 8, 16);
 
 	testManikin->Initialize(phongShader, shellyMaterial, catMaterial, tuxMaterial, tuxTorsoMaterial, tuxShoeMaterial, MyMeshFactory::GetMesh("Sphere"));
 	testManikin->SetHeadMaterial(catMaterial);
