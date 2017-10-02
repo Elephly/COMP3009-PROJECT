@@ -1,7 +1,8 @@
 #include "MyTexture2D.h"
 
+#include <GL/glew.h>
+
 #include "MyIncludes.h"
-#include "glew.h"
 #include "SOIL.h"
 
 MyTexture2D::MyTexture2D(char * texFileName, unsigned int texUnit) :

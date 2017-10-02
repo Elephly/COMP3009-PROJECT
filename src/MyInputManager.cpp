@@ -1,10 +1,6 @@
 #include "MyInputManager.h"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#else
-#include <glut.h>
-#endif
+#include <GL/glut.h>
 
 MyInputManager::MyInputManager()
 {

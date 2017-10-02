@@ -1,8 +1,8 @@
 #ifndef MYIMAGE_H
 #define MYIMAGE_H
 
-#include <glew.h>
-#include "SOIL.h"
+#include <GL/glew.h>
+#include <SOIL.h>
 
 class MyImage
 {

@@ -1,7 +1,7 @@
 #include "MyIndexedVertexArray.h"
 
 #include "MyDefines.h"
-#include <glew.h>
+#include <GL/glew.h>
 #include "MyShaderManager.h"
 
 MyIndexedVertexArray::MyIndexedVertexArray(MyVertex4D * vertexArray, int const & numVertices) :

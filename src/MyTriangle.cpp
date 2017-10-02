@@ -1,6 +1,6 @@
 #include "MyTriangle.h"
 
-#include <glew.h>
+#include <GL/glew.h>
 
 MyTriangle::MyTriangle(MyVector3D & position, MyVector3D & scale, MyVector3D & rotation, MyVertex4D & vertex1, MyVertex4D & vertex2, MyVertex4D & vertex3) :
 	MyGraphicsObject3D(position, scale, rotation)

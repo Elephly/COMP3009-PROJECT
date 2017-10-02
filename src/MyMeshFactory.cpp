@@ -1,9 +1,10 @@
 #include "MyMeshFactory.h"
 
+#include <GL/glew.h>
+#include <vector>
+
 #include "MyIncludes.h"
 #include "MyShaderManager.h"
-#include <glew.h>
-#include <vector>
 
 std::map<char *, MyIndexedVertexArray *> *MyMeshFactory::meshes = new std::map<char *, MyIndexedVertexArray *>();
 

@@ -1,15 +1,7 @@
 #include "MyApplication.h"
 
-#if defined(__APPLE__)
-#include <GLUT/glut.h>
-#else
-#include "windows.h"
-#include "glew.h"
-#include <GL/gl.h>
-#include <glut.h>
-#include "soil.h"
-#include <wglew.h>
-#endif
+#include <GL/glew.h>
+#include <GL/glut.h>
 
 #include "MyStringUtil.h"
 #include "MyMatrix.h"
@@ -34,8 +26,8 @@ MyApplication::MyApplication(char * name)
 	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
-	catTexture = new MyTexture2D("Resource Files\\sample2.png");
-	tuxTexture = new MyTexture2D("Resource Files\\TuxTorso.png");
+	catTexture = new MyTexture2D("res\\images\\sample2.png");
+	tuxTexture = new MyTexture2D("res\\images\\TuxTorso.png");
 
 	shinyMaterial = new MyMaterial(0, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 	MyColorRGBA shellyDiffuse = MyColorRGBA(77.0f / 255.0f, 126.0f / 255.0f, 17.0f / 255.0f);
@@ -111,9 +103,9 @@ void MyApplication::Initialize(int *argc, char **argv)
 		throw glewGetErrorString(err);
 	}
 
-	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", "Shader Files\\ColorVert.glsl", "Shader Files\\ColorFrag.glsl");
-	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", "Shader Files\\GouraudVert.glsl", "Shader Files\\GouraudFrag.glsl");
-	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", "Shader Files\\PhongVert.glsl", "Shader Files\\PhongFrag.glsl");
+	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", "res\\shaders\\ColorVert.glsl", "res\\shaders\\ColorFrag.glsl");
+	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", "res\\shaders\\GouraudVert.glsl", "res\\shaders\\GouraudFrag.glsl");
+	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", "res\\shaders\\PhongVert.glsl", "res\\shaders\\PhongFrag.glsl");
 
 	catTexture->InitializeTexture();
 	tuxTexture->InitializeTexture();

@@ -2,9 +2,11 @@ cmake_minimum_required(VERSION 2.6)
 
 project(N3DIL)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(PUBLIC_INCLUDE_DIR "${PROJECT_BINARY_DIR}/include")
-set(CONFIG_HEADER_IN "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in")
-set(CONFIG_HEADER_OUT "${PUBLIC_INCLUDE_DIR}/${PROJECT_NAME}Config.h")
+set(PUBLIC_RESOURCE_DIR "${PROJECT_BINARY_DIR}/res")
+set(CONFIG_HEADER_IN "${PROJECT_SOURCE_DIR}/ProjectConfig.h.in")
+set(CONFIG_HEADER_OUT "${PUBLIC_INCLUDE_DIR}/ProjectConfig.h")
 set(LOCAL_SUBMODULE_DIR "${PROJECT_SOURCE_DIR}/submodules")
 set(LOCAL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(LOCAL_RESOURCE_DIR "${PROJECT_SOURCE_DIR}/res")
@@ -15,7 +17,6 @@ set(LOCAL_INCLUDES
   "${LOCAL_INCLUDE_DIR}/MyAnimationTrack.h"
   "${LOCAL_INCLUDE_DIR}/MyApplication.h"
   "${LOCAL_INCLUDE_DIR}/MyCamera.h"
-  "${LOCAL_INCLUDE_DIR}/MyCube.h"
   "${LOCAL_INCLUDE_DIR}/MyDefines.h"
   "${LOCAL_INCLUDE_DIR}/MyFileIO.h"
   "${LOCAL_INCLUDE_DIR}/MyGeometry.h"
@@ -35,16 +36,12 @@ set(LOCAL_INCLUDES
   "${LOCAL_INCLUDE_DIR}/MyMeshFactory.h"
   "${LOCAL_INCLUDE_DIR}/MyObject3D.h"
   "${LOCAL_INCLUDE_DIR}/MyObjectManager.h"
-  "${LOCAL_INCLUDE_DIR}/MyQuad.h"
   "${LOCAL_INCLUDE_DIR}/MyShaderManager.h"
   "${LOCAL_INCLUDE_DIR}/MyShaderProgram.h"
-  "${LOCAL_INCLUDE_DIR}/MySphere.h"
   "${LOCAL_INCLUDE_DIR}/MyStringUtil.h"
   "${LOCAL_INCLUDE_DIR}/MyTexture2D.h"
-  "${LOCAL_INCLUDE_DIR}/MyTriangle.h"
   "${LOCAL_INCLUDE_DIR}/MyVector.h"
   "${LOCAL_INCLUDE_DIR}/MyVertex.h"
-  "${LOCAL_INCLUDE_DIR}/SOIL.h"
 )
 set(LOCAL_RESOURCES
   "${LOCAL_RESOURCE_DIR}/images/lenovo.PNG"
@@ -65,7 +62,6 @@ set(LOCAL_SRCS
   "${LOCAL_SRC_DIR}/MyAnimationTrack.cpp"
   "${LOCAL_SRC_DIR}/MyApplication.cpp"
   "${LOCAL_SRC_DIR}/MyCamera.cpp"
-  "${LOCAL_SRC_DIR}/MyCube.cpp"
   "${LOCAL_SRC_DIR}/MyFileIO.cpp"
   "${LOCAL_SRC_DIR}/MyGeometry.cpp"
   "${LOCAL_SRC_DIR}/MyGraphics.cpp"
@@ -82,24 +78,19 @@ set(LOCAL_SRCS
   "${LOCAL_SRC_DIR}/MyMatrix.cpp"
   "${LOCAL_SRC_DIR}/MyMeshFactory.cpp"
   "${LOCAL_SRC_DIR}/MyObject3D.cpp"
-  "${LOCAL_SRC_DIR}/MyQuad.cpp"
   "${LOCAL_SRC_DIR}/MyShaderManager.cpp"
   "${LOCAL_SRC_DIR}/MyShaderProgram.cpp"
-  "${LOCAL_SRC_DIR}/MySphere.cpp"
   "${LOCAL_SRC_DIR}/MyStringUtil.cpp"
   "${LOCAL_SRC_DIR}/MyTexture2D.cpp"
-  "${LOCAL_SRC_DIR}/MyTriangle.cpp"
   "${LOCAL_SRC_DIR}/MyVector.cpp"
   "${LOCAL_SRC_DIR}/MyVertex.cpp"
 )
 
 # The version number.
-set(${PROJECT_NAME}_VERSION_MAJOR 0)
-set(${PROJECT_NAME}_VERSION_MINOR 1)
-set(${PROJECT_NAME}_VERSION_PATCH 0)
-execute_process(COMMAND git rev-list --count HEAD WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}" OUTPUT_VARIABLE ${PROJECT_NAME}_VERSION_REVISION)
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(PROJ_VERSION_MAJOR 0)
+set(PROJ_VERSION_MINOR 1)
+set(PROJ_VERSION_PATCH 0)
+execute_process(COMMAND git rev-list --count HEAD WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}" OUTPUT_VARIABLE PROJ_VERSION_REVISION)
 
 # Configure a header file to pass some of the CMake settings to the source code.
 configure_file(
@@ -113,18 +104,25 @@ include_directories("${LOCAL_SUBMODULE_DIR}/FreeGLUT/freeglut/freeglut/include")
 include_directories("${LOCAL_SUBMODULE_DIR}/glew/include")
 include_directories("${LOCAL_SUBMODULE_DIR}/Simple-OpenGL-Image-Library/src")
 
-add_subdirectory(submodules/FreeGLUT/freeglut/freeglut)
-add_subdirectory(submodules/glew/build/cmake)
-add_subdirectory(submodules/Simple-OpenGL-Image-Library)
+add_subdirectory("${LOCAL_SUBMODULE_DIR}/FreeGLUT/freeglut/freeglut")
+add_subdirectory("${LOCAL_SUBMODULE_DIR}/glew/build/cmake")
+add_subdirectory("${LOCAL_SUBMODULE_DIR}/Simple-OpenGL-Image-Library")
 
 # Build glew registry and extensions
 execute_process(COMMAND bash -c make WORKING_DIRECTORY "${LOCAL_SUBMODULE_DIR}/glew/auto")
 
 add_executable("${PROJECT_NAME}" "${LOCAL_INCLUDES}" "${LOCAL_RESOURCES}" "${LOCAL_SRCS}")
+
+add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${LOCAL_RESOURCE_DIR}" "${PUBLIC_RESOURCE_DIR}")
+
 target_link_libraries("${PROJECT_NAME}"
   freeglut
   glew
   SOIL
+)
+
+set_target_properties(freeglut PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
 )
 
 # Add the install targets
