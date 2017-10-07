@@ -15,8 +15,8 @@ The "Nick 3D & Image Library"
   - ```$ cmake ..```
   
 ### Dependencies
-- Debian/Ubuntu/Mint: ```$ sudo apt-get install build-essential libxmu-dev libxi-dev libgl-dev libosmesa-dev```
-- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel```
+- Debian/Ubuntu/Mint: ```$ sudo apt install build-essential libXmu-dev libXi-dev libgl-dev cmake```
+- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel cmake```
 - Mac OS X: ```$ brew install Caskroom/cask/xquartz```
   
 ### Notes
