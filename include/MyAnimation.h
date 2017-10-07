@@ -3,8 +3,9 @@
 
 class MyObject3D;
 
-#include <map>
 #include "MyAnimationTrack.h"
+
+#include <map>
 
 class MyAnimation
 {

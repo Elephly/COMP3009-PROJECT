@@ -1,8 +1,8 @@
 #include "MyImage.h"
 
-#include <algorithm>
-
 #include "MyIncludes.h"
+
+#include <algorithm>
 
 MyImage::MyImage() : width(0), height(0), channels(0), image(nullptr) { }
 

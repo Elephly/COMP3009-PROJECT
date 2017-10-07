@@ -1,7 +1,6 @@
 #include "MyApplication.h"
-#include <time.h>
 
-using namespace std;
+#include <ctime>
 
 void MainReshapeFunc(int width, int height);
 void MainTimerFunc(int operation);

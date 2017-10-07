@@ -1,10 +1,11 @@
 #ifndef MYANIMATIONTRACK_H
 #define MYANIMATIONTRACK_H
 
-#include <list>
-#include <vector>
 #include "MyKeyframe.h"
 #include "MyObject3D.h"
+
+#include <list>
+#include <vector>
 
 class MyAnimationTrack
 {

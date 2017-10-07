@@ -1,8 +1,8 @@
 #include "MyImageUtil.h"
 
-#include <algorithm>
-
 #include "MyIncludes.h"
+
+#include <algorithm>
 
 void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 {

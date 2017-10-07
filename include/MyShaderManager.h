@@ -1,9 +1,10 @@
 #ifndef MYSHADERMANAGER_H
 #define MYSHADERMANAGER_H
 
+#include "MyShaderProgram.h"
+
 #include <map>
 #include <vector>
-#include "MyShaderProgram.h"
 
 class MyShaderManager
 {

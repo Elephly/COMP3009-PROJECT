@@ -1,14 +1,14 @@
 #ifndef MYAPPLICATION_H
 #define MYAPPLICATION_H
 
+#include "MyCamera.h"
 #include "MyIncludes.h"
 #include "MyInputManager.h"
-#include "MyShaderManager.h"
-#include "MyMaterial.h"
 #include "MyLightSource.h"
-#include "MyCamera.h"
 #include "MyManikin.h"
+#include "MyMaterial.h"
 #include "MyMeshFactory.h"
+#include "MyShaderManager.h"
 
 class MyApplication
 {

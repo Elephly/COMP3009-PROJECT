@@ -1,10 +1,10 @@
 #ifndef MYOBJECTSMANAGER_H
 #define MYOBJECTSMANAGER_H
 
+#include "MyDefines.h"
+
 #include <map>
 #include <vector>
-
-#include "MyDefines.h"
 
 template<typename T>
 class MyObjectManager

@@ -1,8 +1,9 @@
 #ifndef MYVECTOR_H
 #define MYVECTOR_H
 
-#include <iostream>
 #include "MyGeometry.h"
+
+#include <ostream>
 
 class MyVector;
 class MyVector2D;

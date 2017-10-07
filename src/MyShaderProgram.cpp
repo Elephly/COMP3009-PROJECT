@@ -1,9 +1,9 @@
 #include "MyShaderProgram.h"
 
-#include <GL/glew.h>
-
-#include "MyIncludes.h"
 #include "MyFileIO.h"
+#include "MyIncludes.h"
+
+#include <GL/glew.h>
 
 MyShaderProgram::MyShaderProgram(const char * vertShaderFileName, const char * fragShaderFileName)
 {

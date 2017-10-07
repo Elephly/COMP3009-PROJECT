@@ -1,8 +1,8 @@
 #include "MyMaterial.h"
 
-#include <algorithm>
-
 #include "MyDefines.h"
+
+#include <algorithm>
 
 MyMaterial::MyMaterial(MyTexture2D * texture, MyColorRGBA const & ambient, MyColorRGBA const & diffuse, MyColorRGBA const & specular, float const & shine, bool const & toon) :
 	tex(texture), a(ambient), d(diffuse), s(specular), sh(shine), t(toon)

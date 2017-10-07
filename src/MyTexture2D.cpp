@@ -1,9 +1,9 @@
 #include "MyTexture2D.h"
 
-#include <GL/glew.h>
-
 #include "MyIncludes.h"
-#include "SOIL.h"
+
+#include <GL/glew.h>
+#include <SOIL.h>
 
 MyTexture2D::MyTexture2D(const char * texFileName, unsigned int texUnit) :
 	textureID(0), textureUnit((texUnit < GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS) ? texUnit : 0)

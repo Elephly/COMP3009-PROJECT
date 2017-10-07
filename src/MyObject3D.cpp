@@ -1,9 +1,9 @@
 #include "MyObject3D.h"
 
-#include <algorithm>
-
 #include "MyDefines.h"
 #include "MyMath.h"
+
+#include <algorithm>
 
 MyObject3D::MyObject3D(MyVector3D initialPosition, MyVector3D initialScale, MyVector3D initialRotation) :
 	position(initialPosition), scale(initialScale), rotation(initialRotation)

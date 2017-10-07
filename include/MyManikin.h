@@ -1,9 +1,8 @@
 #ifndef MYMANIKIN_H
 #define MYMANIKIN_H
 
-#include "MyObject3D.h"
-#include "MyGraphicsObject3D.h"
 #include "MyAnimation.h"
+#include "MyGraphicsObject3D.h"
 
 class MyManikin : public MyObject3D
 {

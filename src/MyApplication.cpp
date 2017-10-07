@@ -1,10 +1,10 @@
 #include "MyApplication.h"
 
+#include "MyMatrix.h"
+#include "MyStringUtil.h"
+
 #include <GL/glew.h>
 #include <GL/glut.h>
-
-#include "MyStringUtil.h"
-#include "MyMatrix.h"
 
 #if (MY_DEBUG == 1)
 #include <iostream>

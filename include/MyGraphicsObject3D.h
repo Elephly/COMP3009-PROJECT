@@ -1,11 +1,10 @@
 #ifndef MYGRAPHICSOBJECT3D_H
 #define MYGRAPHICSOBJECT3D_H
 
+#include "MyIndexedVertexArray.h"
+#include "MyMaterial.h"
 #include "MyObject3D.h"
 #include "MyShaderProgram.h"
-#include "MyMaterial.h"
-#include "MyVertex.h"
-#include "MyIndexedVertexArray.h"
 
 class MyGraphicsObject3D : public MyObject3D
 {

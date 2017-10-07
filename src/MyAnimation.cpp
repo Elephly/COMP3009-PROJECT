@@ -1,9 +1,9 @@
 #include "MyAnimation.h"
 
-#include <algorithm>
-
 #include "MyDefines.h"
 #include "MyStringUtil.h"
+
+#include <algorithm>
 
 MyAnimation::MyAnimation(unsigned int const & numFrames, float const & framesPerSecond, bool const & loop) :
 	playing(false), elapsedTime(0), frameCount(numFrames), frameRate(framesPerSecond), looping(loop)

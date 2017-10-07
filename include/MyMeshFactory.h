@@ -1,8 +1,9 @@
 #ifndef MYMESHFACTORY_H
 #define MYMESHFACTORY_H
 
-#include "MyIndexedVertexArray.h"
 #include "MyGraphics.h"
+#include "MyIndexedVertexArray.h"
+
 #include <map>
 
 class MyMeshFactory

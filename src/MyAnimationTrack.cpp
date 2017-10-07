@@ -1,9 +1,9 @@
 #include "MyAnimationTrack.h"
 
-#include <algorithm>
-
 #include "MyDefines.h"
 #include "MyMath.h"
+
+#include <algorithm>
 
 MyAnimationTrack::MyAnimationTrack(MyObject3D * obj, unsigned int const & frameCount) :
 	object(obj)

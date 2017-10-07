@@ -1,8 +1,8 @@
 #include "MyManikin.h"
 
-#include <algorithm>
-
 #include "MyDefines.h"
+
+#include <algorithm>
 
 MyManikin::MyManikin(MyIndexedVertexArray *vertexArray, MyVector3D position, MyVector3D scale, MyVector3D rotation) :
 	MyObject3D(position, scale, rotation)

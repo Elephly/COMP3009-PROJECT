@@ -1,10 +1,10 @@
 #ifndef MYTRIANGLE_H
 #define MYTRIANGLE_H
 
-#include "MyMath.h"
 #include "MyGraphicsObject3D.h"
-#include "MyVertex.h"
+#include "MyMath.h"
 #include "MyShaderProgram.h"
+#include "MyVertex.h"
 
 class MyTriangle : public MyGraphicsObject3D
 {
