@@ -3,6 +3,7 @@ The "Nick 3D & Image Library"
 
 ### Prerequisites
 - CMake 3.x.x
+- libxi-dev
 
 ### Build Instructions
 - Clone the project recursively to check out submodules
