@@ -10,7 +10,7 @@
 class MyGraphicsObject3D : public MyObject3D
 {
 public:
-	MyGraphicsObject3D(MyIndexedVertexArray *vertexArray = 0, MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D());
+	MyGraphicsObject3D(MyIndexedVertexArray *vertexArray = 0, MyVector3D position = MyVector3D(), MyVector3D scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D rotation = MyVector3D());
 	virtual ~MyGraphicsObject3D();
 
 	virtual void Initialize(MyShaderProgram *shader, MyMaterial *material, bool recursive = false, MyIndexedVertexArray *vertexArray = 0, bool recursiveVAO = false);

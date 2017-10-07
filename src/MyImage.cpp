@@ -1,4 +1,7 @@
 #include "MyImage.h"
+
+#include <algorithm>
+
 #include "MyIncludes.h"
 
 MyImage::MyImage() : width(0), height(0), channels(0), image(nullptr) { }
@@ -65,7 +68,7 @@ GLubyte * MyImage::GetPixelAt(GLint x, GLint y)
 {
 	GLubyte *pixel = new GLubyte[channels];
 	GLint pixelOffset = (y * width * channels) + (x * channels);
-	
+
 	for (int i = 0; i < channels; i++)
 	{
 		pixel[i] = image[pixelOffset + i];
@@ -110,7 +113,7 @@ void MyImage::SetPixelAt(GLint x, GLint y, GLubyte * value, GLint nChannels)
 {
 	GLint pixelOffset = (y * width * channels) + (x * channels);
 
-	for (int i = 0; i < min(channels, nChannels); i++)
+	for (int i = 0; i < std::min(channels, nChannels); i++)
 	{
 		image[pixelOffset + i] = value[i];
 	}

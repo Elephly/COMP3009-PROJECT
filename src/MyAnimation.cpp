@@ -1,18 +1,20 @@
 #include "MyAnimation.h"
 
+#include <algorithm>
+
 #include "MyDefines.h"
 #include "MyStringUtil.h"
 
 MyAnimation::MyAnimation(unsigned int const & numFrames, float const & framesPerSecond, bool const & loop) :
 	playing(false), elapsedTime(0), frameCount(numFrames), frameRate(framesPerSecond), looping(loop)
 {
-	frameRate = max(frameRate, 0.0f);
-	tracks = new std::map<char *, MyAnimationTrack *>();
+	frameRate = std::max(frameRate, 0.0f);
+	tracks = new std::map<const char *, MyAnimationTrack *>();
 }
 
 MyAnimation::~MyAnimation()
 {
-	for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
+	for (std::map<const char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
 	{
 		MyDelete(it->second);
 	}
@@ -43,7 +45,7 @@ void MyAnimation::Update(float const & deltaTime)
 			}
 		}
 
-		for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
+		for (std::map<const char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
 		{
 			it->second->Update(frameTime, looping);
 		}
@@ -85,7 +87,7 @@ void MyAnimation::Stop()
 	playing = false;
 	elapsedTime = 0.0f;
 
-	for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
+	for (std::map<const char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
 	{
 		it->second->RewindTrack();
 	}
@@ -99,7 +101,7 @@ void MyAnimation::SetLooping(bool const & loop)
 void MyAnimation::SetFrameCount(unsigned int const & frames)
 {
 	frameCount = frames;
-	for (std::map<char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
+	for (std::map<const char *, MyAnimationTrack *>::iterator it = tracks->begin(); it != tracks->end(); ++it)
 	{
 		it->second->SetFrameCount(frames);
 	}
@@ -109,11 +111,11 @@ void MyAnimation::SetFrameRate(float const & framesPerSecond)
 {
 	float frameTime = elapsedTime * frameRate;
 
-	frameRate = max(framesPerSecond, 0.0f);
+	frameRate = std::max(framesPerSecond, 0.0f);
 	elapsedTime = frameTime / frameRate;
 }
 
-void MyAnimation::AddTrack(char *trackName, MyAnimationTrack * track)
+void MyAnimation::AddTrack(const char *trackName, MyAnimationTrack * track)
 {
 	if (tracks->find(trackName) != tracks->end())
 	{
@@ -123,7 +125,7 @@ void MyAnimation::AddTrack(char *trackName, MyAnimationTrack * track)
 	track->SetFrameCount(frameCount);
 }
 
-void MyAnimation::RemoveTrack(char * trackName)
+void MyAnimation::RemoveTrack(const char * trackName)
 {
 	MyDelete((*tracks)[trackName]);
 	tracks->erase(trackName);

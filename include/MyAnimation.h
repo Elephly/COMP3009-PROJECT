@@ -28,8 +28,8 @@ public:
 	virtual void SetFrameCount(unsigned int const & frames);
 	virtual void SetFrameRate(float const & framesPerSecond);
 
-	virtual void AddTrack(char *trackName, MyAnimationTrack *track);
-	virtual void RemoveTrack(char *trackName);
+	virtual void AddTrack(const char *trackName, MyAnimationTrack *track);
+	virtual void RemoveTrack(const char *trackName);
 
 private:
 	bool playing;
@@ -37,7 +37,7 @@ private:
 	float elapsedTime;
 	unsigned int frameCount;
 	float frameRate;
-	std::map<char *, MyAnimationTrack *> *tracks;
+	std::map<const char *, MyAnimationTrack *> *tracks;
 
 };
 

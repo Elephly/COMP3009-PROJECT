@@ -5,7 +5,7 @@
 #include "MyIncludes.h"
 #include "SOIL.h"
 
-MyTexture2D::MyTexture2D(char * texFileName, unsigned int texUnit) :
+MyTexture2D::MyTexture2D(const char * texFileName, unsigned int texUnit) :
 	textureID(0), textureUnit((texUnit < GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS) ? texUnit : 0)
 {
 	if (texFileName != 0)
@@ -26,7 +26,7 @@ MyTexture2D::~MyTexture2D()
 	glDeleteTextures(1, &textureID);
 }
 
-void MyTexture2D::InitializeTexture(char * texFileName, unsigned int texUnit)
+void MyTexture2D::InitializeTexture(const char * texFileName, unsigned int texUnit)
 {
 	if (texFileName != 0)
 	{

@@ -1,5 +1,7 @@
 #include "MyMaterial.h"
 
+#include <algorithm>
+
 #include "MyDefines.h"
 
 MyMaterial::MyMaterial(MyTexture2D * texture, MyColorRGBA const & ambient, MyColorRGBA const & diffuse, MyColorRGBA const & specular, float const & shine, bool const & toon) :
@@ -83,7 +85,7 @@ void MyMaterial::SetSpecular(MyColorRGBA const & specular)
 
 void MyMaterial::SetShine(float const & shine)
 {
-	sh = max(shine, 0.0f);
+	sh = std::max(shine, 0.0f);
 }
 
 void MyMaterial::SetToon(bool const & toon)

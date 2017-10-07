@@ -5,7 +5,7 @@
 #include "MyIncludes.h"
 #include "MyFileIO.h"
 
-MyShaderProgram::MyShaderProgram(char * vertShaderFileName, char * fragShaderFileName)
+MyShaderProgram::MyShaderProgram(const char * vertShaderFileName, const char * fragShaderFileName)
 {
 	if (vertShaderFileName != 0)
 	{
@@ -37,7 +37,7 @@ MyShaderProgram::~MyShaderProgram()
 	MyDeleteArray(fragmentShaderFileName);
 }
 
-void MyShaderProgram::InitializeShaderProgram(char * vertShaderFileName, char * fragShaderFileName)
+void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, const char * fragShaderFileName)
 {
 	if (vertShaderFileName != 0)
 	{

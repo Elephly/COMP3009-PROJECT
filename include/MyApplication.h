@@ -13,7 +13,7 @@
 class MyApplication
 {
 public:
-	MyApplication(char *name = "My Application");
+	MyApplication(const char *name = "My Application");
 	~MyApplication();
 
 	void Initialize(int *argc, char **argv);

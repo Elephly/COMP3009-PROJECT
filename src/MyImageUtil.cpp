@@ -1,4 +1,7 @@
 #include "MyImageUtil.h"
+
+#include <algorithm>
+
 #include "MyIncludes.h"
 
 void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
@@ -6,17 +9,17 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 	double x = areaOfEffect.GetCenterX();
 	double y = areaOfEffect.GetCenterY();
 	double r = areaOfEffect.GetRadius();
-	int x1 = max(areaOfEffect.GetCenterX() - (int)areaOfEffect.GetRadius(), 0);
-	int y1 = max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
-	int x2 = min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
-	int y2 = min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
+	int x1 = std::max(areaOfEffect.GetCenterX() - (int)areaOfEffect.GetRadius(), 0);
+	int y1 = std::max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
+	int x2 = std::min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
+	int y2 = std::min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
 
 	MyImage *temp = new MyImage(*src);
 	int channels = temp->GetImageChannels();
 
 	GLubyte *tempPixel = 0;
 	GLubyte *pixel = 0;
-	
+
 	bool **pixelSet = new bool*[src->GetImageHeight()]();
 	for (int i = 0; i < src->GetImageHeight(); i++)
 	{
@@ -26,7 +29,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 			pixelSet[i][j] = false;
 		}
 	}
-	
+
 	for (int i = y1; i < y2; i++)
 	{
 		for (int j = x1; j < x2; j++)
@@ -121,7 +124,7 @@ void MyImageUtil::BlackHoleEffect(MyImage * src, MyCircle areaOfEffect)
 						nLerps++;
 						MyDeleteArray(tempPixel);
 					}
-					
+
 					pixel = new GLubyte[channels];
 					for (int i = 0; i < channels; i++)
 					{
@@ -155,10 +158,10 @@ void MyImageUtil::ExpandEffect(MyImage * src, MyCircle areaOfEffect)
 	double x = areaOfEffect.GetCenterX();
 	double y = areaOfEffect.GetCenterY();
 	double r = areaOfEffect.GetRadius();
-	int x1 = max(areaOfEffect.GetCenterX() - (int)areaOfEffect.GetRadius(), 0);
-	int y1 = max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
-	int x2 = min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
-	int y2 = min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
+	int x1 = std::max(areaOfEffect.GetCenterX() - (int)areaOfEffect.GetRadius(), 0);
+	int y1 = std::max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
+	int x2 = std::min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
+	int y2 = std::min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
 
 	MyImage *temp = new MyImage(*src);
 	int channels = temp->GetImageChannels();
@@ -194,10 +197,10 @@ void MyImageUtil::SwirlEffect(MyImage * src, MyCircle areaOfEffect, int nTwists)
 	double x = areaOfEffect.GetCenterX();
 	double y = areaOfEffect.GetCenterY();
 	double r = areaOfEffect.GetRadius();
-	int x1 = max(areaOfEffect.GetCenterX() - (int)areaOfEffect.GetRadius(), 0);
-	int y1 = max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
-	int x2 = min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
-	int y2 = min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
+	int x1 = std::max(areaOfEffect.GetCenterX() - (int)areaOfEffect.GetRadius(), 0);
+	int y1 = std::max(areaOfEffect.GetCenterY() - (int)areaOfEffect.GetRadius(), 0);
+	int x2 = std::min(areaOfEffect.GetCenterX() + (int)areaOfEffect.GetRadius(), src->GetImageWidth() - 1);
+	int y2 = std::min(areaOfEffect.GetCenterY() + (int)areaOfEffect.GetRadius(), src->GetImageHeight() - 1);
 	double angle = (nTwists * (2 * MyMath::MY_PI_D)) / r;
 
 	MyImage *temp = new MyImage(*src);
@@ -250,8 +253,8 @@ void MyImageUtil::SwirlEffect(MyImage * src, MyCircle areaOfEffect, int nTwists)
 void MyImageUtil::CopyFromImage(MyImage * src, MyImage ** dest, MyRectangle selection)
 {
 	MyDelete(*dest);
-	int x = min(selection.GetX1(), selection.GetX2());
-	int y = min(selection.GetY1(), selection.GetY2());
+	int x = std::min(selection.GetX1(), selection.GetX2());
+	int y = std::min(selection.GetY1(), selection.GetY2());
 	int width = abs(selection.GetWidth());
 	int height = abs(selection.GetHeight());
 	int channels = src->GetImageChannels();
@@ -279,8 +282,8 @@ void MyImageUtil::PasteToImage(MyImage * src, MyImage * dest, int x, int y)
 {
 	int x2 = x + src->GetImageWidth();
 	int y2 = y + src->GetImageHeight();
-	int width = min(src->GetImageWidth() - (x2 - dest->GetImageWidth()), src->GetImageWidth());
-	int height = min(src->GetImageHeight() - (y2 - dest->GetImageHeight()), src->GetImageHeight());
+	int width = std::min(src->GetImageWidth() - (x2 - dest->GetImageWidth()), src->GetImageWidth());
+	int height = std::min(src->GetImageHeight() - (y2 - dest->GetImageHeight()), src->GetImageHeight());
 	int channels = src->GetImageChannels();
 	for (int i = 0; i < height; i++)
 	{
@@ -304,8 +307,8 @@ void MyImageUtil::GrayscaleImage(MyImage *src, MyImage *dest, GRAYSCALE_TYPE typ
 
 	for (int i = 0; i < width * height * channels; i += channels)
 	{
-		GLubyte maxVal = max(buffer[i], max(buffer[i + 1], buffer[i + 2]));
-		GLubyte minVal = min(buffer[i], min(buffer[i + 1], buffer[i + 2]));
+		GLubyte maxVal = std::max(buffer[i], std::max(buffer[i + 1], buffer[i + 2]));
+		GLubyte minVal = std::min(buffer[i], std::min(buffer[i + 1], buffer[i + 2]));
 
 		switch (type)
 		{

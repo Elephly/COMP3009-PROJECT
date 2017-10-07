@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-MyGraphicsObject3D::MyGraphicsObject3D(MyIndexedVertexArray *vertexArray, MyVector3D & position, MyVector3D & scale, MyVector3D & rotation) :
+MyGraphicsObject3D::MyGraphicsObject3D(MyIndexedVertexArray *vertexArray, MyVector3D position, MyVector3D scale, MyVector3D rotation) :
 	MyObject3D(position, scale, rotation), vertices(vertexArray)
 {
 	shaderProgram = 0;

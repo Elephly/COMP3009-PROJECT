@@ -30,11 +30,11 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 		GLuint colorLoc = 2; // glGetAttribLocation((*it)->GetShaderProgram(), "vtxColor");
 		GLuint textureCoordLoc = 3; // glGetAttribLocation((*it)->GetShaderProgram(), "vtxTextureCoord");
 
-		unsigned int *addr_ver = (unsigned int *)&v;
-		unsigned int *addr_pos = (unsigned int *)&v.GetPosition().GetXAddr();
-		unsigned int *addr_nor = (unsigned int *)&v.GetNormal().GetXAddr();
-		unsigned int *addr_col = (unsigned int *)&v.GetColor().GetRedAddr();
-		unsigned int *addr_tex = (unsigned int *)&v.GetTextureCoord().GetXAddr();
+		unsigned char *addr_ver = (unsigned char *)&v;
+		unsigned char *addr_pos = (unsigned char *)&v.GetPosition().GetXAddr();
+		unsigned char *addr_nor = (unsigned char *)&v.GetNormal().GetXAddr();
+		unsigned char *addr_col = (unsigned char *)&v.GetColor().GetRedAddr();
+		unsigned char *addr_tex = (unsigned char *)&v.GetTextureCoord().GetXAddr();
 
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -44,23 +44,23 @@ void MyIndexedVertexArray::Initialize(MyVertex4D * vertexArray, int const & numV
 		glBindVertexArray(vao);
 
 		glEnableVertexAttribArray(positionLoc);
-		unsigned int attAddress = (unsigned int)addr_pos - (unsigned int)addr_ver;
-		glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		long int attAddress = addr_pos - addr_ver;
+		glVertexAttribPointer(positionLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)(intptr_t)attAddress);
 		//glVertexAttribDivisor(positionLoc, 0);
 
 		glEnableVertexAttribArray(normalLoc);
-		attAddress = (unsigned int)addr_nor - (unsigned int)addr_ver;
-		glVertexAttribPointer(normalLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		attAddress = addr_nor - addr_ver;
+		glVertexAttribPointer(normalLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)(intptr_t)attAddress);
 		//glVertexAttribDivisor(normalLoc, 0);
 
 		glEnableVertexAttribArray(colorLoc);
-		attAddress = (unsigned int)addr_col - (unsigned int)addr_ver;
-		glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		attAddress = addr_col - addr_ver;
+		glVertexAttribPointer(colorLoc, 4, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)(intptr_t)attAddress);
 		//glVertexAttribDivisor(colorLoc, 0);
 
 		glEnableVertexAttribArray(textureCoordLoc);
-		attAddress = (unsigned int)addr_tex - (unsigned int)addr_ver;
-		glVertexAttribPointer(textureCoordLoc, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)attAddress);
+		attAddress = addr_tex - addr_ver;
+		glVertexAttribPointer(textureCoordLoc, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex4D), (void *)(intptr_t)attAddress);
 		//glVertexAttribDivisor(textureCoordLoc, 0);
 
 		glEnableVertexAttribArray(0);

@@ -6,8 +6,8 @@
 class MyCamera : public MyObject3D
 {
 public:
-	MyCamera(MyVector3D &position = MyVector3D(), MyVector3D &lookAtVector = MyVector3D(0.0f, 0.0f, -1.0f), MyVector3D upVector = MyVector3D(0.0f, 1.0f, 0.0f),
-		MyMatrix4 &projection = MyMatrix4::IdentityMatrix(), bool yawLocked = false);
+	MyCamera(MyVector3D position = MyVector3D(), MyVector3D lookAtVector = MyVector3D(0.0f, 0.0f, -1.0f), MyVector3D upVector = MyVector3D(0.0f, 1.0f, 0.0f),
+		MyMatrix4 projection = MyMatrix4::IdentityMatrix(), bool yawLocked = false);
 	virtual ~MyCamera();
 
 	// Transformations

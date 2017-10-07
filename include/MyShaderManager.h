@@ -8,15 +8,15 @@
 class MyShaderManager
 {
 public:
-	static MyShaderProgram *CreateShader(char *shaderName, char *vertShaderFileName, char *fragShaderFileName);
+	static MyShaderProgram *CreateShader(const char *shaderName, const char *vertShaderFileName, const char *fragShaderFileName);
 
-	static MyShaderProgram *GetShader(char *shaderName);
+	static MyShaderProgram *GetShader(const char *shaderName);
 	static std::vector<MyShaderProgram *> *GetShaderList();
 
 	static void Cleanup();
 
 private:
-	static std::map<char *, MyShaderProgram *> *shaders;
+	static std::map<const char *, MyShaderProgram *> *shaders;
 
 };
 

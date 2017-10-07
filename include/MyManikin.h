@@ -8,7 +8,7 @@
 class MyManikin : public MyObject3D
 {
 public:
-	MyManikin(MyIndexedVertexArray *vertexArray = 0, MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D());
+	MyManikin(MyIndexedVertexArray *vertexArray = 0, MyVector3D position = MyVector3D(), MyVector3D scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D rotation = MyVector3D());
 	~MyManikin();
 
 	virtual void Initialize(MyShaderProgram *shader, MyMaterial *skinMaterial, MyMaterial *headMaterial = 0, MyMaterial *clothesMaterial = 0, MyMaterial *shirtStampMaterial = 0,
@@ -37,7 +37,7 @@ private:
 	// Torso - children of abdomen
 	MyGraphicsObject3D *midTorso; // pivot point for upper body
 	MyGraphicsObject3D *torso; // chest area
-	
+
 	// Head and neck - children of torso
 	MyGraphicsObject3D *neck; // pivot point for head
 	MyGraphicsObject3D *head;

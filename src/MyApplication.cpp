@@ -12,7 +12,7 @@
 
 using namespace std;
 
-MyApplication::MyApplication(char * name)
+MyApplication::MyApplication(const char * name)
 {
 	cameraMoveSpeed = 4.0f;
 	cameraRotateSpeed = 60.0f;

@@ -4,7 +4,7 @@
 class MyStringUtil
 {
 public:
-	static char *CopyString(char *string);
+	static char *CopyString(const char *string);
 };
 
 #endif // MYSTRINGUTIL_H

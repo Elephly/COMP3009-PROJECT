@@ -1,8 +1,10 @@
 #include "MyManikin.h"
 
+#include <algorithm>
+
 #include "MyDefines.h"
 
-MyManikin::MyManikin(MyIndexedVertexArray *vertexArray, MyVector3D &position, MyVector3D &scale, MyVector3D &rotation) :
+MyManikin::MyManikin(MyIndexedVertexArray *vertexArray, MyVector3D position, MyVector3D scale, MyVector3D rotation) :
 	MyObject3D(position, scale, rotation)
 {
 	body = new MyObject3D();
@@ -352,7 +354,7 @@ void MyManikin::Stop()
 
 void MyManikin::ChangeSpeed(float const & factor)
 {
-	runAnimation->SetFrameRate(max(runAnimation->GetFrameRate() * factor, 0.1f));
+	runAnimation->SetFrameRate(std::max(runAnimation->GetFrameRate() * factor, 0.1f));
 }
 
 void MyManikin::SetHeadMaterial(MyMaterial * material)

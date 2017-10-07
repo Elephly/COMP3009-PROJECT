@@ -2,9 +2,9 @@
 
 #include "MyDefines.h"
 
-std::map<char *, MyShaderProgram *> *MyShaderManager::shaders = new std::map<char *, MyShaderProgram *>();
+std::map<const char *, MyShaderProgram *> *MyShaderManager::shaders = new std::map<const char *, MyShaderProgram *>();
 
-MyShaderProgram * MyShaderManager::CreateShader(char *shaderName, char * vertShaderFileName, char * fragShaderFileName)
+MyShaderProgram * MyShaderManager::CreateShader(const char *shaderName, const char * vertShaderFileName, const char * fragShaderFileName)
 {
 	if (shaders->find(shaderName) != shaders->end())
 	{
@@ -19,7 +19,7 @@ MyShaderProgram * MyShaderManager::CreateShader(char *shaderName, char * vertSha
 	return shader;
 }
 
-MyShaderProgram * MyShaderManager::GetShader(char * shaderName)
+MyShaderProgram * MyShaderManager::GetShader(const char * shaderName)
 {
 	if (shaders->find(shaderName) != shaders->end())
 	{
@@ -32,7 +32,7 @@ std::vector<MyShaderProgram*>* MyShaderManager::GetShaderList()
 {
 	std::vector<MyShaderProgram *> *shaderList = new std::vector<MyShaderProgram *>();
 
-	for (std::map<char *, MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
+	for (std::map<const char *, MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
 	{
 		shaderList->push_back(it->second);
 	}
@@ -42,7 +42,7 @@ std::vector<MyShaderProgram*>* MyShaderManager::GetShaderList()
 
 void MyShaderManager::Cleanup()
 {
-	for (std::map<char *, MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
+	for (std::map<const char *, MyShaderProgram *>::iterator it = shaders->begin(); it != shaders->end(); ++it)
 	{
 		MyDelete(it->second);
 	}

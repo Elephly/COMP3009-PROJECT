@@ -1,9 +1,11 @@
 #include "MyObject3D.h"
 
+#include <algorithm>
+
 #include "MyDefines.h"
 #include "MyMath.h"
 
-MyObject3D::MyObject3D(MyVector3D & initialPosition, MyVector3D & initialScale, MyVector3D & initialRotation) :
+MyObject3D::MyObject3D(MyVector3D initialPosition, MyVector3D initialScale, MyVector3D initialRotation) :
 	position(initialPosition), scale(initialScale), rotation(initialRotation)
 {
 	children = new std::vector<MyObject3D *>();

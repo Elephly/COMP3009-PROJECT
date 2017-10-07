@@ -4,10 +4,10 @@
 class MyTexture2D
 {
 public:
-	MyTexture2D(char *texFileName = 0, unsigned int texUnit = 0);
+	MyTexture2D(const char *texFileName = 0, unsigned int texUnit = 0);
 	~MyTexture2D();
 
-	virtual void InitializeTexture(char *texFileName = 0, unsigned int texUnit = 0);
+	virtual void InitializeTexture(const char *texFileName = 0, unsigned int texUnit = 0);
 
 	// Getters
 	virtual unsigned int GetTextureID();

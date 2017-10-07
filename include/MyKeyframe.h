@@ -6,7 +6,7 @@
 class MyKeyframe
 {
 public:
-	MyKeyframe(MyVector3D &position = MyVector3D(), MyVector3D &scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D &rotation = MyVector3D());
+	MyKeyframe(MyVector3D position = MyVector3D(), MyVector3D scale = MyVector3D(1.0f, 1.0f, 1.0f), MyVector3D rotation = MyVector3D());
 	~MyKeyframe();
 
 	// Getters

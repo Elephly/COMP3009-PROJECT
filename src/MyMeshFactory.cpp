@@ -6,9 +6,9 @@
 #include "MyIncludes.h"
 #include "MyShaderManager.h"
 
-std::map<char *, MyIndexedVertexArray *> *MyMeshFactory::meshes = new std::map<char *, MyIndexedVertexArray *>();
+std::map<const char *, MyIndexedVertexArray *> *MyMeshFactory::meshes = new std::map<const char *, MyIndexedVertexArray *>();
 
-MyIndexedVertexArray * MyMeshFactory::CreateQuad(char * meshName, MyColorRGBA & color1, MyColorRGBA & color2, MyColorRGBA & color3, MyColorRGBA & color4)
+MyIndexedVertexArray * MyMeshFactory::CreateQuad(const char * meshName, MyColorRGBA color1, MyColorRGBA color2, MyColorRGBA color3, MyColorRGBA color4)
 {
 	if (meshes->find(meshName) != meshes->end())
 	{
@@ -38,7 +38,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateQuad(char * meshName, MyColorRGBA & 
 	return (*meshes)[meshName];
 }
 
-MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeSamples, int longitudeSamples, MyColorRGBA & color1, MyColorRGBA & color2)
+MyIndexedVertexArray * MyMeshFactory::CreateSphere(const char *meshName, int latitudeSamples, int longitudeSamples, MyColorRGBA color1, MyColorRGBA color2)
 {
 	if (meshes->find(meshName) != meshes->end())
 	{
@@ -94,7 +94,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, int latitudeS
 	return (*meshes)[meshName];
 }
 
-MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, MyColorRGBA & solidColor, int latitudeSamples, int longitudeSamples)
+MyIndexedVertexArray * MyMeshFactory::CreateSphere(const char *meshName, MyColorRGBA solidColor, int latitudeSamples, int longitudeSamples)
 {
 	if (meshes->find(meshName) != meshes->end())
 	{
@@ -146,7 +146,7 @@ MyIndexedVertexArray * MyMeshFactory::CreateSphere(char *meshName, MyColorRGBA &
 	return (*meshes)[meshName];
 }
 
-MyIndexedVertexArray * MyMeshFactory::GetMesh(char * meshName)
+MyIndexedVertexArray * MyMeshFactory::GetMesh(const char * meshName)
 {
 	if (meshes->find(meshName) != meshes->end())
 	{
@@ -157,7 +157,7 @@ MyIndexedVertexArray * MyMeshFactory::GetMesh(char * meshName)
 
 void MyMeshFactory::Cleanup()
 {
-	for (std::map<char *, MyIndexedVertexArray *>::iterator it = meshes->begin(); it != meshes->end(); ++it)
+	for (std::map<const char *, MyIndexedVertexArray *>::iterator it = meshes->begin(); it != meshes->end(); ++it)
 	{
 		MyDelete(it->second);
 	}

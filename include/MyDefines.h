@@ -37,13 +37,13 @@
 #define MyDeleteArray(x) if(x!=0){delete[] x;x=0;}
 #endif
 
-#ifndef max
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-#endif
+#ifndef MAX
+#define MAX(a,b) (((a) > (b)) ? (a) : (b))
+#endif // MAX
 
-#ifndef min
-#define min(a,b) (((a) < (b)) ? (a) : (b))
-#endif
+#ifndef MIN
+#define MIN(a,b) (((a) < (b)) ? (a) : (b))
+#endif // MIN
 
 #ifndef ASPECT_RATIO_X
 #define ASPECT_RATIO_X 16

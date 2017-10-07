@@ -1,5 +1,7 @@
 #include "MyAnimationTrack.h"
 
+#include <algorithm>
+
 #include "MyDefines.h"
 #include "MyMath.h"
 
@@ -43,7 +45,7 @@ void MyAnimationTrack::Update(float const & frameTime, bool looping)
 		std::list<unsigned int>::iterator nextKeyframe = (std::next(lastKeyframe) != keyframeIndices->end()) ?
 			std::next(lastKeyframe) : keyframeIndices->begin();
 
-		
+
 		if (frameTime > *nextKeyframe)
 		{
 			if (*nextKeyframe < *lastKeyframe && frameTime < *lastKeyframe)
@@ -70,7 +72,7 @@ void MyAnimationTrack::Update(float const & frameTime, bool looping)
 
 		float t;
 		bool interp = true;
-		
+
 		if (*nextKeyframe > *lastKeyframe)
 		{
 			t = (frameTime - *lastKeyframe) / (*nextKeyframe - *lastKeyframe);

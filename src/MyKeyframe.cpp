@@ -1,6 +1,6 @@
 #include "MyKeyframe.h"
 
-MyKeyframe::MyKeyframe(MyVector3D & p, MyVector3D & s, MyVector3D & r) :
+MyKeyframe::MyKeyframe(MyVector3D p, MyVector3D s, MyVector3D r) :
 	position(p), scale(s), rotation(r)
 {
 }

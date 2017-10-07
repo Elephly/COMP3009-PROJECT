@@ -6,10 +6,10 @@
 class MyShaderProgram
 {
 public:
-	MyShaderProgram(char *vertShaderFileName = 0, char *fragShaderFileName = 0);
+	MyShaderProgram(const char *vertShaderFileName = 0, const char *fragShaderFileName = 0);
 	~MyShaderProgram();
 
-	void InitializeShaderProgram(char *vertShaderFileName = 0, char *fragShaderFileName = 0);
+	void InitializeShaderProgram(const char *vertShaderFileName = 0, const char *fragShaderFileName = 0);
 
 	// Getters
 	unsigned int GetShaderProgram();
