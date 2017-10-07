@@ -1,6 +1,9 @@
 # N3DIL
 The "Nick 3D & Image Library"
 
+### Prerequisites
+- CMake 3.x.x
+
 ### Build Instructions
 - Clone the project recursively to check out submodules
   - ```$ git clone https://github.com/nicholaschiasson/N3DIL.git --recursive```
