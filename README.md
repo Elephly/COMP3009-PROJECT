@@ -20,4 +20,6 @@ The "Nick 3D & Image Library"
 - When building for GNU Makefiles on a Linux system, refer to the following dependencies list before running CMake
 
 ### Dependencies
-- libxi-dev
+- Debian/Ubuntu/Mint: ```$ sudo apt-get install build-essential libxmu-dev libxi-dev libgl-dev libosmesa-dev```
+- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel```
+- Mac OS X: ```$ brew install Caskroom/cask/xquartz```
