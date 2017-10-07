@@ -10,16 +10,16 @@ The "Nick 3D & Image Library"
 - Create a build directory for CMake to do its work, then go to that directory
   - ```$ mkdir N3DIL/build```
   - ```$ cd N3DIL/build```
+- Refer to [Dependencies](#dependencies) before proceeding
 - Run CMake to build the project - feel free to build any project type you want
   - ```$ cmake ..```
+  
+### Dependencies
+- Debian/Ubuntu/Mint: ```$ sudo apt-get install build-essential libxmu-dev libxi-dev libgl-dev libosmesa-dev```
+- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel```
+- Mac OS X: ```$ brew install Caskroom/cask/xquartz```
   
 ### Notes
 - The project has been tested using the GCC and MSVC compilers
 - When building a project for Visual Studio, run in release mode
   - Some bug exists when run in debug mode where the application appears to run normally, but meshes are not rendered at all
-- When building for GNU Makefiles on a Linux system, refer to the following dependencies list before running CMake
-
-### Dependencies
-- Debian/Ubuntu/Mint: ```$ sudo apt-get install build-essential libxmu-dev libxi-dev libgl-dev libosmesa-dev```
-- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel```
-- Mac OS X: ```$ brew install Caskroom/cask/xquartz```
