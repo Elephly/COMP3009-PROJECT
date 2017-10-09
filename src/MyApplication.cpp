@@ -45,7 +45,7 @@ MyApplication::MyApplication(const char * name)
 	MyVector3D cameraPosition(0.0f, 0.0f, 0.0f);
 	MyVector3D cameraLookAt(0.0f, 0.0f, -1.0f);
 	MyVector3D cameraUpVector(0.0f, 1.0f, 0.0f);
-	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y, 0.1f, 1000.0f);
+	MyMatrix4 projectionMatrix = MyMatrix4::SymmetricPerspectiveProjectionMatrix(30.0f, (float)PROJECT_ASPECT_RATIO_X / (float)PROJECT_ASPECT_RATIO_Y, 0.1f, 1000.0f);
 	camera = new MyCamera(cameraPosition, cameraLookAt, cameraUpVector, projectionMatrix, true);
 
 	testManikin = new MyManikin();
@@ -87,7 +87,7 @@ void MyApplication::Initialize(int *argc, char **argv)
 {
 	glutInit(argc, argv);
 	windowWidth = (int)(0.75f * (float)glutGet(GLUT_SCREEN_WIDTH));
-	windowHeight = (int)((float)windowWidth / ((float)ASPECT_RATIO_X / (float)ASPECT_RATIO_Y));
+	windowHeight = (int)((float)windowWidth / ((float)PROJECT_ASPECT_RATIO_X / (float)PROJECT_ASPECT_RATIO_Y));
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(windowWidth, windowHeight);
 	glutInitWindowPosition((int)((float)(glutGet(GLUT_SCREEN_WIDTH) - windowWidth) / 2.0f),

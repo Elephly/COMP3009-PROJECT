@@ -1,13 +1,11 @@
 #ifndef MYDEFINES_H
 #define MYDEFINES_H
 
+#include "ProjectConfig.h"
+
 #ifndef MY_DEBUG
 #define MY_DEBUG 1
 #endif // MY_DEBUG
-
-#ifndef PROJECT_NAME
-#define PROJECT_NAME "N3DIL"
-#endif
 
 #ifndef TIMER_UPDATE_OPERATION
 #define TIMER_UPDATE_OPERATION 0
@@ -44,13 +42,5 @@
 #ifndef MIN
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
 #endif // MIN
-
-#ifndef ASPECT_RATIO_X
-#define ASPECT_RATIO_X 16
-#endif
-
-#ifndef ASPECT_RATIO_Y
-#define ASPECT_RATIO_Y 9
-#endif
 
 #endif // MYDEFINES_H
