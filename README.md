@@ -2,6 +2,7 @@
 The "Nick 3D & Image Library"
 
 ### Prerequisites
+- Git
 - CMake 3.x.x
 
 ### Build Instructions
@@ -15,9 +16,9 @@ The "Nick 3D & Image Library"
   - ```$ cmake ..```
   
 ### Dependencies
-- Debian/Ubuntu/Mint: ```$ sudo apt-get install -y build-essential libxmu-dev libxi-dev libgl-dev libosmesa-dev libgl1-mesa-dev libglu1-mesa-dev cmake```
-- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel cmake```
-- Mac OS X: ```$ brew install Caskroom/cask/xquartz```
+- Debian/Ubuntu/Mint: ```$ sudo apt-get install -y build-essential libxmu-dev libxi-dev libgl-dev libgl1-mesa-dev libglu1-mesa-dev git cmake```
+- RedHat/CentOS/Fedora: ```$ sudo yum install libXmu-devel libXi-devel libGL-devel git cmake```
+- Mac OS X: ```$ brew install Caskroom/cask/xquartz git cmake```
   
 ### Notes
 - The project has been tested using the GCC and MSVC compilers
