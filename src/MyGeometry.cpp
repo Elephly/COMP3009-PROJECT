@@ -73,9 +73,9 @@ void MyRectangle::SetHeight(int height)
 
 char *MyRectangle::ToString()
 {
-	sprintf_s(stringRectangle, "Rectangle:\n\tx1:\t%5d\n\ty1:\t%5d\n\tx2:\t%5d\n\ty2:\t%5d\n\twidth:\t%5d\n\theight:\t%5d\n",
+	sprintf(stringRectangle, "Rectangle:\n\tx1:\t%5d\n\ty1:\t%5d\n\tx2:\t%5d\n\ty2:\t%5d\n\twidth:\t%5d\n\theight:\t%5d\n",
 		x_, y_, GetX2(), GetY2(), width_, height_);
-		
+
 	return stringRectangle;
 }
 MyCircle::MyCircle(int x, int y, double radius) : x_(x), y_(y), radius_(radius) { }
@@ -120,7 +120,7 @@ void MyCircle::SetDiameter(double diameter)
 }
 char * MyCircle::ToString()
 {
-	sprintf_s(stringCircle, "Circle:\n\tCenter x1:\t%8d\n\tCenter y1:\t%8d\n\tradius:/t%8f\n",
+	sprintf(stringCircle, "Circle:\n\tCenter x1:\t%8d\n\tCenter y1:\t%8d\n\tradius:/t%8f\n",
 		x_, y_, radius_);
 
 	return stringCircle;

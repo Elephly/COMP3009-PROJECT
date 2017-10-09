@@ -12,7 +12,7 @@ MyTexture2D::MyTexture2D(const char * texFileName, unsigned int texUnit) :
 	{
 		int sl = strlen(texFileName);
 		textureFileName = new char[sl + 1];
-		strcpy_s(textureFileName, sl + 1, texFileName);
+		strcpy(textureFileName, texFileName);
 	}
 	else
 	{
@@ -33,7 +33,7 @@ void MyTexture2D::InitializeTexture(const char * texFileName, unsigned int texUn
 		int sl = strlen(texFileName);
 		MyDeleteArray(textureFileName);
 		textureFileName = new char[sl + 1];
-		strcpy_s(textureFileName, sl + 1, texFileName);
+		strcpy(textureFileName, texFileName);
 	}
 	if (texUnit != 0)
 	{

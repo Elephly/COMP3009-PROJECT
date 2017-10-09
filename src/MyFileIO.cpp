@@ -8,7 +8,7 @@ int MyFileIO::ReadFile(char * fileName, char ** buffer, int * bufferSize)
 {
 	int length = 0;
 	FILE *fp = 0;
-	fopen_s(&fp, fileName, "r");
+	fp = fopen(fileName, "r");
 	if (fp == 0)
 	{
 		return -1;

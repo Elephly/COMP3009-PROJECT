@@ -11,7 +11,7 @@ MyShaderProgram::MyShaderProgram(const char * vertShaderFileName, const char * f
 	{
 		int sl = strlen(vertShaderFileName);
 		vertexShaderFileName = new char[sl + 1];
-		strcpy_s(vertexShaderFileName, sl + 1, vertShaderFileName);
+		strcpy(vertexShaderFileName, vertShaderFileName);
 	}
 	else
 	{
@@ -21,7 +21,7 @@ MyShaderProgram::MyShaderProgram(const char * vertShaderFileName, const char * f
 	{
 		int sl = strlen(fragShaderFileName);
 		fragmentShaderFileName = new char[sl + 1];
-		strcpy_s(fragmentShaderFileName, sl + 1, fragShaderFileName);
+		strcpy(fragmentShaderFileName, fragShaderFileName);
 	}
 	else
 	{
@@ -44,14 +44,14 @@ void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, c
 		int sl = strlen(vertShaderFileName);
 		MyDeleteArray(vertexShaderFileName);
 		vertexShaderFileName = new char[sl + 1];
-		strcpy_s(vertexShaderFileName, sl + 1, vertShaderFileName);
+		strcpy(vertexShaderFileName, vertShaderFileName);
 	}
 	if (fragShaderFileName != 0)
 	{
 		int sl = strlen(fragShaderFileName);
 		MyDeleteArray(fragmentShaderFileName);
 		fragmentShaderFileName = new char[sl + 1];
-		strcpy_s(fragmentShaderFileName, sl + 1, fragShaderFileName);
+		strcpy(fragmentShaderFileName, fragShaderFileName);
 	}
 	int rc;
 	int srcLength;
@@ -67,7 +67,7 @@ void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, c
 		char log[2048];
 		glGetShaderInfoLog(vtxShader, sizeof(log), NULL, log);
 		char errLog[2048];
-		sprintf_s(errLog, "Error creating vertex shader - %s\n", log);
+		sprintf(errLog, "Error creating vertex shader - %s\n", log);
 		throw errLog;
 	}
 	MyDeleteArray(shaderSrc[0]);
@@ -82,7 +82,7 @@ void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, c
 		char log[2048];
 		glGetShaderInfoLog(frgShader, sizeof(log), NULL, log);
 		char errLog[2048];
-		sprintf_s(errLog, "Error creating fragment shader - %s\n", log);
+		sprintf(errLog, "Error creating fragment shader - %s\n", log);
 		throw errLog;
 	}
 	MyDeleteArray(shaderSrc[0]);
@@ -98,7 +98,7 @@ void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, c
 		char log[2048];
 		glGetProgramInfoLog(shaderProgram, sizeof(log), NULL, log);
 		char errLog[2048];
-		sprintf_s(errLog, "Error linking shader program (id=%d) - %s\n", shaderProgram, log);
+		sprintf(errLog, "Error linking shader program (id=%d) - %s\n", shaderProgram, log);
 		throw errLog;
 	}
 
