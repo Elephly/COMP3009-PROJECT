@@ -6,10 +6,6 @@
 #include <cstdio>
 #include <cstdlib>
 
-#ifdef _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-#endif
-
 #include <cassert>
 #include <cstring>
 

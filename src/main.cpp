@@ -80,9 +80,6 @@ void MainKeyboardFunc(unsigned char key, int x, int y)
 		if (key == 27)
 		{
 			MyDelete(myApplication);
-#ifdef _CRTDBG_MAP_ALLOC
-			_CrtDumpMemoryLeaks();
-#endif
 		}
 		else
 		{
