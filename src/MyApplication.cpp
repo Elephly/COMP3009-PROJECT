@@ -26,8 +26,12 @@ MyApplication::MyApplication(const char * name)
 	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
-	catTexture = new MyTexture2D("res\\images\\sample2.png");
-	tuxTexture = new MyTexture2D("res\\images\\TuxTorso.png");
+	char *path = MyStringUtil::SystemPath(3, "res", "images", "sample2.png");
+	catTexture = new MyTexture2D(path);
+	MyDeleteArray(path);
+	path = MyStringUtil::SystemPath(3, "res", "images", "TuxTorso.png");
+	tuxTexture = new MyTexture2D(path);
+	MyDeleteArray(path);
 
 	shinyMaterial = new MyMaterial(0, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 	MyColorRGBA shellyDiffuse = MyColorRGBA(77.0f / 255.0f, 126.0f / 255.0f, 17.0f / 255.0f);
@@ -103,9 +107,21 @@ void MyApplication::Initialize(int *argc, char **argv)
 		throw glewGetErrorString(err);
 	}
 
-	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", "res\\shaders\\ColorVert.glsl", "res\\shaders\\ColorFrag.glsl");
-	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", "res\\shaders\\GouraudVert.glsl", "res\\shaders\\GouraudFrag.glsl");
-	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", "res\\shaders\\PhongVert.glsl", "res\\shaders\\PhongFrag.glsl");
+	char *vertPath = MyStringUtil::SystemPath(3, "res", "shaders", "ColorVert.glsl");
+	char *fragPath = MyStringUtil::SystemPath(3, "res", "shaders", "ColorFrag.glsl");
+	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", vertPath, fragPath);
+	MyDeleteArray(vertPath);
+	MyDeleteArray(fragPath);
+	vertPath = MyStringUtil::SystemPath(3, "res", "shaders", "GouraudVert.glsl");
+	fragPath = MyStringUtil::SystemPath(3, "res", "shaders", "GouraudFrag.glsl");
+	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", vertPath, fragPath);
+	MyDeleteArray(vertPath);
+	MyDeleteArray(fragPath);
+	vertPath = MyStringUtil::SystemPath(3, "res", "shaders", "PhongVert.glsl");
+	fragPath = MyStringUtil::SystemPath(3, "res", "shaders", "PhongFrag.glsl");
+	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", vertPath, fragPath);
+  MyDeleteArray(vertPath);
+  MyDeleteArray(fragPath);
 
 	catTexture->InitializeTexture();
 	tuxTexture->InitializeTexture();

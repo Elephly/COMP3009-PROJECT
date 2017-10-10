@@ -43,4 +43,12 @@
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
 #endif // MIN
 
+#ifndef SYSTEM_DELIM
+#ifdef _WIN32
+#define SYSTEM_DELIM "\\"
+#else
+#define SYSTEM_DELIM "/"
+#endif
+#endif // SYSTEM_DELIM
+
 #endif // MYDEFINES_H

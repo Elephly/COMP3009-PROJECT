@@ -67,7 +67,7 @@ void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, c
 		char log[2048];
 		glGetShaderInfoLog(vtxShader, sizeof(log), NULL, log);
 		char errLog[2048];
-		sprintf(errLog, "Error creating vertex shader - %s\n", log);
+		sprintf(errLog, "Error creating vertex shader '%s' - %s\n", vertexShaderFileName, log);
 		throw errLog;
 	}
 	MyDeleteArray(shaderSrc[0]);
@@ -82,7 +82,7 @@ void MyShaderProgram::InitializeShaderProgram(const char * vertShaderFileName, c
 		char log[2048];
 		glGetShaderInfoLog(frgShader, sizeof(log), NULL, log);
 		char errLog[2048];
-		sprintf(errLog, "Error creating fragment shader - %s\n", log);
+		sprintf(errLog, "Error creating fragment shader '%s' - %s\n", fragmentShaderFileName, log);
 		throw errLog;
 	}
 	MyDeleteArray(shaderSrc[0]);
