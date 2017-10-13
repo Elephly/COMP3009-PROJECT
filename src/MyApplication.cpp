@@ -26,12 +26,10 @@ MyApplication::MyApplication(const char * name)
 	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
-	char *path = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "images", "sample2.png");
-	catTexture = new MyTexture2D(path);
-	MyDeleteArray(path);
-	path = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "images", "TuxTorso.png");
-	tuxTexture = new MyTexture2D(path);
-	MyDeleteArray(path);
+	std::string path = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("images").append(SYSTEM_DELIM).append("sample2.png");
+	catTexture = new MyTexture2D(path.c_str());
+	path = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("images").append(SYSTEM_DELIM).append("TuxTorso.png");
+	tuxTexture = new MyTexture2D(path.c_str());
 
 	shinyMaterial = new MyMaterial(0, MyColorRGBA(0.25f, 0.25f, 0.25f), MyColorRGBA(0.75f, 0.75f, 0.75f), MyColorRGBA(0.5f, 0.5f, 0.5f), 128.0f);
 	MyColorRGBA shellyDiffuse = MyColorRGBA(77.0f / 255.0f, 126.0f / 255.0f, 17.0f / 255.0f);
@@ -107,21 +105,15 @@ void MyApplication::Initialize(int *argc, char **argv)
 		throw glewGetErrorString(err);
 	}
 
-	char *vertPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "ColorVert.glsl");
-	char *fragPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "ColorFrag.glsl");
-	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", vertPath, fragPath);
-	MyDeleteArray(vertPath);
-	MyDeleteArray(fragPath);
-	vertPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "GouraudVert.glsl");
-	fragPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "GouraudFrag.glsl");
-	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", vertPath, fragPath);
-	MyDeleteArray(vertPath);
-	MyDeleteArray(fragPath);
-	vertPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "PhongVert.glsl");
-	fragPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "PhongFrag.glsl");
-	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", vertPath, fragPath);
-  MyDeleteArray(vertPath);
-  MyDeleteArray(fragPath);
+	std::string vertPath = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("shaders").append(SYSTEM_DELIM).append("ColorVert.glsl");
+	std::string fragPath = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("shaders").append(SYSTEM_DELIM).append("ColorFrag.glsl");
+	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", vertPath.c_str(), fragPath.c_str());
+	vertPath = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("shaders").append(SYSTEM_DELIM).append("GouraudVert.glsl");
+	fragPath = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("shaders").append(SYSTEM_DELIM).append("GouraudFrag.glsl");
+	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", vertPath.c_str(), fragPath.c_str());
+	vertPath = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("shaders").append(SYSTEM_DELIM).append("PhongVert.glsl");
+	fragPath = std::string(PROJECT_RESOURCE_DIRECTORY).append(SYSTEM_DELIM).append("shaders").append(SYSTEM_DELIM).append("PhongFrag.glsl");
+	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", vertPath.c_str(), fragPath.c_str());
 
 	catTexture->InitializeTexture();
 	tuxTexture->InitializeTexture();
