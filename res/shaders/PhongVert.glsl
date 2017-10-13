@@ -1,5 +1,7 @@
 #version 400
 
+#extension GL_ARB_separate_shader_objects : enable
+
 uniform mat4 transform;
 uniform mat4 view;
 uniform mat4 projection;

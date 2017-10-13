@@ -1,5 +1,7 @@
 #version 400
 
+#extension GL_ARB_separate_shader_objects : enable
+
 uniform mat4 transform;
 uniform mat4 view;
 uniform mat4 projection;
@@ -34,7 +36,7 @@ vec4 threeTermReflectionLighting(vec3 normal, vec3 position, vec3 lightPos, floa
 	vec4 ambi = ambientFraction * lightCol;
 	vec4 diff = diffuseIntensity * diffuseFraction * lightCol;
 	vec4 spec = specularIntensity * specularFraction * lightCol;
-	
+
 	return (objectColor * (ambi + diff)) + spec;
 }
 
@@ -54,7 +56,7 @@ vec4 threeTermHalfwayLighting(vec3 normal, vec3 position, vec3 lightPos, float s
 	vec4 ambi = ambientFraction * lightCol;
 	vec4 diff = diffuseIntensity * diffuseFraction * lightCol;
 	vec4 spec = specularIntensity * specularFraction * lightCol;
-	
+
 	return (objectColor * (ambi + diff)) + spec;
 }
 
@@ -66,6 +68,6 @@ void main(void)
 	vec3 vPosition = vec3(view * transform * vtxPosition);
 	vec3 vNormal = vec3(transpose(inverse(view * transform)) * vtxNormal);
 	vec3 light = vec3(view * lightPosition);
-	
+
 	vColor = threeTermHalfwayLighting(vNormal, vPosition, light, shine, ambient, diffuse, specular, vtxColor, lightColor);
 }

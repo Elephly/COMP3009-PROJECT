@@ -26,10 +26,10 @@ MyApplication::MyApplication(const char * name)
 	elapsedTime = 0;
 	inputManager = new MyInputManager();
 
-	char *path = MyStringUtil::SystemPath(3, "res", "images", "sample2.png");
+	char *path = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "images", "sample2.png");
 	catTexture = new MyTexture2D(path);
 	MyDeleteArray(path);
-	path = MyStringUtil::SystemPath(3, "res", "images", "TuxTorso.png");
+	path = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "images", "TuxTorso.png");
 	tuxTexture = new MyTexture2D(path);
 	MyDeleteArray(path);
 
@@ -107,18 +107,18 @@ void MyApplication::Initialize(int *argc, char **argv)
 		throw glewGetErrorString(err);
 	}
 
-	char *vertPath = MyStringUtil::SystemPath(3, "res", "shaders", "ColorVert.glsl");
-	char *fragPath = MyStringUtil::SystemPath(3, "res", "shaders", "ColorFrag.glsl");
+	char *vertPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "ColorVert.glsl");
+	char *fragPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "ColorFrag.glsl");
 	MyShaderProgram *colorShader = MyShaderManager::CreateShader("ColorShader", vertPath, fragPath);
 	MyDeleteArray(vertPath);
 	MyDeleteArray(fragPath);
-	vertPath = MyStringUtil::SystemPath(3, "res", "shaders", "GouraudVert.glsl");
-	fragPath = MyStringUtil::SystemPath(3, "res", "shaders", "GouraudFrag.glsl");
+	vertPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "GouraudVert.glsl");
+	fragPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "GouraudFrag.glsl");
 	MyShaderProgram *gouraudShader = MyShaderManager::CreateShader("GouraudShader", vertPath, fragPath);
 	MyDeleteArray(vertPath);
 	MyDeleteArray(fragPath);
-	vertPath = MyStringUtil::SystemPath(3, "res", "shaders", "PhongVert.glsl");
-	fragPath = MyStringUtil::SystemPath(3, "res", "shaders", "PhongFrag.glsl");
+	vertPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "PhongVert.glsl");
+	fragPath = MyStringUtil::SystemPath(3, PROJECT_RESOURCE_DIRECTORY, "shaders", "PhongFrag.glsl");
 	MyShaderProgram *phongShader = MyShaderManager::CreateShader("PhongShader", vertPath, fragPath);
   MyDeleteArray(vertPath);
   MyDeleteArray(fragPath);
@@ -150,7 +150,7 @@ void MyApplication::LoadContent()
 
 void MyApplication::Update(float const & deltaTime)
 {
-	printf("FPS: %d\n", (int)(1.0f / deltaTime));
+	//printf("FPS: %d\n", (int)(1.0f / deltaTime));
 	bool cameraTransformed = false;
 	if (inputManager != 0)
 	{

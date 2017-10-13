@@ -4,9 +4,23 @@ project(N3DIL)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# use, i.e. don't skip the full RPATH for the build tree
+SET(CMAKE_SKIP_BUILD_RPATH FALSE)
+
+# when building, don't use the install RPATH already
+# (but later on when installing)
+SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+
+SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
+# add the automatically determined parts of the RPATH
+# which point to directories outside the build tree to the install RPATH
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(PUBLIC_INCLUDE_DIR "${PROJECT_BINARY_DIR}/include")
-set(PUBLIC_RESOURCE_DIR "${PROJECT_BINARY_DIR}/res")
+set(PUBLIC_RESOURCE_DIR_NAME "res")
+set(PUBLIC_RESOURCE_DIR "${PROJECT_BINARY_DIR}/${PUBLIC_RESOURCE_DIR_NAME}")
 set(CONFIG_HEADER_IN "${PROJECT_SOURCE_DIR}/ProjectConfig.h.in")
 set(CONFIG_HEADER_OUT "${PUBLIC_INCLUDE_DIR}/ProjectConfig.h")
 set(LOCAL_SUBMODULE_DIR "${PROJECT_SOURCE_DIR}/submodules")
@@ -128,6 +142,9 @@ set_target_properties(freeglut PROPERTIES
 )
 
 # Add the install targets
-install (TARGETS "${PROJECT_NAME}" DESTINATION bin)
-install (FILES "${CONFIG_HEADER_OUT}" DESTINATION include)
-install (FILES "${LOCAL_RESOURCES}" DESTINATION res)
+install (TARGETS "${PROJECT_NAME}"
+  RUNTIME DESTINATION "bin"
+  LIBRARY NAMELINK_ONLY DESTINATION "lib"
+  ARCHIVE DESTINATION "lib/static")
+install (FILES "${CONFIG_HEADER_OUT}" DESTINATION "include")
+install (DIRECTORY "${LOCAL_RESOURCE_DIR}/" DESTINATION "bin/${PUBLIC_RESOURCE_DIR_NAME}")
