@@ -46,8 +46,21 @@ The remainder of this document details how to go about cloning and building this
 project in your own environment.
 
 #### Prerequisites
-- Git
-- CMake 3.x.x
+- All Platforms:
+  - Git
+  - CMake 3.x.x
+- Debian/Ubuntu/Mint:
+  - ```$ sudo apt-get install -y build-essential```
+- RedHat/CentOS/Fedora:
+  - ```$ sudo yum groupinstall -y "Development Tools" "Development Libraries"```
+- Mac OS X: Install Xcode and then do the following:
+  - ```$ xcode-select --install```
+- Windows 10: This is incredibly tedious, but for now this is the solution:
+  - Enable Developer Mode through Windows Control Panel
+  - Enable Windows Subsystem for Linux feature through Windows Control Panel
+  - Install Bash on Ubuntu on Windows
+  - Open Bash and do the following:
+    - ```sudo apt-get update && sudo apt-get install -y build-essential git cmake```
 
 #### Build Instructions
 - Clone the project recursively to check out submodules
@@ -61,21 +74,11 @@ project in your own environment.
 
 #### Dependencies
 - Debian/Ubuntu/Mint:
-  - ```$ sudo apt-get install -y build-essential libxmu-dev libxi-dev libgl-dev libgl1-mesa-dev libglu1-mesa-dev git cmake```
+  - ```$ sudo apt-get install -y libxmu-dev libxi-dev libgl-dev libgl1-mesa-dev libglu1-mesa-dev```
 - RedHat/CentOS/Fedora:
-  - ```$ sudo yum groupinstall -y "Development Tools" "Development Libraries"```
-  - ```$ sudo yum install -y libXmu-devel libXi-devel libGL-devel mesa-libGL-devel mesa-libGLU-devel git cmake```
-- Mac OS X: Install Xcode and then do the following:
-  - ```$ xcode-select --install```
-  - ```$ brew install Caskroom/cask/xquartz git cmake```
-- Windows 10: This is incredibly tedious, but for now this is the solution:
-  - Install git
-  - Install cmake
-  - Enable Developer Mode through Windows Control Panel
-  - Enable Windows Subsystem for Linux feature through Windows Control Panel
-  - Install Bash on Ubuntu on Windows
-  - Open Bash and do the following:
-    - ```sudo apt-get update && sudo apt-get install -y build-essential git cmake```
+  - ```$ sudo yum install -y libXmu-devel libXi-devel libGL-devel mesa-libGL-devel mesa-libGLU-devel```
+- Mac OS X:
+  - ```$ brew install Caskroom/cask/xquartz```
 
 #### Notes
 - The project has been tested using the GCC and MSVC compilers
