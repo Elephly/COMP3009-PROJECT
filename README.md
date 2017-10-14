@@ -1,6 +1,15 @@
 # N3DIL
 Nick's 3D & Image Library
 
+## Contents
+- [Description](#description)
+  - [Demo Controls](#demo-controls)
+- [Setup](#setup)
+  - [Prerequisites](#prerequisites)
+  - [Build Instructions](#build-instructions)
+  - [Dependencies](#dependencies)
+  - [Notes](#notes)
+
 ## Description
 This was a term project for COMP3009, my third year computer graphics course. At
 the time, my goal for the project was to take what I was learning and make an
