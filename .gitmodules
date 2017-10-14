@@ -1,9 +1,0 @@
-[submodule "submodules/Simple-OpenGL-Image-Library"]
-	path = submodules/Simple-OpenGL-Image-Library
-	url = https://github.com/kbranigan/Simple-OpenGL-Image-Library
-[submodule "submodules/glew"]
-	path = submodules/glew
-	url = https://github.com/nigels-com/glew
-[submodule "submodules/FreeGLUT"]
-	path = submodules/FreeGLUT
-	url = https://github.com/dcnieho/FreeGLUT
