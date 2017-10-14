@@ -1,5 +1,6 @@
 #include "MyApplication.h"
 
+#include <cstdlib>
 #include <ctime>
 
 void MainReshapeFunc(int width, int height);
@@ -21,7 +22,15 @@ int main(int argc, char *argv[])
 	try
 	{
 		srand((unsigned int)time(0));
-		myApplication = new MyApplication(PROJECT_NAME);
+		myApplication = new MyApplication(std::string(PROJECT_NAME)
+			.append("-v")
+			.append(std::to_string(PROJECT_VERSION_MAJOR))
+			.append(".")
+			.append(std::to_string(PROJECT_VERSION_MINOR))
+			.append(".")
+			.append(std::to_string(PROJECT_VERSION_PATCH))
+			.append(".")
+			.append(std::to_string(PROJECT_VERSION_REVISION)).c_str());
 		myApplication->Initialize(&argc, argv);
 		myApplication->RegisterReshapeFunc(MainReshapeFunc);
 		myApplication->RegisterTimerFunc(MainTimerFunc);
